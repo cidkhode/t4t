@@ -1,0 +1,21 @@
+@import '../../styles/colors';
+
+.t4t-button {
+  outline: none;
+  border: solid 1px @t4t-black;
+  border-radius: 2px;
+  background: @t4t-white;
+  color: @t4t-orange;
+  width: fit-content;
+  padding: 10px;
+
+  &:hover:not(:active) {
+    background: @t4t-orange;
+    color: @t4t-white;
+  }
+
+  &:hover:active {
+    background: @t4t-orange-dark;
+    color: @t4t-white;
+  }
+}

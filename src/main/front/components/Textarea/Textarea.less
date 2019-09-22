@@ -1,0 +1,33 @@
+@import '../../styles/colors';
+
+.t4t-textarea-container {
+  display: grid;
+  min-width: 300px;
+  min-height: 150px;
+  &.disabled {
+    .t4t-textarea {
+      border: 2px solid @t4t-gray01;
+      resize: none;
+    }
+    label {
+      color: @t4t-gray01;
+    }
+  }
+
+  &.error {
+    .t4t-textarea {
+      border: 2px solid @t4t-red;
+    }
+    label {
+      color: @t4t-red;
+    }
+  }
+  .t4t-textarea {
+    border-radius: 5px;
+    border: 1px solid @t4t-black;
+    padding: 10px;
+    outline: none;
+    min-width: inherit;
+    min-height: inherit;
+  }
+}

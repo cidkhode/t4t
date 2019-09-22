@@ -1,0 +1,66 @@
+@import '../../styles/colors';
+
+.t4t-checkbox-label {
+  user-select: none;
+  display: block;
+  position: relative;
+  padding-left: 25px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+
+  .checkbox-default-input {
+    display: none;
+  }
+
+  .checkbox-checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background: @t4t-gray01;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    .checkbox-checkmark {
+      background: @t4t-disabled-input;
+    }
+  }
+
+  &:not(.disabled) {
+    &:hover .checkbox-default-input ~ .checkbox-checkmark {
+      background: @t4t-gray02;
+    }
+
+    .checkbox-default-input:checked ~ .checkbox-checkmark {
+      background: @t4t-orange;
+    }
+
+    .checkbox-default-input:checked ~ .checkbox-checkmark:after {
+      display: block;
+    }
+
+    .checkbox-default-input:active ~ .checkbox-checkmark {
+      background: @t4t-gray03;
+    }
+
+    .checkbox-checkmark:after {
+      left: 7px;
+      top: 2px;
+      width: 4px;
+      height: 10px;
+      content: "";
+      border: solid white;
+      border-width: 0 3px 3px 0;
+      transform: rotate(45deg);
+      position: absolute;
+      display: none;
+    }
+
+    .t4t-checkbox-label:hover input ~ .checkbox-checkmark {
+      background-color: @t4t-gray02;
+    }
+  }
+}

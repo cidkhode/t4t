@@ -1,0 +1,101 @@
+@import '../../styles/colors';
+
+.t4t-input-container {
+  display: flex;
+  height: 30px;
+  position: relative;
+  &.disabled {
+    .t4t-input, .t4t-input-button {
+      border-top: 1px solid @t4t-gray03;
+      border-bottom: 1px solid @t4t-gray03;
+    }
+    .t4t-input {
+      border-left: 1px solid @t4t-gray03;
+      background: @t4t-gray01;
+    }
+    .t4t-input-button {
+      border-right: 1px solid @t4t-gray03;
+    }
+  }
+  &.error {
+    .t4t-input, .t4t-input-button {
+      border-top: 2px solid @t4t-red;
+      border-bottom: 2px solid @t4t-red;
+    }
+    .t4t-input {
+      border-left: 2px solid @t4t-red;
+      background: @t4t-white;
+      color: @t4t-red;
+
+      &:disabled {
+        background: @t4t-gray01;
+      }
+
+      &:focus+.t4t-input-button {
+        border-right: 2px solid @t4t-red;
+        border-top: 2px solid @t4t-red;
+        border-bottom: 2px solid @t4t-red;
+        color: @t4t-red;
+      }
+    }
+    .t4t-input-button {
+      border-right: 2px solid @t4t-red;
+      &:hover:not(:active):not(:disabled) {
+        background: @t4t-red-light;
+        color: @t4t-white;
+      }
+      &:hover:active {
+        background: @t4t-red-dark;
+        color: @t4t-white;
+      }
+    }
+  }
+}
+
+.t4t-input {
+  border-radius: 4px 0 0 4px;
+  border-left: 1px solid @t4t-black;
+  border-top: 1px solid @t4t-black;
+  border-bottom: 1px solid @t4t-black;
+  border-right: none;
+  outline: none;
+  width: inherit;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  &:focus {
+    border-left: 2px solid @t4t-orange;
+    border-top: 2px solid @t4t-orange;
+    border-bottom: 2px solid @t4t-orange;
+    color: @t4t-orange;
+  }
+  &:focus+.t4t-input-button {
+    border-right: 2px solid @t4t-orange;
+    border-top: 2px solid @t4t-orange;
+    border-bottom: 2px solid @t4t-orange;
+    color: @t4t-orange;
+  }
+}
+
+.t4t-input-button {
+  border-radius: 0 4px 4px 0;
+  border-top: solid 1px @t4t-black;
+  border-right: solid 1px @t4t-black;
+  border-bottom: solid 1px @t4t-black;
+  border-left: none;
+  background: @t4t-white;
+  color: @t4t-black;
+  outline: none;
+
+  &:disabled {
+    background: @t4t-gray01;
+  }
+  &:hover:not(:active):not(:disabled) {
+    background: @t4t-orange-light;
+    color: @t4t-white;
+  }
+  &:hover:active {
+    background: @t4t-orange-dark;
+    color: @t4t-white;
+  }
+}
