@@ -1,38 +1,33 @@
-# Thought4Thought
+# Welcome to Thought4Thought!
 
-This is the front-end repository of the T4T project. Please have a look at our Table of Contents for more information regarding the tech stack, setup, and overall information on the project itself!
+This is the web-based application we are creating for this project.
 
-## Table of Contents
+### Tech stack
 
- - Tech Stack
- - Setup
- - About
+The client side uses the following tech stack:
+ - React.JS
+ - Node.JS
+ - Webpack 4
 
-## Tech Stack
+The server side uses the following tech stack:
+- Java / Spring
+- Maven
 
-Our team uses **IntelliJ** as its primary development IDE. That being said, this project revolves around 3 core developer tools and/or frameworks:
+Recommended IDEs:
+ - IntelliJ IDEA
+ - Eclipse
 
- - Webpack
-	 - Webpack 4, specifically, is used to bundle all of our source code into a dependency graph
- - Babel
-	 - We use Babel for transpiling our ES6 code into older versions of JS so that the project works on older browser(s)
- - NodeJS and NPM
-     - Used to manage front-end dependencies
- - ReactJS
-	 - We will be using ReactJS as our front-end javascript framework
+### Setup
+To start this project, you'll need a handful of dev prerequisites including the following:
+ - Node.JS
+	 - It should come with NPM, but make sure you have this as well
+ - Maven
+ - JDK8
 
-## Setup
+Follow guided docs to set these up in your machines. Once you have them, pull the project using the repository `.git` link found above. Clone the project, and in the root directory, run the following commands:
+ - `mvn clean install -DskipTests` to fetch backend dependencies and compile the project
+ - `npm install` to fetch all frontend dependencies
+ - To start the Spring application, run `Thought4ThoughtApplication.java` and you should see at the bottom of the console that the application has started
+ - To build the frontend, use `npm run build` and then `npm run start` to start it at [localhost:3000](http://localhost:3000/).
 
-This project has a relatively straightforward and simple setup process. To get started, open up IntelliJ (or your preferred development playground), and use the terminal or VCS GUI to clone this remote repository into your local environment. Once you have cloned the repository, you need to install all the dependencies that the project needs. Follow these steps to get the project up and running:
-
- - Run `npm install`
-	 - This will install all dev and nondev dependencies defined in `package.json`
- - Run `npm build`
-	 - This will build and bundle our code
- - Run `npm start`********
-	 - This will start the project on [localhost:8080](localhost:8080)
-	
-
-## About
-
-The Thought4Thought project aims to take the centralized flow of information and ideas that circulate around the world at light-speed and put it in the hands and control of everyday people, in order to free thought and encourage creativity.
+More to follow in the coming weeks...
