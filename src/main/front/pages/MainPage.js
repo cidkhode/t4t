@@ -1,18 +1,30 @@
 import React, { Component } from 'react';
-import Button from "../components/Button/Button";
-export class MainPage extends Component {
 
-  handleButtonClick = () => {
-    console.log(`Button clicked!`);
-    fetch('/api/articles', { credentials: 'same-origin' })
-      .then(response => response.json())
-      .then( json => console.log(`Response data`, json))
-  };
+/* Components */
+import Button from "../components/Button/Button";
+import Login from "../components/Modal/Login";
+
+
+class MainPage extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { loginOpen: false };
+
+    this.toggleLogin = this.toggleLogin.bind(this);
+    console.log(this.state);
+  }
+
+  toggleLogin = () => {
+    this.setState({ loginOpen: this.state.loginOpen ? false : true });
+    console.log(this.state);
+  }
 
   render() {
     return (
       <div>
-        <Button handleClick={ this.handleButtonClick } text="Sample button" />
+        <Button handleClick={this.toggleLogin} text="Login" />
+        <Login isActive={this.state.loginOpen} />
       </div>
     )
   }
