@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
-class SignupForm extends React.Component {
+class SignupForm extends Component {
 	constructor(props) {
 		super(props);
 
@@ -25,7 +25,7 @@ class SignupForm extends React.Component {
 				break;
 			
 			case 2:
-				return (<p onClick={this.getNextStep}> Final Step </p>);
+				return (<p onClick={this.getNextStep}> Complete </p>);
 				break;
 
 			case 3:
