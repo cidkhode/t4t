@@ -27,21 +27,56 @@
 			}
 
 			#steps {
+				position: relative;
 				margin: 0 0 20px 0;
+				display: flex;
+				flex-flow: row nowrap;
+				overflow: hidden;
+
+				transition: height .15s linear;
+
+				&.curr-step-1, &.curr-step-2, &.curr-step-3 {
+					transition: height .15s linear;
+				}
+				
+				&.curr-step-1 { height: 265px; }
+				&.curr-step-2 { height: 151px; }
+				&.curr-step-3 { height: 151px; } // height: 50px;
+				
 
 				.step {
-					display: none;
+					width: 100%;
+					position: absolute;
+					top: 0;
+					left: 100%;
 					flex-flow: column;
 
 					margin: 0 0 0 0;
 
+					background-color: #fff;
+
+					transition: left .15s linear;
+
+					// hides formik error messages in forms
+					> div {
+						display: none;
+					}
+
 					&.active {
 						display: flex;
+						left: 0;
+
+						transition: left .15s linear;
 					}
 				}
 
 				#step-3 {
 					text-align: center;
+					display: flex;
+					flex-flow: column;
+					justify-content: center;
+
+					height: 151px;
 
 					p {
 						margin: 0 0 10px 0;
@@ -151,7 +186,7 @@
 					margin: 0 0 20px 0;
 					
 					text-shadow: none;
-					transition: background .2s;
+					transition: background .2s linear;
 				}
 			}
 		}
