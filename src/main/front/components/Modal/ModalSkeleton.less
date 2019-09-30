@@ -19,12 +19,14 @@
 		display: flex;
 	}
 
-	.inner {
+	> .inner {
 		position: relative;
 		min-width: 300px;
 		max-width: 350px;
 		background-color: @white;
 		padding: 30px;
+
+		box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.1);
 
 		.modal-content {
 			background-color: @white;
