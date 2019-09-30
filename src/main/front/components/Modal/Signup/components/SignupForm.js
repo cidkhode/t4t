@@ -81,7 +81,7 @@ class SignupForm extends React.Component {
 				{({ isSubmitting }) => (
 					<Form>
 						<div id="steps" className={`curr-step-${this.state.stepCtr}`}>
-							<div id="step-1" className={`step ${this.state.stepCtr >= 1 ? "active" : ""} ${this.state.stepCtr >= 2 ? "active-hide" : ""}`}>
+							<div id="step-1" className={`step ${this.state.stepCtr >= 1 ? "active" : ""} ${this.state.stepCtr > 1 ? "active-hide" : ""}`}>
 								<Field type="text" name="usertype" placeholder="Reader or Writer" />
 								<ErrorMessage name="usertype" component="div" />
 
@@ -98,7 +98,7 @@ class SignupForm extends React.Component {
 								<ErrorMessage name="confirm-pass" component="div" />
 							</div>
 
-							<div id="step-2" className={`step ${this.state.stepCtr >= 2 ? "active" : ""} ${this.state.stepCtr >= 2 ? "active-hide" : ""}`}>
+							<div id="step-2" className={`step ${this.state.stepCtr > 1 ? "active" : ""} ${this.state.stepCtr === 3 ? "active-hide" : ""}`}>
 								<Field type="text" name="interests" placeholder="Interests" />
 								<ErrorMessage name="interests" component="div" />
 
@@ -109,7 +109,7 @@ class SignupForm extends React.Component {
 								<ErrorMessage name="view_points" component="div" />
 							</div>
 
-							<div id="step-3" className={`step ${this.state.stepCtr === 3 ? "active" : ""} ${this.state.stepCtr >= 2 ? "active-hide" : ""}`}>
+							<div id="step-3" className={`step ${this.state.stepCtr === 3 ? "active" : ""}`}>
 								<p> Registration Complete. </p>
 								<p> Please confirm your email. </p>
 							</div>
