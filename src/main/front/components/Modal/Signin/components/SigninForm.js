@@ -1,7 +1,7 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
-const LoginForm = () => (
+const SigninForm = () => (
 	<Formik
 		initialValues={{ email: '', password: '' }}
 		validate={values => {
@@ -28,10 +28,10 @@ const LoginForm = () => (
 			<Field type="password" name="password" placeholder="Password" />
 			<ErrorMessage name="password" component="div" />
 
-			<button type="submit" disabled={isSubmitting}> Login </button>
+			<button type="submit" disabled={isSubmitting}> Sign in </button>
 		</Form>
 		)}
 	</Formik>
 );
 
-export default LoginForm;
+export default SigninForm;

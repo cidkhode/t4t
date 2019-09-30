@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 
 /* Components */
 import ModalSkeleton from '../../Modal';
-import LoginForm from './components/LoginForm.js';
-import LinkGroup from './components/LinkGroup.js';
+import SigninForm from './components/SigninForm.js';
 
 /* Styles */
 import '../ModalSkeleton.less';
-import './Login.less';
+import './Signin.less';
 
 
-class Login extends Component {
+class Signin extends Component {
 	constructor(props) {
 		super(props);
 
@@ -22,12 +21,16 @@ class Login extends Component {
 	render() {
 		return(
 			<ModalSkeleton isActive={this.props.isActive}>
-				<div id="login-container" className="modal-content">
+				<div id="signin-container" className="modal-content">
 					<span className="closeModal" onClick={this.toggleActive} />
 					<div className="inner">
 						<h3> Welcome Back </h3>
-						<LoginForm />
-						<LinkGroup />
+						<SigninForm />
+						
+						<div className="link-group">
+							<a href="#"> Create an account </a>
+							<a href="#"> Forgot password? </a>
+						</div>
 					</div>
 				</div>
 			</ModalSkeleton>
@@ -35,4 +38,4 @@ class Login extends Component {
 	}
 }
 
-export default Login;
+export default Signin;

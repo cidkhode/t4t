@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 /* Components */
 import ModalSkeleton from '../../Modal';
 import SignupForm from './components/SignupForm.js';
-import LinkGroup from './components/LinkGroup.js';
 
 /* Styles */
 import '../ModalSkeleton.less';
@@ -27,7 +26,10 @@ class Signup extends Component {
 					<div className="inner">
 						<h3> Create Your T4T Account </h3>
 						<SignupForm />
-						<LinkGroup />
+						
+						<div className="link-group">
+							<a href="#"> Sign in </a>
+						</div>
 					</div>
 				</div>
 			</ModalSkeleton>
