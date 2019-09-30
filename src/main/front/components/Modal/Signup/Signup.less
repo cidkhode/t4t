@@ -4,43 +4,155 @@
 		padding: 0;
 
 		h3 {
-			margin: 0 0 25px 0;
+			margin: 0 0 20px 0;
 			text-align: center;
 		}
 
 		form {
 			display: flex;
 			flex-flow: column;
-			margin: 0 0 25px 0;
+			margin: 0 0 20px 0;
 
 			input[type="text"], input[type="email"], input[type="password"] {
 				border: none;
 				font-size: 13px;
 				padding: 10px 5px;
-				margin: 10px 0 15px;
+				margin: 0 0 20px;
 				border-bottom: 1px solid #333;
 			}
 
-			button {
-				color: white;
-				background-color: #333;
-				
-				border: none;
-				border-radius: 2px;
-				
-				box-shadow: none;
+			input {
+				&:first-child { margin-top: 0; }
+				&:last-child { margin-bottom: 0; }
+			}
 
-				cursor: pointer;
-				display: inline-block;
-				
-				font-size: 14px;
-				font-weight: 600;
-				
-				line-height: 1;
-				padding: 1em 2em;
-				
-				text-shadow: none;
-				transition: background .2s;
+			#steps {
+				margin: 0 0 20px 0;
+
+				.step {
+					display: none;
+					flex-flow: column;
+
+					margin: 0 0 0 0;
+
+					&.active {
+						display: flex;
+					}
+				}
+
+				#step-3 {
+					text-align: center;
+
+					p {
+						margin: 0 0 10px 0;
+
+						&:last-child {
+							margin: 0 0 0 0;
+						}
+					}
+				}
+			}
+
+			#signup-controls {
+				display: inline-flex;
+				flex-flow: column;
+				justify-content: center;
+
+				#step-nav {
+					display: flex;
+					flex-flow: row nowrap;
+					justify-content: space-between;
+					align-items: center;
+
+					margin: 0 0 20px 0;
+
+					> p, > p a {
+						font-size: 18px;
+						font-weight: 500;
+						margin: 0;
+						cursor: default;
+					}
+
+					.arrow-left, .arrow-right {
+						width: 0;
+						height: 0;
+						cursor: pointer;
+
+						border-top: 10px solid transparent;
+						border-bottom: 10px solid transparent;
+
+						opacity: 0;
+						pointer-events: none;
+
+						&.active {
+							opacity: 1;
+							pointer-events: auto;
+						}
+					}
+
+					.arrow-left {
+						border-right: 15px solid #333; 
+					}
+
+					.arrow-right {
+						border-left: 15px solid #333;
+					}
+				}
+
+				#step-counter {
+					display: flex;
+					flex-flow: row nowrap;
+					justify-content: space-between;
+					align-items: center;
+
+					width: 100px;
+					margin: 0 auto;
+
+					p {
+						display: flex;
+						justify-content: center;
+						align-items: center;
+
+						border: 1px solid #333;
+						border-radius: 15px;
+						
+						height: 20px;
+						width: 20px;
+						font-size: 12px;
+
+						padding: 0;
+						margin: 0;
+						
+						&.active {
+							background-color: #333;
+							color: #fff;
+						}
+					}
+				}
+
+				button, a.button {
+					color: white;
+					background-color: #333;
+					
+					border: none;
+					border-radius: 2px;
+					
+					box-shadow: none;
+					text-align: center;
+
+					cursor: pointer !important;
+					display: inline-block;
+					
+					font-size: 14px !important;
+					font-weight: 600;
+					
+					line-height: 1;
+					padding: 1em 2em;
+					margin: 0 0 20px 0;
+					
+					text-shadow: none;
+					transition: background .2s;
+				}
 			}
 		}
 

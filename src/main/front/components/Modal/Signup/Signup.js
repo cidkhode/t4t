@@ -25,7 +25,7 @@ class Signup extends Component {
 				<div id="signup-container" className="modal-content">
 					<span className="closeModal" onClick={this.toggleActive} />
 					<div className="inner">
-						<h3> Create an Account </h3>
+						<h3> Create Your T4T Account </h3>
 						<SignupForm />
 						<LinkGroup />
 					</div>
