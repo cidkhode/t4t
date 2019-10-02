@@ -28,7 +28,7 @@ const SigninForm = () => (
 			<Field type="password" name="password" placeholder="Password" />
 			<ErrorMessage name="password" component="div" />
 
-			<button type="submit" disabled={isSubmitting}> Sign in </button>
+			<button type="submit" disabled={isSubmitting}> <span> Sign in </span> <div className="arrow"></div> </button>
 		</Form>
 		)}
 	</Formik>

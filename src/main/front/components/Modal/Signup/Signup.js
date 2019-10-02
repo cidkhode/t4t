@@ -23,14 +23,7 @@ class Signup extends Component {
 			<ModalSkeleton isActive={this.props.isActive}>
 				<div id="signup-container" className="modal-content">
 					<span className="closeModal" onClick={this.toggleActive} />
-					<div className="inner">
-						<h3> Create Your T4T Account </h3>
-						<SignupForm />
-						
-						<div className="link-group">
-							<a href="#"> Sign in </a>
-						</div>
-					</div>
+					<SignupForm />
 				</div>
 			</ModalSkeleton>
 		)

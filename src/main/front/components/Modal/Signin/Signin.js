@@ -28,8 +28,8 @@ class Signin extends Component {
 						<SigninForm />
 						
 						<div className="link-group">
-							<a href="#"> Create an account </a>
-							<a href="#"> Forgot password? </a>
+							<a href="#"> Sign up </a>
+							<a href="#"> Forgot password </a>
 						</div>
 					</div>
 				</div>
