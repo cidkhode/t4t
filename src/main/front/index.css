@@ -1,0 +1,326 @@
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: auto;
+    overflow-x: hidden;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: normal;
+}
+
+.logo {
+    position: absolute;
+    font-size: 20px;
+    left: 88px;
+    top: 37px;
+    padding: 14px 54px;
+    color: #4F4F4F;
+    background-color: #56CCF2;
+    border: none;
+    border-radius: 10px;
+}
+
+.navhead {
+    width: 100%;
+    min-height: 120px;
+    display: flex;
+    flex-direction: row;
+}
+
+.signUp {
+    position: absolute;
+    font-size: 30px;
+    right: 39px;
+    top: 20px;
+    padding: 21px 19px;
+    color: #2D9CDB;
+    background-color: white;
+    border-color: #2D9CDB;
+    border-style: solid;
+    box-sizing: border-box;
+    border-radius: 10px;
+    transition: 0.3s;
+    opacity: 0.6;
+}
+
+.signUp:hover {
+    color: white;
+    background-color: #2D9CDB;
+    opacity: 1.0;
+    transition: 0.3s;
+}
+
+.signIn {
+    position: absolute;
+    top: 40px;
+    right: 265px;
+    color: #2D9CDB;
+    font-size: 30px;
+    border: none;
+    background-color: white;
+    opacity: 0.6;
+    transition: 0.3s;
+}
+
+.signIn:hover {
+    opacity: 1.0;
+    transition: 0.3s;
+}
+
+input[type=button] {
+    background: url("./assets/search.png");
+    border: 0;
+    display: block;
+    height: 44px;
+    width: 36px;
+}
+
+.searchBar button {
+    position: absolute;
+    top: 38px;
+    right: 770px;
+    border: none;
+    background-color: white;
+    transition: 0.3s;
+}
+
+.searchBar img:hover {
+    height: 48px;
+    width: 40px;
+    transition: 0.3s;
+}
+
+.searchBar input {
+    position: absolute;
+    outline: none;
+    top: 38px;
+    right: 383px;
+    font-size: 30px;
+    opacity: 0.6;
+    border: none;
+    background-color: white;
+    padding: 5px;
+    transition: 0.3s;
+}
+
+.searchBar input:hover {
+    opacity: 1.0;
+    transition: 0.3s;
+}
+
+.searchBar input:focus {
+    opacity: 1.0;
+    border-bottom: 0.1rem solid #e0e0e0;
+}
+
+h1 {
+    font-size: 25px;
+    opacity: 0.6;
+    color: #828282;
+    height: 32px;
+    margin: 0;
+    padding: 0;
+}
+
+h1.popular {
+    position: absolute;
+    left: 88px;
+    top: 176px;
+}
+
+h1.reading {
+    position: absolute;
+    right: 400px;
+    top: 176px;
+}
+
+h1.network {
+    position: absolute;
+    left: 88px;
+    top: 731px;
+}
+
+.mostpopular {
+    position: absolute;
+    top: 236px;
+    left: 88px;
+    display: flex;
+    height: 444px;
+    width: 731px;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.leftPrev, .rightPrev {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 444px;
+}
+
+.leftPrev {
+    width: 373px;
+}
+
+.rightPrev {
+    width: 292px;
+}
+
+.article.condensed .prevImg {
+    position: absolute;
+    left: 0;
+    height: 113px;
+    width: 108px;
+}
+
+.article.larger .prevImg {
+    height: 142px;
+    width: 292px;
+}
+
+.article.author .prevImg {
+    height: 110px;
+    width: 344px;
+    padding-bottom: 10px;
+}
+
+.article.condensed {
+    right: 15.5px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    height: 113px;
+    width: 373px;
+}
+
+.article.larger {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 214px;
+    width: 293px;
+}
+
+.article.author {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 201px;
+    width: 344px;
+    padding-right: 42px;
+
+}
+
+.article.condensed .articleInfo {
+    position: absolute;
+    left: 146px;
+    width: 225px;
+    height: 89px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.article.larger .articleInfo {
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: center;
+}
+
+.articleTitle {
+    width: 225px;
+    height: 20px;
+    font-size: 20px;
+    text-align: left;
+}
+
+.article.larger .articleTitle {
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.article.author .articleTitle {
+    padding-bottom: 10px;
+}
+
+.articleDesc {
+    line-height: 16px;
+    text-align: left;
+    height: 48px;
+    font-size: 10px;
+}
+
+.article.condensed .articleDesc {
+    position: absolute;
+    left: 0;
+    top: 42px;
+    width: 198px;
+}
+
+.article.larger .articleDesc {
+    width: 276px;
+}
+
+.article.author .articleDesc {
+    width: 204px;
+}
+
+.bookmark, .like {
+    position: absolute;
+}
+
+.bookmark {
+    bottom: 27px;
+    right: 17px;
+}
+
+.like {
+    bottom: 0px;
+    right: 14px;
+}
+
+.article.larger .bookmark {
+    bottom: 55px;
+    right: 37px;
+}
+
+.article.larger .like {
+    bottom: 55px;
+    right: 0px;
+}
+
+.readinglist {
+    position: absolute;
+    top: 236px;
+    right: 88px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 441px;
+}
+
+.readinglist .article.condensed {
+    padding-bottom: 25px;
+}
+
+.networknews {
+    position: absolute;
+    left: 88px;
+    top: 789px;
+    display: flex;
+    flex-direction: row;
+    width: 314px;
+}
+
+.userpic {
+    position: absolute;
+    right: 80px;
+    bottom: 17px;
+    height: 48px;
+    width: 48px;
+}
