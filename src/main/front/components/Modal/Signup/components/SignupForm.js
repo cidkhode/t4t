@@ -10,15 +10,9 @@ class SignupForm extends Component {
 			maxStep: 1,
 			lastStep: 3
 		}
-
-		this.getCurrStep = this.getCurrStep.bind(this);
-		this.setStep = this.setStep.bind(this);
-		this.getPrevStep = this.getPrevStep.bind(this);
-		this.getNextStep = this.getNextStep.bind(this);
-		this.resendVerification = this.resendVerification.bind(this);
 	}
 
-	getCurrStep(step) {
+	getCurrStep = (step) => {
 		switch(step) {
 			case 1:
 				return (<p onClick={this.getNextStep}> Sign Up </p>);
@@ -27,36 +21,28 @@ class SignupForm extends Component {
 			case 2:
 				return (<p onClick={this.getNextStep}> Complete </p>);
 				break;
-
-			case 3:
-				return;
-				break;
 		}
 	}
 
-	setStep(step) {
+	setStep = (step) => {
 		if (0 < step && step <= this.state.maxStep && !(this.state.stepCtr === this.state.lastStep)) {
 			this.setState({ stepCtr: step });
 		}
 	}
 
-	getPrevStep() {
+	getPrevStep = () => {
 		if (this.state.stepCtr > 0) {
 			this.setState({ stepCtr: this.state.stepCtr - 1 });
 		}
 	}
 
-	getNextStep() {
+	getNextStep = () => {
 		if (this.state.stepCtr < this.state.lastStep) {
 			this.setState({ stepCtr: this.state.stepCtr + 1, maxStep: this.state.stepCtr + 1 });
 		}
 	}
 
-	resendVerification() {
-		return;
-	}
-
-
+	resendVerification = () => {}
 
 	render() {
 		return(

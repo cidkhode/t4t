@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 /* Components */
-import ModalSkeleton from '../../Modal';
+import ModalSkeleton from '../../Modal/ModalSkeleton';
 import SignupForm from './components/SignupForm.js';
 
 /* Styles */
@@ -12,17 +12,13 @@ import './Signup.less';
 class Signup extends Component {
 	constructor(props) {
 		super(props);
-
-		this.toggleActive = this.toggleActive.bind(this);
 	}
-
-	toggleActive = () => {}
 
 	render() {
 		return(
 			<ModalSkeleton isActive={this.props.isActive}>
 				<div id="signup-container" className="modal-content">
-					<span className="closeModal" onClick={this.toggleActive} />
+					<span className="closeModal" />
 					<SignupForm />
 				</div>
 			</ModalSkeleton>
