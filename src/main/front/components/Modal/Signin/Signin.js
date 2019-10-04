@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { bool } from 'prop-types';
 
 /* Components */
-import ModalSkeleton from '../../Modal/ModalSkeleton';
+import ModalSkeleton from '../../Modal/ModalSkeleton.js';
 import SigninForm from './components/SigninForm.js';
 
 /* Styles */
@@ -33,5 +34,14 @@ class Signin extends Component {
 		)
 	}
 }
+
+
+Signin.propTypes = {
+    isActive: bool.isRequired,
+};
+
+Signin.defaultProps = {
+    isActive: false
+};
 
 export default Signin;
