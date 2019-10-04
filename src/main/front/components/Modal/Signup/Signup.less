@@ -1,13 +1,8 @@
+@import '../../../styles/colors';
 
 .modal-container {
 	> .inner {
 		padding: 42px 50px 26px 50px;
-
-		#steps {
-			&.curr-step-3 {
-
-			}
-		}
 	}
 }
 
@@ -35,7 +30,7 @@
 				border: none;
 				padding: 0 0 24px 0;
 				margin: 0 0 20px;
-				border-bottom: 1px solid #4F4F4F;
+				border-bottom: 1px solid @t4t-gray05;
 				background-color: transparent !important;
 
 				font-size: 25px;
@@ -82,8 +77,6 @@
 
 					width: 100%;
 					margin: 0 0 0 0;
-
-					background-color: #BDBDBD;
 
 					opacity: 0;
 					transition: opacity .15s linear;
@@ -178,7 +171,7 @@
 						position: relative;
 						right: 2px;
 						top: 12px;
-						background-color: #000;
+						background-color: @t4t-black;
 						border-radius: 5px;
 
 						opacity: 0;
@@ -188,14 +181,14 @@
 
 						&:before, &:after {
 							height: 4px;
-							background-color: #000;
+							background-color: @t4t-black;
 
 							position: absolute;
 							right: 0;
 
 							content: '';
 							border-radius: 5px;
-							background-color: #000;
+							background-color: @t4t-black;
 						}
 
 						&.active {
@@ -258,7 +251,7 @@
 							justify-content: center;
 							align-items: center;
 
-							border: 1px solid #333;
+							border: 1px solid @t4t-black;
 							border-radius: 15px;
 							
 							height: 17px;
@@ -272,8 +265,8 @@
 							transition: background-color .15s linear;
 							
 							&.active {
-								background-color: #333;
-								color: #fff;
+								background-color: @t4t-black;
+								color: @t4t-white;
 
 								transition: all .15s linear;
 							}
@@ -287,10 +280,6 @@
 						font-size: 30px;
 						line-height: 35px;
 					}
-				}
-
-				button, a.button {
-					
 				}
 			}
 		}

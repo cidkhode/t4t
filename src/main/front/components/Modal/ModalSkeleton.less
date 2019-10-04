@@ -1,3 +1,4 @@
+@import '../../styles/colors';
 
 .modal-container {
 	display: none;
@@ -21,13 +22,13 @@
 		position: relative;
 		width: 600px;
 		min-height: 590px;
-		background: #BDBDBD;
+		background: @t4t-gray06;
 
 		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 		border-radius: 5px;
 
 		.modal-content {
-			background: #BDBDBD;
+			background: @t4t-gray06;
 		}
 
 		.closeModal {
@@ -37,7 +38,7 @@
 			width: 44px;
 			height: 44px;
 			border-radius: 30px;
-			background-color: #E0E0E0;
+			background-color: @t4t-gray07;
 
 			cursor: pointer;
 
@@ -51,7 +52,7 @@
 				width: 3px;
 				height: 24px;
 				border-radius: 5px;
-				background-color: #000;
+				background-color: @t4t-black;
 			}
 
 			&:before {

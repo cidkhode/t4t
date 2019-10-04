@@ -1,7 +1,8 @@
+@import '../../../styles/colors';
 
 .modal-container {
 	> .inner {
-		padding: 69px 50px 56px 50px;
+		padding: 69px 50px 56px 50px !important;
 	}
 }
 
@@ -31,7 +32,7 @@
 				font-size: 13px;
 				padding: 0 0 22px 0;
 				margin: 0 0 59px;
-				border-bottom: 1px solid #4F4F4F;
+				border-bottom: 1px solid @t4t-gray05;
 				background-color: transparent;
 
 				font-size: 25px;
@@ -66,26 +67,24 @@
 					border: none;
 				}
 
-				span {}
-
 				.arrow {
 					width: 27px;
 					height: 4px;
 					position: relative;
 					right: 2px;
-					background-color: #000;
+					background-color: @t4t-black;
 					border-radius: 5px;
 
 					&:before, &:after {
 						height: 4px;
-						background-color: #000;
+						background-color: @t4t-black;
 
 						position: absolute;
 						right: 0;
 
 						content: '';
 						border-radius: 5px;
-						background-color: #000;
+						background-color: @t4t-black;
 					}
 
 					&:before {
