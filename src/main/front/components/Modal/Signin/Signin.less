@@ -1,0 +1,121 @@
+@import '../../../styles/colors';
+
+.modal-container {
+	> .inner {
+		padding: 69px 50px 56px 50px !important;
+	}
+}
+
+
+#signin-container {
+	.inner {
+		padding: 0;
+
+		h3 {
+			margin: 0 0 70px 0;
+			text-align: center;
+
+			font-family: Roboto;
+			font-style: normal;
+			font-weight: normal;
+			font-size: 40px;
+			line-height: 47px;
+		}
+
+		form {
+			display: flex;
+			flex-flow: column;
+			margin: 0 0 25px 0;
+
+			input[type="email"], input[type="password"] {
+				border: none;
+				font-size: 13px;
+				padding: 0 0 22px 0;
+				margin: 0 0 59px;
+				border-bottom: 1px solid @t4t-gray05;
+				background-color: transparent;
+
+				font-size: 25px;
+				line-height: 29px;
+
+				&:focus {
+					outline: none;
+				}
+			}
+
+			// TEMP: hides formik error messages in forms
+			> div {
+				display: none;
+			}
+
+			button {
+				font-family: Roboto;
+				font-style: normal;
+				font-weight: 500;
+				font-size: 35px;
+				line-height: 41px;
+				background-color: transparent;
+				padding: 0 !important;
+				position: relative;
+
+				display: flex;
+				flex-flow: row nowrap;
+				justify-content: space-between;
+				align-items: center;
+
+				&, &:focus {
+					border: none;
+				}
+
+				.arrow {
+					width: 27px;
+					height: 4px;
+					position: relative;
+					right: 2px;
+					background-color: @t4t-black;
+					border-radius: 5px;
+
+					&:before, &:after {
+						height: 4px;
+						background-color: @t4t-black;
+
+						position: absolute;
+						right: 0;
+
+						content: '';
+						border-radius: 5px;
+						background-color: @t4t-black;
+					}
+
+					&:before {
+						transform: rotate(45deg);
+						width: 20px;
+						bottom: 6px;
+						right: -3px;
+					}
+
+					&:after {
+						width: 20px;
+						transform: rotate(-45deg);
+						top: 5px;
+						right: -3px;
+					}
+				}
+			}
+		}
+
+		.link-group {
+			display: flex;
+			flex-flow: row nowrap;
+			justify-content: space-between;
+
+			margin: 50px 0 0 0;
+
+			a {
+				font-size: 30px;
+				line-height: 35px;
+				text-decoration-line: underline;
+			}
+		}
+	}
+}

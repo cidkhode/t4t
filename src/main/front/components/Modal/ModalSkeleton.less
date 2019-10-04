@@ -1,0 +1,68 @@
+@import '../../styles/colors';
+
+.modal-container {
+	display: none;
+	
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(238, 238, 238, 0);
+
+	flex-flow: row wrap;
+	justify-content: center;
+	align-items: center;
+
+	&.active {
+		display: flex;
+	}
+
+	> .inner {
+		position: relative;
+		width: 600px;
+		min-height: 590px;
+		background: @t4t-gray06;
+
+		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+		border-radius: 5px;
+
+		.modal-content {
+			background: @t4t-gray06;
+		}
+
+		.closeModal {
+			position: absolute;
+			right: 29px;
+			top: 22px;
+			width: 44px;
+			height: 44px;
+			border-radius: 30px;
+			background-color: @t4t-gray07;
+
+			cursor: pointer;
+
+		 	&:before, &:after {
+				position: absolute;
+				left: 20px;
+				top: 10px;
+
+				content: '';
+
+				width: 3px;
+				height: 24px;
+				border-radius: 5px;
+				background-color: @t4t-black;
+			}
+
+			&:before {
+				transform: rotate(44deg);
+			}
+
+			&:after {
+				transform: rotate(-44deg);
+			}
+		}
+
+	}
+}
