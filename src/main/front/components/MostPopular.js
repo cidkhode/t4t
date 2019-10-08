@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ArticlePrev from './ArticlePrev';
+import Section from './Section/Section';
 
 class MostPopular extends Component {
     constructor(props) {
@@ -9,15 +9,8 @@ class MostPopular extends Component {
     render() {
         return (
             <div className="mostpopular">
-                <div className="leftPrev">
-                    <ArticlePrev viewType="condensed"/>
-                    <ArticlePrev viewType="condensed"/>
-                    <ArticlePrev viewType="condensed"/>
-                </div>
-                <div className="rightPrev">
-                    <ArticlePrev viewType="larger"/>
-                    <ArticlePrev viewType="larger"/>
-                </div>
+                <Section type={"leftPrev"} condensed={3}/>
+                <Section type={"rightPrev"} larger={2}/>
             </div>
         )
     }

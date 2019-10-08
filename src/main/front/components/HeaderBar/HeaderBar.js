@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import Button from './Button/Button';
-import Searchbar from './Searchbar';
-import searchPic from '../assets/search.png';
+import Searchbar from '../Searchbar/Searchbar';
+import searchPic from '../../assets/search.png';
+import './HeaderBar.less';
 
 class Navbar extends Component {
     constructor(props) {

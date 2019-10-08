@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import Button from "../components/Button/Button";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/HeaderBar/HeaderBar";
 import MostPopular from "../components/MostPopular";
-import ReadingList from "../components/ReadingList";
-import NetworkNews from "../components/NetworkNews";
+import Section from "../components/Section/Section";
 
 export class MainPage extends Component {
 
@@ -16,14 +14,14 @@ export class MainPage extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{minWidth: "1440px", margin: 0}}>
         <Navbar />
         <h1 className="popular">Most Popular Today</h1>
         <MostPopular />
         <h1 className="reading">Your Reading List</h1>
-        <ReadingList />
+        <Section type={"readinglist"} condensed={6} />
         <h1 className="network">News From Your Network</h1>
-        <NetworkNews />
+        <Section type={"networknews"} author={2} />
       </div>
     )
   }

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import Blank from '../assets/fillerArticlePic.png';
-import Like from '../assets/like.png';
-import Bookmark from '../assets/bookmark.png';
-import User from '../assets/fillerUserPic.png';
+import Blank from '../../assets/fillerArticlePic.png';
+import Like from '../../assets/like.png';
+import Bookmark from '../../assets/bookmark.png';
+import User from '../../assets/fillerUserPic.png';
+import './ArticlePrev.less';
 
 class ArticlePrev extends Component {
     constructor(props) {
@@ -11,6 +12,8 @@ class ArticlePrev extends Component {
         this.state = {
             viewType: this.props.viewType,
             articleImage: Blank,
+            title: this.props.title,
+            description: this.props.description,
         }
     }
 
