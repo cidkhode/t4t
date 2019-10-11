@@ -10,7 +10,7 @@ class MostPopular extends Component {
         return (
             <div className="mostpopular">
                 <Section type={"leftPrev"} condensed={3}/>
-                <Section type={"rightPrev"} larger={2}/>
+                <Section type={"rightPrev"} larger={4}/>
             </div>
         )
     }

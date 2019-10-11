@@ -20,54 +20,56 @@ h1 {
 }
 
 h1.popular {
-    position: absolute;
+    position: relative;
     left: 88px;
-    top: 176px;
+    top: 85px;
 }
 
 h1.reading {
-    position: absolute;
-    right: 400px;
-    top: 176px;
+    position: relative;
+    left: 1300px;
+    bottom: 390px;
 }
 
 h1.network {
-    position: absolute;
+    position: relative;
     left: 88px;
-    top: 731px;
+    bottom: 650px;
 }
 
 .mostpopular {
-    position: absolute;
-    top: 236px;
+    position: relative;
+    top: 112px;
     left: 88px;
     display: flex;
     height: 444px;
-    width: 731px;
+    width: 1095px;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
 }
 
-.leftPrev, .rightPrev {
+.leftPrev, .rightPrev{
     display: flex;
-    flex-direction: column;
     justify-content: space-around;
     height: 444px;
 }
 
 .leftPrev {
     width: 373px;
+    flex-direction: column;
 }
 
 .rightPrev {
-    width: 292px;
+    width: 651px;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .readinglist {
-    position: absolute;
-    top: 236px;
-    right: 88px;
+    position: relative;
+    bottom: 325px;
+    left: 1375px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -79,9 +81,9 @@ h1.network {
 }
 
 .networknews {
-    position: absolute;
+    position: relative;
     left: 88px;
-    top: 789px;
+    bottom: 600px;
     display: flex;
     flex-direction: row;
     width: 314px;

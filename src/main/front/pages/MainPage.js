@@ -21,7 +21,7 @@ export class MainPage extends Component {
         <h1 className="reading">Your Reading List</h1>
         <Section type={"readinglist"} condensed={6} />
         <h1 className="network">News From Your Network</h1>
-        <Section type={"networknews"} author={2} />
+        <Section type={"networknews"} author={3} />
       </div>
     )
   }
