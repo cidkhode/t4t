@@ -27,24 +27,16 @@ public class MainController {
     @Autowired
     private UserRepository userRepository;
 
-    @RequestMapping(path="/add", method= RequestMethod.GET)
+    @RequestMapping(path="/api/add", method= RequestMethod.GET)
     public String addNewUser (@RequestParam String name, @RequestParam String email) {
-        if (name.equalsIgnoreCase("Cid")){
-            User n = new User();
-            n.setName(name);
-            n.setEmail(email);
-            userRepository.save(n);
-            return "Done";
-        }
-        return "Saved";
+        User n = new User();
+        n.setName(name);
+        n.setEmail(email);
+        userRepository.save(n);
+        return "Saved user";
     }
 
-    @RequestMapping(path="/demoAdd", method = RequestMethod.GET)
-    public String demoAdd () {
-        return "testing";
-    }
-
-    @GetMapping(path="/all")
+    @GetMapping(path="/api/all")
     public Iterable<User> getAllUsers() {
         return userRepository.findAll();
     }
