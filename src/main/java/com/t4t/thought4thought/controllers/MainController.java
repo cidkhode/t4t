@@ -3,16 +3,17 @@ package com.t4t.thought4thought.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.t4t.thought4thought.entities.User;
+import com.t4t.thought4thought.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class MainController {
-
     @RequestMapping(value = "/api/articles", method= RequestMethod.GET)
     public ObjectNode getArticles() {
-        System.out.println("-----HERE-----");
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode objectNode = objectMapper.createObjectNode();
         ArrayNode articlesArray = objectMapper.createArrayNode();
@@ -21,5 +22,30 @@ public class MainController {
         articlesArray.add("Article 3");
         objectNode.put("articles", articlesArray);
         return objectNode;
+    }
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @RequestMapping(path="/add", method= RequestMethod.GET)
+    public String addNewUser (@RequestParam String name, @RequestParam String email) {
+        if (name.equalsIgnoreCase("Cid")){
+            User n = new User();
+            n.setName(name);
+            n.setEmail(email);
+            userRepository.save(n);
+            return "Done";
+        }
+        return "Saved";
+    }
+
+    @RequestMapping(path="/demoAdd", method = RequestMethod.GET)
+    public String demoAdd () {
+        return "testing";
+    }
+
+    @GetMapping(path="/all")
+    public Iterable<User> getAllUsers() {
+        return userRepository.findAll();
     }
 }
