@@ -38,7 +38,7 @@ export default class InputButton extends Component {
 
   render() {
     return (
-      <div className={ `t4t-input-container ${this.props.extraClass} ${this.props.disabled ? 'disabled' : ''} ${this.props.error ? 'error' : ''}` } >
+      <div className={ `t4t-input-container ${this.props.extraClass} ${this.props.disabled ? 'disabled' : ''} ${this.props.error ? 'public.404.html' : ''}` } >
         <input
           type="text"
           placeholder={ this.props.placeholder }
