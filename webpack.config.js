@@ -5,7 +5,7 @@ const local = 'http://localhost:8080';
 module.exports = {
   entry: './src/main/front/index.js',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'src/main/resources/static'),
     filename: 'min.js'
   },
   module: {
