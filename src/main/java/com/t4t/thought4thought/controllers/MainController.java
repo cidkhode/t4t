@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController
 public class MainController {
+    // TODO: update this endpoint for retrieving articles - leaving as is for now for example purposes
     @RequestMapping(value = "/api/articles", method= RequestMethod.GET)
     public ObjectNode getArticles() {
         ObjectMapper objectMapper = new ObjectMapper();
@@ -27,6 +28,7 @@ public class MainController {
     @Autowired
     private UserRepository userRepository;
 
+    // TODO: update this endpoint to accept creation of accounts - leaving as is for now for example purposes
     @RequestMapping(path="/api/add", method= RequestMethod.GET)
     public String addNewUser (@RequestParam String name, @RequestParam String email) {
         User n = new User();
@@ -36,6 +38,7 @@ public class MainController {
         return "Saved user";
     }
 
+    // TODO: remove this endpoint - leaving it as is for now for example purposes
     @GetMapping(path="/api/all")
     public Iterable<User> getAllUsers() {
         return userRepository.findAll();
