@@ -4,7 +4,7 @@ import './Textarea.less';
 
 export const Textarea = props => {
   return (
-    <div className={ `t4t-textarea-container ${props.extraClass} ${props.disabled ? 'disabled' : ''} ${props.error ? 'error' : ''}` }>
+    <div className={ `t4t-textarea-container ${props.extraClass} ${props.disabled ? 'disabled' : ''} ${props.error ? 'public.404.html' : ''}` }>
       <textarea
         className="t4t-textarea"
         onChange={ e => props.handleChange(e.target.value) }
