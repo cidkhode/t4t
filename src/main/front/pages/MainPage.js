@@ -31,7 +31,7 @@ class MainPage extends Component {
         key: 'sampleTopic2'
       },
       {
-        title: 'Sample topic 3',
+        title: 'Sample topic 3 that\'s just way too long',
         key: 'sampleTopic3'
       },
       {
@@ -65,6 +65,10 @@ class MainPage extends Component {
 
   selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption }, () => console.log(`Topic selected: `, selectedSideBarOption));
 
+  closeSignin = () => this.setState({ signinOpen: false });
+
+  closeSignup = () => this.setState({ signupOpen: false });
+
   render() {
     return (
       <div>
@@ -81,8 +85,8 @@ class MainPage extends Component {
         <Button handleClick={ this.toggleSignup } text="Register" />
         <Button handleClick={ this.fetchTest } text="Add a user..." />
         <Button handleClick={ this.getAllUsers } text="Retrieve all" />
-        <Signin isActive={ this.state.signinOpen } />
-        <Signup isActive={ this.state.signupOpen } />
+        <Signin closeSignin={ this.closeSignin } isActive={ this.state.signinOpen } />
+        <Signup closeSignup={ this.closeSignup } isActive={ this.state.signupOpen } />
       </div>
     )
   }

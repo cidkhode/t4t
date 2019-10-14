@@ -16,33 +16,31 @@ class SignupForm extends Component {
 		switch(step) {
 			case 1:
 				return (<p onClick={this.getNextStep}> Sign Up </p>);
-				break;
-			
+
 			case 2:
 				return (<p onClick={this.getNextStep}> Complete </p>);
-				break;
 		}
-	}
+	};
 
 	setStep = (step) => {
 		if (0 < step && step <= this.state.maxStep && !(this.state.stepCtr === this.state.lastStep)) {
 			this.setState({ stepCtr: step });
 		}
-	}
+	};
 
 	getPrevStep = () => {
 		if (this.state.stepCtr > 0) {
 			this.setState({ stepCtr: this.state.stepCtr - 1 });
 		}
-	}
+	};
 
 	getNextStep = () => {
 		if (this.state.stepCtr < this.state.lastStep) {
 			this.setState({ stepCtr: this.state.stepCtr + 1, maxStep: this.state.stepCtr + 1 });
 		}
-	}
+	};
 
-	resendVerification = () => {}
+	resendVerification = () => {}; // TODO: implement this when BE is ready
 
 	render() {
 		return(
@@ -109,11 +107,11 @@ class SignupForm extends Component {
 							<div id="signup-controls" style={{display: this.state.stepCtr === this.state.lastStep ? "none" : "block"}}>
 								<div id="step-nav">
 									<div onClick={this.getPrevStep} className="arrow-wrap">
-										<div className={`arrow arrow-left ${this.state.stepCtr === 2 ? "active" : ""}`}></div>
+										<div className={`arrow arrow-left ${this.state.stepCtr === 2 ? "active" : ""}`} />
 									</div>
 									{this.getCurrStep(this.state.stepCtr)}
 									<div onClick={this.getNextStep} className="arrow-wrap">
-										<div className={`arrow arrow-right ${this.state.stepCtr < 3 ? "active" : ""}`}></div>
+										<div className={`arrow arrow-right ${this.state.stepCtr < 3 ? "active" : ""}`} />
 									</div>
 								</div>
 
