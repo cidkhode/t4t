@@ -15,11 +15,42 @@ class MainPage extends Component {
       signinOpen: false,
       signupOpen: false,
       sideBarOpen: false,
+      selectedSideBarOption: '',
     };
   }
 
+  // TODO: when we implement login system, take username and pass it into a fetch get request to retrieve selected topics of user, and remove this mock array
+  fetchTopics = () => {
+    return [
+      {
+        title: 'Sample topic 1',
+        key: 'sampleTopic1'
+      },
+      {
+        title: 'Sample topic 2',
+        key: 'sampleTopic2'
+      },
+      {
+        title: 'Sample topic 3',
+        key: 'sampleTopic3'
+      },
+      {
+        title: 'Sample topic 4',
+        key: 'sampleTopic4'
+      },
+    ]
+  };
+
   toggleSignin = () => this.setState({ signinOpen: !this.state.signinOpen });
+
   toggleSignup = () => this.setState({ signupOpen: !this.state.signupOpen });
+
+  openSideBar = () => this.setState({ sideBarOpen: !this.state.sideBarOpen });
+
+  signOut = () => {
+    console.log('Trying to sign out');
+  };
+
   fetchTest = () => {
     fetch('/api/add?name=cid&email=test@email.com')
       .then(resp => console.log(`Successful adding!`, resp))
@@ -32,18 +63,26 @@ class MainPage extends Component {
       .catch(error => console.error(`Something went wrong trying to get all users`, error));
   };
 
-  openSideBar = () => this.setState({ sideBarOpen: !this.state.sideBarOpen });
+  selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption }, () => console.log(`Topic selected: `, selectedSideBarOption));
 
   render() {
     return (
       <div>
-        <Sidebar onOpen={ this.openSideBar } name="Cid Khode" isOpen={ this.state.sideBarOpen }/>
+        <Sidebar
+          topics={ this.fetchTopics() }
+          onTopicSelection={ this.selectTopic }
+          onOpen={ this.openSideBar }
+          name="Cid Khode"
+          isOpen={ this.state.sideBarOpen }
+          onSignOut={ this.signOut }
+          selectedOption={ this.state.selectedSideBarOption }
+        />
         <Button handleClick={ this.toggleSignin } text="Log in" />
         <Button handleClick={ this.toggleSignup } text="Register" />
         <Button handleClick={ this.fetchTest } text="Add a user..." />
         <Button handleClick={ this.getAllUsers } text="Retrieve all" />
-        <Signin isActive={this.state.signinOpen} />
-        <Signup isActive={this.state.signupOpen} />
+        <Signin isActive={ this.state.signinOpen } />
+        <Signup isActive={ this.state.signupOpen } />
       </div>
     )
   }
