@@ -1,0 +1,125 @@
+@import '../../styles/colors';
+
+.t4t-sidebar {
+  position: absolute;
+  right: 0;
+  margin-top: 100px;
+  cursor: pointer;
+  z-index: 10;
+
+  &.is-open {
+    .side-bar-option {
+      width: 200px;
+
+      &.topics-sub-menu {
+        hr {
+          width: 60px;
+        }
+      }
+    }
+
+    .side-bar-option-text {
+      white-space: nowrap;
+      margin-left: 40px;
+      margin-right: 10px;
+      max-width: 100px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &.is-closed {
+    .side-bar-option {
+      width: 80px;
+
+      &.topics-sub-menu {
+        hr {
+          width: 30px;
+        }
+      }
+    }
+  }
+
+  .side-bar-option {
+    -webkit-transition: width .1s;
+    transition: width .1s;
+    text-align: center;
+    display: flex;
+    height: 60px;
+    align-items: center;
+    color: @t4t-gray03;
+
+    &.topics-sub-menu {
+      cursor: default;
+
+      hr {
+        -webkit-transition: width .1s;
+        transition: width .1s;
+      }
+    }
+
+    .side-bar-option-type {
+      height: 20px;
+      width: 20px;
+      background-color: @t4t-gray02;
+      border-radius: 50%;
+      display: inline-block;
+      position: absolute;
+      right: 0;
+      margin-right: 30px;
+    }
+
+    &.is-selected {
+      color: @t4t-gray08;
+
+      .side-bar-option-type {
+        background-color: @t4t-gray03;
+      }
+    }
+
+    &:not(.side-bar-expand) {
+      background: @t4t-gray01;
+
+      .side-bar-three-dots {
+        color: @t4t-black;
+        font-size: 30px;
+        font-weight: bold;
+        position: absolute;
+        right: 0;
+        margin: -6px 30px 0 0;
+      }
+
+      &:not(.topics-sub-menu):hover {
+        background: rgba(196, 196, 196, .6);
+      }
+    }
+
+    &.side-bar-expand {
+      -webkit-transition: width .1s;
+      transition: width .1s;
+      background: @t4t-gray02;
+      text-align: center;
+      border-radius: 14px 0 0 0;
+      color: @t4t-gray05;
+
+      .side-bar-arrow {
+        width: 0;
+        height: 0;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid transparent;
+        display: inline-block;
+        position: absolute;
+        right: 0;
+        margin-right: 36px;
+
+        &.expand-arrow {
+          border-right: 10px solid @t4t-gray05;
+        }
+
+        &.collapse-arrow {
+          border-left: 10px solid @t4t-gray05;
+        }
+      }
+    }
+  }
+}

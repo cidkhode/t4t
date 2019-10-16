@@ -5,20 +5,16 @@ import { element, bool } from 'prop-types';
 import './ModalSkeleton.less';
 
 const ModalSkeleton = props => (
-  <div className={`modal-container ${props.isActive ? "active" : ""}`}>
-	<div className={`inner`}>
-		{props.children}
-	</div>
+  <div className={ `modal-container ${props.isActive ? "active" : ""}` }>
+    <div className="inner">
+      {props.children}
+    </div>
   </div>
 );
 
 ModalSkeleton.propTypes = {
     isActive: bool.isRequired,
     children: element,
-};
-
-ModalSkeleton.defaultProps = {
-    isActive: false
 };
 
 export default ModalSkeleton;
