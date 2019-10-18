@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 
 /* Components */
-import Button from "../components/Button/Button";
-import Signin from "../components/Modal/Signin/Signin";
-import Signup from "../components/Modal/Signup/Signup";
 import Sidebar from "../components/Sidebar/Sidebar";
-
+import Navbar from "../components/Navbar/Navbar";
 
 class MainPage extends Component {
   constructor(props) {
@@ -65,13 +62,10 @@ class MainPage extends Component {
 
   selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption }, () => console.log(`Topic selected: `, selectedSideBarOption));
 
-  closeSignin = () => this.setState({ signinOpen: false });
-
-  closeSignup = () => this.setState({ signupOpen: false });
-
   render() {
     return (
       <div>
+        <Navbar />
         <Sidebar
           topics={ this.fetchTopics() }
           onTopicSelection={ this.selectTopic }
@@ -81,12 +75,6 @@ class MainPage extends Component {
           onSignOut={ this.signOut }
           selectedOption={ this.state.selectedSideBarOption }
         />
-        <Button handleClick={ this.toggleSignin } text="Log in" />
-        <Button handleClick={ this.toggleSignup } text="Register" />
-        <Button handleClick={ this.fetchTest } text="Add a user..." />
-        <Button handleClick={ this.getAllUsers } text="Retrieve all" />
-        <Signin closeSignin={ this.closeSignin } isActive={ this.state.signinOpen } />
-        <Signup closeSignup={ this.closeSignup } isActive={ this.state.signupOpen } />
       </div>
     )
   }
