@@ -88,3 +88,84 @@ h1.network {
     flex-direction: row;
     width: 314px;
 }
+
+@media only screen and (max-width: 1439px) {
+    h1 {
+        font-size: 25px;
+        opacity: 0.6;
+        color: #828282;
+        height: 2.96296296296296296296296296vh;
+        margin: 0;
+        padding: 0;
+    }
+    
+    h1.popular {
+        position: relative;
+        left: 88px;
+        top: 85px;
+    }
+    
+    h1.reading {
+        position: relative;
+        left: 1300px;
+        bottom: 390px;
+    }
+    
+    h1.network {
+        position: relative;
+        left: 88px;
+        bottom: 650px;
+    }
+    
+    .mostpopular {
+        position: relative;
+        top: 112px;
+        left: 88px;
+        display: flex;
+        height: 41.1111111111111111111111111111111111vh;
+        width: 57.03125vw;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+    
+    .leftPrev, .rightPrev{
+        display: flex;
+        justify-content: space-around;
+        height: 41.111111111111111111111111111111vh;
+    }
+    
+    .leftPrev {
+        width: 19.4270833333333333333333333333vw;
+        flex-direction: column;
+    }
+    
+    .rightPrev {
+        width: 33.90625vw;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .readinglist {
+        position: relative;
+        bottom: 325px;
+        left: 1375px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        width: 441px;
+    }
+    
+    .readinglist .article.condensed {
+        padding-bottom: 25px;
+    }
+    
+    .networknews {
+        position: relative;
+        left: 88px;
+        bottom: 600px;
+        display: flex;
+        flex-direction: row;
+        width: 314px;
+    }
+}

@@ -19,9 +19,9 @@ class Navbar extends Component {
 
     render() {
         return (
-            <div class="navhead">
+            <div className="navhead">
                 <button className="logo">LOGO</button>
-                <div class="searchBar">
+                <div className="searchBar">
                     <button><img src={searchPic}/></button>
                     <input type="text" placeholder="Search Thought4Thought"></input>
                 </div>
