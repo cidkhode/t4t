@@ -34,32 +34,36 @@ class Navbar extends Component {
   render() {
     return (
       <div className="navhead">
-        <button className="logo">LOGO</button>
-        <Searchbar
-          extraClass="navbar-search-bar"
-          searchInputValue={ this.state.searchText }
-          onSearch={ this.onSearch }
-          onSearchInputChange={ this.onSearchInputChange }
-          searchIconPath={ searchImg }
-        />
-        <Button
-          extraClass="signIn"
-          handleClick={ () => this.togglePopup(POPUP_KEYS.loginPopupOpen, !this.state[POPUP_KEYS.loginPopupOpen]) }
-          text="Log in"
-        />
-        <Button
-          extraClass="signUp"
-          handleClick={ () => this.togglePopup(POPUP_KEYS.loginPopupOpen, !this.state[POPUP_KEYS.loginPopupOpen]) }
-          text="Register!"
-        />
-        <Signin
-          closeSignin={ () => this.togglePopup(POPUP_KEYS.loginPopupOpen, !this.state[POPUP_KEYS.loginPopupOpen]) }
-          isActive={ this.state[POPUP_KEYS.loginPopupOpen] }
-        />
-        <Signup
-          closeSignup={ () => this.togglePopup(POPUP_KEYS.signupPopupOpen, !this.state[POPUP_KEYS.signupPopupOpen]) }
-          isActive={ this.state[POPUP_KEYS.signupPopupOpen] }
-        />
+        <div className="navbar-left-floated-content">
+          <button className="logo">LOGO</button>
+        </div>
+        <div className="navbar-right-floated-content">
+          <Searchbar
+            extraClass="navbar-search-bar nav-bar-right-child"
+            searchInputValue={ this.state.searchText }
+            onSearch={ this.onSearch }
+            onSearchInputChange={ this.onSearchInputChange }
+            searchIconPath={ searchImg }
+          />
+          <Button
+            extraClass="nav-bar-sign-in-button nav-bar-right-child"
+            handleClick={ () => this.togglePopup(POPUP_KEYS.loginPopupOpen, !this.state[POPUP_KEYS.loginPopupOpen]) }
+            text="Log in"
+          />
+          <Button
+            extraClass="nav-bar-sign-up-button"
+            handleClick={ () => this.togglePopup(POPUP_KEYS.loginPopupOpen, !this.state[POPUP_KEYS.loginPopupOpen]) }
+            text="Register!"
+          />
+          <Signin
+            closeSignin={ () => this.togglePopup(POPUP_KEYS.loginPopupOpen, !this.state[POPUP_KEYS.loginPopupOpen]) }
+            isActive={ this.state[POPUP_KEYS.loginPopupOpen] }
+          />
+          <Signup
+            closeSignup={ () => this.togglePopup(POPUP_KEYS.signupPopupOpen, !this.state[POPUP_KEYS.signupPopupOpen]) }
+            isActive={ this.state[POPUP_KEYS.signupPopupOpen] }
+          />
+        </div>
       </div>
     );
   }

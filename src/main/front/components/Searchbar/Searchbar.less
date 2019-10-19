@@ -1,16 +1,22 @@
 @import '../../styles/colors';
 
-.t4t-searchBar {
+.t4t-search-bar-container {
+  display: flex;
   .t4t-search-bar-button {
     border: none;
-    background-color: white;
+    background-color: @t4t-white;
     transition: 0.3s;
-  }
+    opacity: 0.6;
+    outline: none;
+    cursor: pointer;
 
-  img:hover {
-    height: 48px;
-    width: 40px;
-    transition: 0.3s;
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &:active {
+      opacity: 1.0;
+    }
   }
 
   .t4t-search-bar {
@@ -18,7 +24,7 @@
     font-size: 16px;
     opacity: 0.6;
     border: none;
-    background-color: white;
+    background-color: @t4t-white;
     padding: 5px;
     transition: 0.3s;
     width: 190px;

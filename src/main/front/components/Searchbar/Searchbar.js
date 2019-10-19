@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './Searchbar.less';
 
 export const Searchbar = props => (
-  <div className={ `t4t-searchBar ${props.extraClass}` }>
+  <div className={ `t4t-search-bar-container ${props.extraClass}` }>
     <button onClick={ props.onSearch } className="t4t-search-bar-button">
       { props.searchIconPath && <img alt="search-icon" src={ props.searchIconPath }/> }
     </button>
