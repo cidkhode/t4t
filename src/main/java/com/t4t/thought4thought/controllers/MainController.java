@@ -5,8 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.t4t.thought4thought.entities.User;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,16 +43,5 @@ public class MainController {
     @GetMapping(path="/api/all")
     public Iterable<User> getAllUsers() {
         return userService.getAllUsers();
-    }
-
-    @PostMapping(path="/api/login")
-    public String validUser(@RequestBody String jsonStr) throws JSONException {
-        JSONObject object = new JSONObject(jsonStr);
-
-       if (userService.validUser(object.getString("email"), object.getString("password")))
-           return "Login Succesful";
-        else
-            return "Invalid email or password";
-
     }
 }

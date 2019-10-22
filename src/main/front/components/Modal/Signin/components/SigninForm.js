@@ -6,7 +6,8 @@ class SigninForm extends PureComponent {
 		console.log('Values', values);
 		const {email, password} = values;
 		fetch('/api/login', {
-			method: 'post',
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({email,password})
 		})
 			.then(resp => console.log('Login Successful', resp))
