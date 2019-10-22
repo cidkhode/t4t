@@ -2,6 +2,16 @@ import React, { PureComponent } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 class SigninForm extends PureComponent {
+	sendLogin = (values) => {
+		console.log('Values', values);
+		const {email, password} = values;
+		fetch('/api/login', {
+			method: 'post',
+			body: JSON.stringify({email,password})
+		})
+			.then(resp => console.log('Login Successful', resp))
+			.catch(error => console.error("Something went wrong.", error));
+	};
 	render(){
 		return (
 			<Formik
@@ -15,12 +25,7 @@ class SigninForm extends PureComponent {
 					}
 					return errors;
 				}}
-				onSubmit={(values, { setSubmitting }) => {
-					setTimeout(() => {
-						alert(JSON.stringify(values, null, 2));
-						setSubmitting(false);
-					}, 400);
-				}}
+				onSubmit={(values) => this.sendLogin(values)}
 			>
 				{({ isSubmitting }) => (
 				<Form>

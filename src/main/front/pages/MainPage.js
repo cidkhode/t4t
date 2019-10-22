@@ -63,6 +63,12 @@ class MainPage extends Component {
       .catch(error => console.error(`Something went wrong trying to get all users`, error));
   };
 
+  validUser = () => {
+    fetch('/api/login')
+      .then(resp => console.log('Successful login!', resp))
+      .catch(error => console.error('Invalid User', error));
+  };
+
   selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption }, () => console.log(`Topic selected: `, selectedSideBarOption));
 
   closeSignin = () => this.setState({ signinOpen: false });
