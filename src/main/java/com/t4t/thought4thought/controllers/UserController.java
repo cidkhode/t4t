@@ -17,15 +17,21 @@ public class UserController {
         String email = user.get("email").asText();
         String password = user.get("password").asText();
         boolean exists = userService.validUser(email, password);
-        return new Thought4ThoughtResponseObject().createResponse(exists ? 0 : -1, exists ? "Success!" : "Invalid Credentials");
+        return new Thought4ThoughtResponseObject().createResponse(exists ? 0 : 1, exists ? "Success!" : "Invalid Credentials!");
     }
 
     @PostMapping(path = "/api/register")
     public Thought4ThoughtResponseObject registerUser(@RequestBody User user) {
         Thought4ThoughtResponseObject thought4ThoughtResponseObject =
-                new Thought4ThoughtResponseObject().createResponse(0, "Success!");
+                new Thought4ThoughtResponseObject().createResponse(0, "");
         try {
-            userService.save(user);
+            boolean saved = userService.registerNewUser(user);
+            if (saved) {
+                thought4ThoughtResponseObject.setInfo("Saved user successfully!");
+            } else {
+                thought4ThoughtResponseObject.setStatus(1);
+                thought4ThoughtResponseObject.setInfo("User exists already!");
+            }
         } catch (Exception e) {
             thought4ThoughtResponseObject.setStatus(-1);
             thought4ThoughtResponseObject.setInfo("Something went wrong...");

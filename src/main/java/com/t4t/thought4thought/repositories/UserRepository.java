@@ -5,4 +5,6 @@ import com.t4t.thought4thought.entities.User;
 
 public interface UserRepository extends CrudRepository<User, Integer> {
     User findByEmailAndPassword(String email, String pass);
+
+    boolean existsByEmail(String email);
 }

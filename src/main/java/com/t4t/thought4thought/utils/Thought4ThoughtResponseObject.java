@@ -1,7 +1,7 @@
 package com.t4t.thought4thought.utils;
 
 public class Thought4ThoughtResponseObject {
-    private int status; // 0 is all good, -1 is something went wrong
+    private int status; /* 0: success; 1: not successful; -1: unexpected error */
     private String info; // some details here
 
     public Thought4ThoughtResponseObject createResponse(int status, String info) {

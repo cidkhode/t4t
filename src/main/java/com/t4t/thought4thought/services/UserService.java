@@ -11,13 +11,17 @@ public class UserService {
     UserRepository userRepository;
 
     public boolean validUser(String email, String password){
-
         User user = userRepository.findByEmailAndPassword(email, password);
         return user != null;
     }
 
-    public void save(User user){
-        userRepository.save(user);
+    public boolean registerNewUser(User user) {
+        boolean saved = false;
+        if (!userRepository.existsByEmail(user.getEmail())) {
+            userRepository.save(user);
+            saved = true;
+        }
+        return saved;
     }
 
     public Iterable<User> getAllUsers(){
