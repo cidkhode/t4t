@@ -1,8 +1,7 @@
 @import '../../../styles/colors';
 
 #dashboard-account {
-	min-height: calc(100vh - 50px);
-	padding: 100px 0 0 0;
+	padding: 50px 0 0 0;
 
 	max-width: calc(100% - 350px);
 	width: calc(100% - 350px);
@@ -34,23 +33,25 @@
 
 		.inner {
 			display: flex;
-			flex-flow: row nowrap;
+			flex-flow: row wrap;
 
 			.article, .following {
 				display: flex;
-				flex-flow: row nowrap;
-				margin: 0 75px 0 0;
+				flex-flow: column;
+				margin: 0 25px 25px 0;
 
 				&:last-child {
 					margin: 0 0 0 0;
 				}
 
 				.dashboard-img {
-					max-width: 130px;
-					max-height: 130px;
+					min-width: 130px;
+					min-height: 130px;
 					overflow: hidden;
 
-					margin: 0 25px 0 0;
+					margin: 0 0 0 0;
+
+					background-color: @t4t-gray07;
 
 					img {
 						width: 100%;
@@ -76,14 +77,41 @@
 	}
 
 	#account-article-saved {
+		.inner {
+			.article {
+				width: calc(((100%/5) - 50px) + (50px/5));
+				min-width: 175px;
 
+				.article-img {
+					height: 150px;
+					border-radius: 5px;
+				}
+			}
+		}
 	}
 
 	#account-following {
 		.inner {
+			flex-flow: row wrap;
+
 			.following {
+				display: flex;
+				flex-flow: column;
+				align-items: center;
+
+				margin: 0 15px 15px 0;
+
+				border: 1px solid @t4t-gray07;
+				border-radius: 5px;
+				padding: 15px 15px 5px 15px;
+
 				.dashboard-img {
 					border-radius: 100px;
+				}
+
+				> p {
+					max-width: 130px;
+					margin: 0 auto 0 0;				
 				}
 			}
 		}

@@ -13,7 +13,7 @@ class DashboardSidebar extends Component {
 
 			<div id="dashboard-user-info">
 				<div className="dashboard-img">
-					<img src="https://via.placeholder.com/175" />
+					<img src="https://i.pravatar.cc/175" />
 				</div>
 
 				<h3 className="dashboard-name"> John Doe </h3>

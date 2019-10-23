@@ -7,6 +7,45 @@ class Account extends Component {
     super(props);
   }
 
+	getArticles = () => {
+		let articles = [];
+
+		for (let j = 0; j < 5; j++) {
+			articles.push(
+				<div className="article" key={j}>
+					<div className="dashboard-img article-img">
+						<img src="https://picsum.photos/130/250" />
+					</div>
+
+					<p className="article-title"> Lorem ipsum dolor sit amet, consectetur adipiscing elit </p>
+				</div>
+			)
+		}
+
+		return articles;
+	}
+
+	getFollowers = () => {
+		let followers = [];
+
+		for (let j = 0; j < 5; j++) {
+			followers.push(
+				<div className="following" key={j}>
+					<div className="dashboard-img following-img">
+						<img src="https://i.pravatar.cc/120" />
+					</div>
+
+					<div>
+						<p className="following-name"> John Doe </p>
+					</div>
+				</div>
+			)
+		}
+
+		return followers;
+	}
+
+
   render() {
     return (
 		<div id="dashboard-account">
@@ -20,54 +59,14 @@ class Account extends Component {
 			<div id="account-article-saved" className="account-slider">
 				<h4> Saved Articles </h4>
 				<div className="inner">
-					<div className="article">
-						<div className="dashboard-img">
-							<img src="https://via.placeholder.com/130" />
-						</div>
-
-						<div>
-							<div></div>
-							<div></div>
-						</div>
-					</div>
-
-					<div className="article">
-						<div className="dashboard-img">
-							<img src="https://via.placeholder.com/130" />
-						</div>
-
-						<div>
-							<div></div>
-							<div></div>
-						</div>
-					</div>
+					{this.getArticles()}
 				</div>
 			</div>
 
 			<div id="account-following" className="account-slider">
 				<h4> Following </h4>
 				<div className="inner">
-					<div className="following">
-						<div className="dashboard-img">
-							<img src="https://via.placeholder.com/130" />
-						</div>
-
-						<div>
-							<div></div>
-							<div></div>
-						</div>
-					</div>
-
-					<div className="following">
-						<div className="dashboard-img">
-							<img src="https://via.placeholder.com/130" />
-						</div>
-
-						<div>
-							<div></div>
-							<div></div>
-						</div>
-					</div>
+					{this.getFollowers()}
 				</div>
 			</div>
 
