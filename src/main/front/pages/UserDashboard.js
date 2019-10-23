@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import Sidebar from "../components/Sidebar/Sidebar";
-import DashboardSidebar from '../components/Dashboard/Sidebar/DashboardSidebar.js';
+import Dashboard from '../components/Dashboard/Dashboard.js';
 import Account from '../components/Dashboard/Account/Account.js';
 
 class UserDashboard extends Component {
@@ -35,19 +35,18 @@ class UserDashboard extends Component {
 
   render() {
     return (
-      <div id="Dashboard" className="dashboard">
-          {/* <DashboardSidebar /> */}
-          <Account />
-          {/* <Sidebar
-            topics={ this.fetchTopics() }
-            onTopicSelection={ this.selectTopic }
-            onOpen={ this.openSideBar }
-            name="John Doe"
-            isOpen={ this.state.sideBarOpen }
-            onSignOut={ this.signOut }
-            selectedOption={ this.state.selectedSideBarOption }
-          /> */} 
-      </div>
+      <Dashboard>
+        <Account />
+        <Sidebar
+          topics={ this.fetchTopics() }
+          onTopicSelection={ this.selectTopic }
+          onOpen={ this.openSideBar }
+          name="John Doe"
+          isOpen={ this.state.sideBarOpen }
+          onSignOut={ this.signOut }
+          selectedOption={ this.state.selectedSideBarOption }
+        />
+      </Dashboard>
     )
   }
 }
