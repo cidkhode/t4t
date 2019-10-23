@@ -7,9 +7,7 @@
 	margin: 0 80px 0 0 !important; // takes sidebar into account
 
 	.dashboard-page {
-		padding: 45px 0 0 0;
-
-		max-width: calc(100% - 310px);
+		padding: 50px 0 0 0;
 		width: calc(100% - 310px);
 		
 		display: flex;
@@ -30,7 +28,7 @@
 		}
 
 		.article-container {
-			margin: 0 0 35px 0;
+			margin: 0 0 0 0 !important;
 
 			.inner {
 				display: flex;
@@ -40,19 +38,17 @@
 				.article {
 					width: calc((100%/4) - 25px);
 					min-width: 225px;
-					margin: 0 25px 25px 0;
+					margin: 0 25px 35px 0;
 
 					&:last-of-type {
 						margin: 0 0 0 0;
 					}
 
-					&:nth-last-child(-n+4) { // target last 4 ".article"s to remove margin from the bottom to not mess w/ even spacing of divs
-						margin-bottom: 0 !important;
-					}
+					// &:nth-last-child(-n+4) { // target last 4 ".article"s to remove margin from the bottom to not mess w/ even spacing of divs
+					// 	margin-bottom: 0 !important;
+					// }
 
 					.article-img {
-						min-height: 160px;
-
 						img {
 							border-radius: 5px;
 							overflow: hidden;
@@ -87,6 +83,41 @@
 				&.active {
 					color: @t4t-gray05;
 					font-weight: 700;
+				}
+			}
+		}
+
+		// responsive styling
+		@media only screen and (max-width: 1400px) {
+			width: calc(100% - 250px);
+
+			.article-container {
+				.inner {
+					.article {
+						width: calc((100%/3) - 25px);
+					}
+				}
+			}
+		}
+
+		@media only screen and (max-width: 1150px) {
+			width: calc(100% - 225px);
+
+			.article-container {
+				.inner {
+					.article {
+						width: calc((100%/2) - 25px);
+					}
+				}
+			}
+		}
+
+		@media only screen and (max-width: 900px) {
+			.article-container {
+				.inner {
+					.article {
+						width: 100%;
+					}
 				}
 			}
 		}
