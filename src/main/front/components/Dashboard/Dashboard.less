@@ -69,15 +69,16 @@
 
 		.article-topics {
 			display: flex;
-			margin: 0 0 15px 0;
+			flex-flow: row wrap;
+			margin: 0 0 0 0;
 
 			p {
 				color: @t4t-gray06;
-				margin: 0 0 0 0;
+				margin: 0 0 15px 0;
 				cursor: pointer;
 
 				&:not(:last-child) {
-					margin: 0 15px 0 0;
+					margin: 0 15px 15px 0;
 				}
 
 				&.active {
@@ -117,6 +118,10 @@
 				.inner {
 					.article {
 						width: 100%;
+
+						&:last-of-type {
+							margin: 0 25px 35px 0;
+						}
 					}
 				}
 			}

@@ -55,5 +55,31 @@
 				}
 			}
 		}
+
+		@media only screen and (max-width: 769px) {
+			.inner {
+				.following {
+					width: calc((100%/2) - 40px);
+
+					&:nth-of-type(2n) {
+						margin: 0 0 15px 0;
+					}
+				}
+			}
+		}
+
+		@media only screen and (max-width: 769px) {
+			.inner {
+				.following {
+					width: 100%;
+
+					margin: 0 0 15px 0;
+
+					&:nth-of-type(2n) {
+						margin: 0 0 15px 0;
+					}
+				}
+			}
+		}
 	}
 }
