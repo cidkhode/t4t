@@ -5,7 +5,7 @@ import { array } from 'prop-types';
 import './Main.less';
 
 const Main = props => (
-	<div id="dashboard-main">
+	<div id="dashboard-main" className="dashboard-page">
 		<div id="latest-activity" className="article-container">
 			<h3> Latest Activity </h3>
 
@@ -15,7 +15,7 @@ const Main = props => (
 		</div>
 
 		<div id="articles" className="article-container">
-			<div id="article-topics">
+			<div className="article-topics">
 				<p className="topic active"> All Articles (17) </p>
 				<p className="topic"> Topic A (10) </p>
 				<p className="topic"> Topic B (3) </p>
