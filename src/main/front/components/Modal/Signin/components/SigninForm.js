@@ -13,6 +13,7 @@ class SigninForm extends PureComponent {
 			.then(resp => console.log('Login Successful', resp))
 			.catch(error => console.error("Something went wrong.", error));
 	};
+
 	render(){
 		return (
 			<Formik
@@ -36,7 +37,7 @@ class SigninForm extends PureComponent {
 					<Field type="password" name="password" placeholder="Password" />
 					<ErrorMessage name="password" component="div" />
 
-					<button type="submit" disabled={isSubmitting}> <span> Sign in </span> <div className="arrow"></div> </button>
+					<button className="formik-sign-in-button" type="submit" disabled={isSubmitting}> <span> Sign in </span> <div className="arrow"/> </button>
 				</Form>
 				)}
 			</Formik>

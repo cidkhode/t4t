@@ -29,16 +29,6 @@ public class MainController {
     @Autowired
     private UserService userService;
 
-    // TODO: update this endpoint to accept creation of accounts - leaving as is for now for example purposes
-    @RequestMapping(path="/api/add", method= RequestMethod.GET)
-    public String addNewUser (@RequestParam String name, @RequestParam String email) {
-        User n = new User();
-        n.setName(name);
-        n.setEmail(email);
-        userService.save(n);
-        return "Saved user";
-    }
-
     // TODO: remove this endpoint - leaving it as is for now for example purposes
     @GetMapping(path="/api/all")
     public Iterable<User> getAllUsers() {
