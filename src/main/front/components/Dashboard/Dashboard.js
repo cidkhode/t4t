@@ -1,5 +1,5 @@
 import React from 'react';
-import { element } from 'prop-types';
+import { element, object } from 'prop-types';
 
 /* Components */
 import DashboardSidebar from './Sidebar/DashboardSidebar.js';
@@ -9,13 +9,14 @@ import './Dashboard.less';
 
 const Dashboard = props => (
 	<div id="dashboard" className="dashboard">
-		<DashboardSidebar />
+		<DashboardSidebar userProfile={props.userProfile} />
 		{props.children}
 	</div>
 );
 
 Dashboard.propTypes = {
-    children: element,
+    userProfile: object.isRequired,
+    children: element.isRequired,
 };
 
 export default Dashboard;

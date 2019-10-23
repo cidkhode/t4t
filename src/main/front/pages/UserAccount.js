@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 
 /* Components */
-import Sidebar from "../components/Sidebar/Sidebar";
+import Sidebar from '../components/Sidebar/Sidebar';
 import Dashboard from '../components/Dashboard/Dashboard.js';
-import Main from '../components/Dashboard/Main/Main.js';
+import Account from '../components/Dashboard/Account/Account.js';
 
-class UserDashboard extends Component {
+class UserAccount extends Component {
   constructor(props) {
     super(props);
     
@@ -33,11 +33,11 @@ class UserDashboard extends Component {
     console.log('Trying to sign out');
   };
 
-  getLatest = () => {
-    let latest = [];
+  getArticles = () => {
+    let articles = [];
 
     for (let j = 0; j < 4; j++) {
-      latest.push(
+      articles.push(
         <div className="article" key={j}>
           <div className="dashboard-img article-img">
             <img src="https://picsum.photos/450/285" />
@@ -48,25 +48,25 @@ class UserDashboard extends Component {
       )
     }
 
-    return latest;
+    return articles;
   }
 
-  getArticles = () => {
-    let articles = [];
+  getFollowing = () => {
+    let followers = [];
 
-    for (let j = 0; j < 8; j++) {
-      articles.push(
-        <div className="article" key={j}>
-          <div className="dashboard-img article-img">
-            <img src="https://picsum.photos/450/280" />
+    for (let j = 0; j < 5; j++) {
+      followers.push(
+        <div className="following" key={j}>
+          <div className="dashboard-img following-img">
+            <img src="https://i.pravatar.cc/120" />
           </div>
 
-          <p className="article-title"> Lorem ipsum dolor sit amet, consectetur adipiscing elit </p>
+          <p className="following-name"> John Doe </p>
         </div>
       )
     }
 
-    return articles;
+    return followers;
   }
 
   getUserProfile = () => ({ name: "John Doe", imageUrl: "https://i.pravatar.cc/175" });
@@ -75,7 +75,7 @@ class UserDashboard extends Component {
     return (
       <Dashboard userProfile={this.getUserProfile()}>
         <>
-          <Main articles={this.getArticles()} latest={this.getLatest()} />
+          <Account articles={this.getArticles()} following={this.getFollowing()} />
           <Sidebar
             topics={ this.fetchTopics() }
             onTopicSelection={ this.selectTopic }
@@ -91,4 +91,4 @@ class UserDashboard extends Component {
   }
 }
 
-export default UserDashboard;
+export default UserAccount;
