@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import Sidebar from "../components/Sidebar/Sidebar";
 import Dashboard from '../components/Dashboard/Dashboard.js';
 import Account from '../components/Dashboard/Account/Account.js';
+import Main from '../components/Dashboard/Main/Main.js';
 
 class UserDashboard extends Component {
   constructor(props) {
@@ -36,7 +37,7 @@ class UserDashboard extends Component {
   render() {
     return (
       <Dashboard>
-        <Account />
+        <Main />
         <Sidebar
           topics={ this.fetchTopics() }
           onTopicSelection={ this.selectTopic }

@@ -1,0 +1,67 @@
+@import '../../../styles/colors';
+
+#dashboard-main {
+	padding: 50px 0 0 0;
+
+	max-width: calc(100% - 310px);
+	width: calc(100% - 310px);
+	
+	display: flex;
+	flex-flow: column;
+
+	.article-container {
+		.inner {
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: flex-start;
+
+			.article {
+				width: calc((100%/4) - 25px);
+				min-width: 250px;
+				margin: 0 25px 0 0;
+
+				&:last-of-type {
+					margin: 0 0 0 0;
+				}
+
+				.article-img {
+					min-height: 160px;
+
+					img {
+						border-radius: 5px;
+						overflow: hidden;
+
+						width: 100%;
+						height: 100%;
+
+						object-fit: cover;
+					}
+				}
+
+				> p {}
+			}
+		}
+	}
+
+
+	#articles {
+		#article-topics {
+			display: flex;
+			margin: 50px 0 25px 0;
+
+			p {
+				color: @t4t-gray06;
+				margin: 0 0 0 0;
+				cursor: pointer;
+
+				&:not(:last-child) {
+					margin: 0 15px 0 0;
+				}
+
+				&.active {
+					color: @t4t-gray05;
+				}
+			}
+		}
+	}
+}
