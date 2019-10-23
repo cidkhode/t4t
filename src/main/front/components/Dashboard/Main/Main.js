@@ -62,7 +62,7 @@ class Main extends Component {
 		return (
 			<div id="dashboard-main">
 				<div id="latest-activity" className="article-container">
-					<h4> Latest Activity </h4>
+					<h3> Latest Activity </h3>
 
 					<div className="inner">
 						{this.getLatest()}

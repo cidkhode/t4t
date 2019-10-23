@@ -1,13 +1,17 @@
 @import '../../../styles/colors';
 
 #dashboard-account {
-	padding: 50px 0 0 0;
+	padding: 45px 0 0 0;
 
 	max-width: calc(100% - 310px);
 	width: calc(100% - 310px);
 	
 	display: flex;
 	flex-flow: column;
+
+	> div {
+		margin: 0 0 35px 0 !important;
+	}
 
 	#account-user-info {
 		display: flex;
@@ -17,7 +21,9 @@
 			margin: 0 0 15px 0;
 
 			&:last-child {
-				margin: 0 0 0 0;
+				margin: 0 auto 0 0;
+				max-width: 700px;
+				line-height: 21px;
 			}
 		}
 	}
@@ -51,12 +57,12 @@
 
 					margin: 0 0 0 0;
 
-					background-color: @t4t-gray07;
-
 					img {
 						width: 100%;
 						height: 100%;
 						object-fit: cover;
+
+						background-color: @t4t-gray07;
 					}
 				}
 
@@ -68,13 +74,26 @@
 	#account-article-saved {
 		.inner {
 			.article {
-				width: calc((100%/5) - 25px);
-				min-width: 200px;
-				max-width: 250px;
+				width: calc((100%/4) - 25px);
+				min-width: 225px;
+				margin: 0 25px 0 0;
+
+				&:last-of-type {
+					margin: 0 0 0 0;
+				}
 
 				.article-img {
-					height: 150px;
-					border-radius: 5px;
+					min-height: 160px;
+
+					img {
+						border-radius: 5px;
+						overflow: hidden;
+
+						width: 100%;
+						height: 100%;
+
+						object-fit: cover;
+					}
 				}
 
 				> p {}
@@ -125,6 +144,7 @@
 
 			&.active {
 				color: @t4t-gray05;
+				font-weight: 700;
 			}
 		}
 	}

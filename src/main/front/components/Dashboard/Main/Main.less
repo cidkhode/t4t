@@ -1,7 +1,7 @@
 @import '../../../styles/colors';
 
 #dashboard-main {
-	padding: 50px 0 0 0;
+	padding: 45px 0 0 0;
 
 	max-width: calc(100% - 310px);
 	width: calc(100% - 310px);
@@ -10,6 +10,8 @@
 	flex-flow: column;
 
 	.article-container {
+		margin: 0 0 35px 0;
+
 		.inner {
 			display: flex;
 			flex-flow: row wrap;
@@ -17,7 +19,7 @@
 
 			.article {
 				width: calc((100%/4) - 25px);
-				min-width: 250px;
+				min-width: 225px;
 				margin: 0 25px 0 0;
 
 				&:last-of-type {
@@ -43,11 +45,17 @@
 		}
 	}
 
+	#latest-activity {
+		h3 {
+			margin: 0 0 15px 0;
+		}
+	}
+
 
 	#articles {
 		#article-topics {
 			display: flex;
-			margin: 50px 0 25px 0;
+			margin: 50px 0 15px 0;
 
 			p {
 				color: @t4t-gray06;
@@ -60,6 +68,7 @@
 
 				&.active {
 					color: @t4t-gray05;
+					font-weight: 700;
 				}
 			}
 		}

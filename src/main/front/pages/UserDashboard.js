@@ -37,7 +37,7 @@ class UserDashboard extends Component {
   render() {
     return (
       <Dashboard>
-        <Main />
+        <Account />
         <Sidebar
           topics={ this.fetchTopics() }
           onTopicSelection={ this.selectTopic }

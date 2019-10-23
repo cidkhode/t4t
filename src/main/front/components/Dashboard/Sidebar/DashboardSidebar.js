@@ -35,10 +35,14 @@ class DashboardSidebar extends Component {
 					<div></div>
 					<div></div>
 				</div>
+				<div></div>
+				<div></div>
 			</div>
 
 			<div id="dashboard-pov" className="tag-container">
 				<h4> Points of View </h4>
+				<div></div>
+				<div></div>
 				<div></div>
 				<div></div>
 				<div></div>

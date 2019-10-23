@@ -10,11 +10,11 @@ class Account extends Component {
 	getArticles = () => {
 		let articles = [];
 
-		for (let j = 0; j < 5; j++) {
+		for (let j = 0; j < 4; j++) {
 			articles.push(
 				<div className="article" key={j}>
 					<div className="dashboard-img article-img">
-						<img src="https://picsum.photos/130/250" />
+						<img src="https://picsum.photos/450/285" />
 					</div>
 
 					<p className="article-title"> Lorem ipsum dolor sit amet, consectetur adipiscing elit </p>
@@ -51,7 +51,7 @@ class Account extends Component {
 			<div id="account-user-info">
 				<p className="account-name"> Account Name </p>
 				<p className="account-email"> Email </p>
-				<p className="account-about"> About </p>
+				<p className="account-about"> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
 			</div>
 
 			<div id="account-article-saved" className="account-slider">
