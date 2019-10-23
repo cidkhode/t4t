@@ -35,9 +35,7 @@ class Account extends Component {
 						<img src="https://i.pravatar.cc/120" />
 					</div>
 
-					<div>
-						<p className="following-name"> John Doe </p>
-					</div>
+					<p className="following-name"> John Doe </p>
 				</div>
 			)
 		}
