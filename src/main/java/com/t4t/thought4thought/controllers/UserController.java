@@ -22,20 +22,6 @@ public class UserController {
 
     @PostMapping(path = "/api/register")
     public Thought4ThoughtResponseObject registerUser(@RequestBody User user) {
-        Thought4ThoughtResponseObject thought4ThoughtResponseObject =
-                new Thought4ThoughtResponseObject().createResponse(0, "");
-        try {
-            boolean saved = userService.registerNewUser(user);
-            if (saved) {
-                thought4ThoughtResponseObject.setInfo("Saved user successfully!");
-            } else {
-                thought4ThoughtResponseObject.setStatus(1);
-                thought4ThoughtResponseObject.setInfo("User exists already!");
-            }
-        } catch (Exception e) {
-            thought4ThoughtResponseObject.setStatus(-1);
-            thought4ThoughtResponseObject.setInfo("Something went wrong...");
-        }
-        return thought4ThoughtResponseObject;
+        return userService.registerNewUser(user);
     }
 }
