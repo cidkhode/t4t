@@ -16,6 +16,8 @@ public class User {
 
     private String password;
 
+    private String passwordSalt;
+
     private String userType;
 
     private String interests;
@@ -60,8 +62,16 @@ public class User {
         return password;
     }
 
-    public void setPassword(String pass){
-        this.password = pass;
+    public void setPassword(String password){
+        this.password = password;
+    }
+
+    public String getPasswordSalt(){
+        return passwordSalt;
+    }
+
+    public void setPasswordSalt(String passwordSalt){
+        this.passwordSalt = passwordSalt;
     }
 
     public String getUserType() {

@@ -1,12 +1,17 @@
-package com.t4t.thought4thought.services;
+package com.t4t.thought4thought.utils;
+
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class HashPassword {
+public class PasswordEncryptor {
+    public String generateRandomSalt() {
+        return RandomStringUtils.randomAlphabetic(10);
+    }
 
-    public String encryptPassword(String plainTextPass, String salt){
+    public String encryptPassword(String plainTextPass, String salt) {
         String saltedHashedPass=null;
         try{
             MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -22,6 +27,4 @@ public class HashPassword {
         }
         return saltedHashedPass;
     }
-
-   // public static byte
 }

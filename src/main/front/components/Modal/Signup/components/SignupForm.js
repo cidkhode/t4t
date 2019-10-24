@@ -109,6 +109,12 @@ class SignupForm extends Component {
 		return isInvalid;
 	};
 
+	onKeyDown = (key) => {
+		if (!key.shiftKey && key.keyCode === 9) {
+			key.preventDefault();
+		}
+	};
+
 	render() {
 		return(
 			<Formik
@@ -166,7 +172,7 @@ class SignupForm extends Component {
 						<Form>
 							<div id="steps" className={`curr-step-${this.state.stepCtr}`}>
 								<div id="step-1" className={`step ${this.state.stepCtr >= 1 ? "active" : ""} ${this.state.stepCtr > 1 ? "active-hide" : ""}`}>
-									<Field type="text" name="firstName" placeholder="Fist Name" />
+									<Field type="text" name="firstName" placeholder="First Name" />
 									<ErrorMessage name="name" component="div" />
 
 									<Field type="text" name="lastName" placeholder="Last Name" />
@@ -178,7 +184,7 @@ class SignupForm extends Component {
 									<Field type="password" name="password" placeholder="Password" />
 									<ErrorMessage name="password" component="div" />
 
-									<Field type="password" name="confirmPass" placeholder="Confirm Password" />
+									<Field onKeyDown={ this.onKeyDown } type="password" name="confirmPass" placeholder="Confirm Password" />
 									<ErrorMessage name="confirm-pass" component="div" />
 								</div>
 								<div id="step-2" className={`step ${this.state.stepCtr > 1 ? "active" : ""} ${this.state.stepCtr === 3 ? "active-hide" : ""}`}>
@@ -188,7 +194,7 @@ class SignupForm extends Component {
 									<Field type="text" name="fieldsOfStudy" placeholder="Field of Study" />
 									<ErrorMessage name="fieldsOfStudy" component="div" />
 
-									<Field type="text" name="viewPoints" placeholder="View Points" />
+									<Field onKeyDown={ this.onKeyDown } type="text" name="viewPoints" placeholder="View Points" />
 									<ErrorMessage name="viewPoints" component="div" />
 								</div>
 								<div id="step-3" className={`step ${this.state.stepCtr === 3 ? "active" : ""}`}>

@@ -1,10 +1,10 @@
 package com.t4t.thought4thought.services;
 
 import com.t4t.thought4thought.entities.User;
+import com.t4t.thought4thought.utils.PasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.t4t.thought4thought.repositories.UserRepository;
 import org.springframework.stereotype.Service;
-import com.t4t.thought4thought.services.HashPassword;
 
 @Service
 public class UserService {
@@ -12,16 +12,21 @@ public class UserService {
     UserRepository userRepository;
 
     public boolean validUser(String email, String password){
-        HashPassword hashPassword = new HashPassword();
-        User user = userRepository.findByEmailAndPassword(email, hashPassword.encryptPassword(password,"derr1k"));
-        return user != null;
+        PasswordEncryptor passwordEncryptor = new PasswordEncryptor();
+        User user = userRepository.findByEmail(email);
+        return user != null && user
+                .getPassword()
+                .equals(passwordEncryptor.encryptPassword(password, user.getPasswordSalt()));
     }
 
     public boolean registerNewUser(User user) {
         boolean saved = false;
-        HashPassword hashPassword = new HashPassword();
+        PasswordEncryptor passwordEncryptor = new PasswordEncryptor();
+        String salt = passwordEncryptor.generateRandomSalt();
+        user.setPasswordSalt(salt);
+
         if (!userRepository.existsByEmail(user.getEmail())) {
-            user.setPassword(hashPassword.encryptPassword(user.getPassword(),"derr1k"));
+            user.setPassword(passwordEncryptor.encryptPassword(user.getPassword(), user.getPasswordSalt()));
             userRepository.save(user);
             saved = true;
         }
