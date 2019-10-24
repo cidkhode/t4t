@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-
-/* Components */
+import PropTypes from 'prop-types';
 import Sidebar from "../components/Sidebar/Sidebar";
-import Dashboard from '../components/Dashboard/Dashboard.js';
-import Main from '../components/Dashboard/Main/Main.js';
+import DashboardContainer from '../components/Dashboard/DashboardContainer.js';
+import DashboardView from '../components/Dashboard/Main/DashboardView.js';
 
-class UserDashboard extends Component {
+export class UserDashboard extends Component {
   constructor(props) {
     super(props);
-    
     this.state = {
       sideBarOpen: false,
       selectedSideBarOption: '',
@@ -29,66 +27,64 @@ class UserDashboard extends Component {
 
   openSideBar = () => this.setState({ sideBarOpen: !this.state.sideBarOpen });
 
-  signOut = () => {
-    console.log('Trying to sign out');
-  };
-
-  getLatest = () => {
-    let latest = [];
-
-    for (let j = 0; j < 4; j++) {
-      latest.push(
-        <div className="article" key={j}>
-          <div className="dashboard-img article-img">
-            <img src="https://picsum.photos/450/285" />
-          </div>
-
-          <p className="article-title"> Lorem ipsum dolor sit amet, consectetur adipiscing elit </p>
-        </div>
-      )
-    }
-
-    return latest;
-  }
-
-  getArticles = () => {
-    let articles = [];
-
-    for (let j = 0; j < 8; j++) {
-      articles.push(
-        <div className="article" key={j}>
-          <div className="dashboard-img article-img">
-            <img src="https://picsum.photos/450/280" />
-          </div>
-
-          <p className="article-title"> Lorem ipsum dolor sit amet, consectetur adipiscing elit </p>
-        </div>
-      )
-    }
-
-    return articles;
-  }
-
-  getUserProfile = () => ({ name: "John Doe", imageUrl: "https://i.pravatar.cc/175" });
+  signOut = () => console.log('Trying to sign out');
 
   render() {
     return (
-      <Dashboard userProfile={this.getUserProfile()}>
+      <DashboardContainer
+        userAccountDetails={this.props.userAccountDetails }
+        interests={ this.props.interests }
+        pointsOfView={ this.props.pointsOfView }
+      >
         <>
-          <Main articles={this.getArticles()} latest={this.getLatest()} />
+          <DashboardView
+            allArticles={ this.props.allArticles }
+            latestArticles={ this.props.latestArticles }
+          />
           <Sidebar
             topics={ this.fetchTopics() }
             onTopicSelection={ this.selectTopic }
             onOpen={ this.openSideBar }
-            name="John Doe"
+            name={ this.props.userAccountDetails.name }
             isOpen={ this.state.sideBarOpen }
             onSignOut={ this.signOut }
             selectedOption={ this.state.selectedSideBarOption }
           />
         </>
-      </Dashboard>
+      </DashboardContainer>
     )
   }
 }
+
+UserDashboard.propTypes = {
+  userAccountDetails: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    about: PropTypes.string.isRequired,
+  }),
+  latestArticles: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired
+  })),
+  allArticles: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired
+  })),
+  interests: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+  })).isRequired,
+  pointsOfView: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+  })),
+};
+
+UserDashboard.defaultProps = {
+
+};
 
 export default UserDashboard;

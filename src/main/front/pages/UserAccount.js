@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-
-/* Components */
+import PropTypes from 'prop-types';
 import Sidebar from '../components/Sidebar/Sidebar';
-import Dashboard from '../components/Dashboard/Dashboard.js';
-import Account from '../components/Dashboard/Account/Account.js';
+import DashboardContainer from '../components/Dashboard/DashboardContainer.js';
+import AccountView from '../components/Dashboard/Account/AccountView.js';
 
-class UserAccount extends Component {
+export class UserAccount extends Component {
   constructor(props) {
     super(props);
-    
     this.state = {
       sideBarOpen: false,
       selectedSideBarOption: '',
@@ -29,66 +27,64 @@ class UserAccount extends Component {
 
   openSideBar = () => this.setState({ sideBarOpen: !this.state.sideBarOpen });
 
-  signOut = () => {
-    console.log('Trying to sign out');
-  };
-
-  getArticles = () => {
-    let articles = [];
-
-    for (let j = 0; j < 4; j++) {
-      articles.push(
-        <div className="article" key={j}>
-          <div className="dashboard-img article-img">
-            <img src="https://picsum.photos/450/285" />
-          </div>
-
-          <p className="article-title"> Lorem ipsum dolor sit amet, consectetur adipiscing elit </p>
-        </div>
-      )
-    }
-
-    return articles;
-  }
-
-  getFollowing = () => {
-    let followers = [];
-
-    for (let j = 0; j < 5; j++) {
-      followers.push(
-        <div className="following" key={j}>
-          <div className="dashboard-img following-img">
-            <img src="https://i.pravatar.cc/120" />
-          </div>
-
-          <p className="following-name"> John Doe </p>
-        </div>
-      )
-    }
-
-    return followers;
-  }
-
-  getUserProfile = () => ({ name: "John Doe", imageUrl: "https://i.pravatar.cc/175" });
+  signOut = () => { console.log('Trying to sign out'); };
 
   render() {
     return (
-      <Dashboard userProfile={this.getUserProfile()}>
+      <DashboardContainer
+        interests={ this.props.interests }
+        pointsOfView={ this.props.pointsOfView }
+        userAccountDetails={this.props.userAccountDetails}
+      >
         <>
-          <Account articles={this.getArticles()} following={this.getFollowing()} />
+          <AccountView
+            savedArticles={ this.props.savedArticles }
+            followingUsers={ this.props.followingUsers }
+            userAccountDetails={ this.props.userAccountDetails }
+          />
           <Sidebar
             topics={ this.fetchTopics() }
             onTopicSelection={ this.selectTopic }
             onOpen={ this.openSideBar }
-            name="John Doe"
+            name={ this.props.userAccountDetails.name }
             isOpen={ this.state.sideBarOpen }
             onSignOut={ this.signOut }
             selectedOption={ this.state.selectedSideBarOption }
           />
         </>
-      </Dashboard>
+      </DashboardContainer>
     )
   }
 }
+
+UserAccount.propTypes = {
+  userAccountDetails: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    about: PropTypes.string.isRequired,
+  }),
+  savedArticles: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired
+  })),
+  followingUsers:  PropTypes.arrayOf(PropTypes.shape({
+    followingUserName: PropTypes.string.isRequired,
+    followingUserEmail: PropTypes.string.isRequired,
+    followingUserImage: PropTypes.string.isRequired,
+  })),
+  interests: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+  })).isRequired,
+  pointsOfView: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string.isRequired,
+  })),
+};
+
+UserAccount.defaultProps = {
+
+};
 
 export default UserAccount;
