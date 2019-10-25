@@ -40,7 +40,8 @@ main {
 					flex-flow: row nowrap;
 
 					.list {
-						width: 50%;
+						min-width: 400px;
+						width: calc(50% - 25px);
 
 						.t4t-article.vertical {
 							.article-description  {
@@ -77,6 +78,76 @@ main {
 			width: 400px;
 			display: flex;
 			flex-flow: column;
+		}
+
+		@media only screen and (max-width: 1400px) {
+			#popnet {
+				width: calc(100% - 300px);
+
+				#popular {
+					.inner {
+						.list {
+							min-width: 300px;
+
+							.t4t-article {
+								.article-pic {
+									height: 125px;
+									min-width: 125px;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		@media only screen and (max-width: 1100px) {
+			#popnet {
+				#popular {
+					.inner {
+						flex-flow: column;
+
+						.list {
+							width: calc(100% - 25px);
+
+							.t4t-article {
+								flex-flow: column;
+
+								.article-info {
+								    padding: 0 0 0 0;
+
+								    .article-text {
+								        .article-title {
+								            margin: 15px 0 5px 0;
+								        }
+								    }
+								}
+							}
+						}
+					}
+				}
+
+				#network {
+					.inner {
+						.list {
+							.t4t-article {
+								width: 100%;
+								max-width: unset;
+
+								margin-right: 0;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		@media only screen and (max-width: 800px) {
+			flex-flow: column;
+
+			#popnet, #reading {
+				width: 100%;
+			}
 		}
 	}
 }
