@@ -19,7 +19,7 @@ class MainPage extends Component {
       selectedSideBarOption: '',
       mostPopularArticles: [0,1,2],
       mostPopularBig: [0,1],
-      readingListArticles: [0,1,2,3,4,5],
+      readingListArticles: [0,1,2,3,4],
       networkArticles: [0,1],
     };
   }
