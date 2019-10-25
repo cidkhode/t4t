@@ -5,7 +5,8 @@ import Sidebar from "../components/Sidebar/Sidebar";
 import Navbar from "../components/Navbar/Navbar";
 import ArticlePreview from "../components/ArticlePreview/ArticlePreview";
 
-import SampleImage from "../assets/fillerArticlePic.png";
+/* Styles */
+import './Homepage.less';
 
 class MainPage extends Component {
   constructor(props) {
@@ -20,161 +21,7 @@ class MainPage extends Component {
       mostPopularBig: [0,1],
       readingListArticles: [0,1,2,3,4,5],
       networkArticles: [0,1],
-
-      MainContent: {
-        display: 'flex',
-        flexDirection: 'column',
-        flexWrap: 'wrap',
-        flexFlow: 'column wrap',
-        justifyContent: 'center',
-        margin: 'auto',
-        maxHeight: '1080px',
-        width: '100%',
-        fontFamily: 'Roboto',
-      },
-      MostPopular: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-        maxHeight: '600px',
-        marginRight: 'auto',
-        paddingBottom: '25px',
-        paddingLeft: '70px',
-        width: '50%',
-      },
-      ReadingList: {
-        float: 'right',
-        marginLeft: 'auto',
-        paddingRight: '125px',
-        display: 'flex',
-        flexDirection: 'column',
-      },
-      NetworkNews: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        width: '50%',
-        marginRight: 'auto',
-        paddingLeft: '40px',
-        flexWrap: 'wrap',
-        paddingBottom: '25px',
-      }
     };
-  }
-
-  updateWindow = () => {
-    console.log(window.innerWidth);
-    if(window.innerWidth >= 1300) {
-      const main = {
-        display: 'flex',
-        flexDirection: 'column',
-        flexWrap: 'wrap',
-        flexFlow: 'column wrap',
-        margin: 'auto',
-        maxHeight: '1080px',
-        width: '100%',
-        fontFamily: 'Roboto',
-      }
-      const popular = {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-around',
-        flexDirection: 'column',
-        maxHeight: '600px',
-        marginRight: 'auto',
-        paddingBottom: '25px',
-        paddingLeft: '70px',
-        width: '60%',
-      }
-      const network = {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        width: '50%',
-        marginRight: 'auto',
-        paddingLeft: '40px',
-        flexWrap: 'wrap',
-        paddingBottom: '25px',
-      }
-      const reading = {
-        float: 'right',
-        marginLeft: 'auto',
-        paddingRight: '125px',
-        display: 'flex',
-        flexDirection: 'column',
-      }
-      this.setState({MainContent: main, MostPopular: popular, ReadingList: reading, NetworkNews: network});
-    } else if(window.innerWidth < 1300 && window.innerWidth > 700) {
-      const main = {
-          display: 'flex',
-          flexDirection: 'column',
-          flexWrap: 'wrap',
-          flexFlow: 'column wrap',
-          justifyContent: 'center',
-          margin: 'auto',
-          width: '100%',
-          fontFamily: 'Roboto',
-      }
-      const popular = {
-        display: 'flex',
-        flexWrap: 'wrap',
-        flexDirection: 'column',
-        width: '100%',
-        maxHeight: '600px',
-        justifyContent: 'center',
-        paddingBottom: '25px',
-        border: '0.1rem solid black',
-      }
-      const network = {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        width: '100%',
-        paddingLeft: '40px',
-        flexWrap: 'wrap',
-        paddingBottom: '25px',
-      }
-      const reading = {
-        display: 'flex',
-        flexDirection: 'column',
-        margin: 'auto',
-      }
-      this.setState({MainContent: main, MostPopular: popular, ReadingList: reading, NetworkNews: network});
-    } else if(window.innerWidth <= 700) {
-      const main = {
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        flexWrap: 'wrap',
-        flexFlow: 'column wrap',
-        width: '100%',
-        fontFamily: 'Roboto',
-      }
-      const popular = {
-        display: 'flex',
-        flexWrap: 'wrap',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        width: '100%',
-        paddingBottom: '25px',
-        border: '0.1rem solid black',
-      }
-      const network = {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        margin: 'auto',
-        flexWrap: 'wrap',
-        paddingBottom: '25px',
-      }
-      const reading = {
-        margin: 'auto',
-        display: 'flex',
-        flexDirection: 'column',
-      }
-      this.setState({MainContent: main, MostPopular: popular, ReadingList: reading, NetworkNews: network});
-    }
   }
 
   // TODO: when we implement login system, take username and pass it into a fetch get request to retrieve selected topics of user, and remove this mock array
@@ -223,21 +70,9 @@ class MainPage extends Component {
 
   selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption }, () => console.log(`Topic selected: `, selectedSideBarOption));
 
-  componentDidMount() {
-    window.addEventListener('resize', this.updateWindow);
-  }
-
-  componentWillMount() {
-    this.updateWindow();
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.updateWindow);
-  }
-
   render() {
     return (
-      <div>
+      <main id="homepage">
         <Navbar />
         <Sidebar
           topics={ this.fetchTopics() }
@@ -248,99 +83,77 @@ class MainPage extends Component {
           onSignOut={ this.signOut }
           selectedOption={ this.state.selectedSideBarOption }
         />
-        <div style={ this.state.MainContent }>
-          <h1 style={ SectionHeader }>Most Popular From Today</h1>
-          <div style={ this.state.MostPopular }>
-            {this.state.mostPopularArticles.map((item) => 
-            <ArticlePreview
-              type={"horizontal"}
-              image={SampleImage}
-              title={"NJIT Student attempts to code a website unsuccessfully"}
-              description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
-            />)}
-            {this.state.mostPopularBig.map((item) => 
-            <ArticlePreview
-              type={"vertical"}
-              image={SampleImage}
-              title={"NJIT Student attempts to code a website unsuccessfully"}
-              description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
-            />)}
+        <div id="content">
+          
+          <div id="popnet">  
+            <div id="popular">
+              <h2>Most Popular From Today</h2>
+
+              <div className="inner">
+                <div className="list">
+                  {this.state.mostPopularArticles.map((item) => 
+                    <ArticlePreview
+                      type={"horizontal"}
+                      image={'https://picsum.photos/150'}
+                      title={"NJIT Student attempts to code a website unsuccessfully"}
+                      description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
+                    />
+                  )}
+                </div>
+                
+                <div className="list">
+                  {this.state.mostPopularBig.map((item) => 
+                    <ArticlePreview
+                      type={"vertical"}
+                      image={'https://picsum.photos/400/150'}
+                      title={"NJIT Student attempts to code a website unsuccessfully"}
+                      description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div id="network">
+              <h2>New From Your Network</h2>
+
+              <div className="inner">
+                <div className="list">
+                  {this.state.networkArticles.map((item) => 
+                    <ArticlePreview
+                      type={"vertical"}
+                      image={'https://picsum.photos/450/250'}
+                      title={"NJIT Student attempts to code a website unsuccessfully"}
+                      description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
+                    />
+                  )}
+                </div>
+              </div>
+
+            </div>
           </div>
-          <h1 style={ SectionHeader }>News From Your Network</h1>
-          <div style={ this.state.NetworkNews }>
-            {this.state.networkArticles.map((item) => 
-              <ArticlePreview
-                type={"vertical"}
-                image={SampleImage}
-                title={"NJIT Student attempts to code a website unsuccessfully"}
-                description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
-            />)}
+
+          <div id="reading">
+            <h2>Reading List</h2>
+
+            <div className="inner">
+              <div className="list">
+                {this.state.readingListArticles.map((item) => 
+                  <ArticlePreview
+                    type={"horizontal"}
+                    image={'https://picsum.photos/150'}
+                    title={"NJIT Student attempts to code a website unsuccessfully"}
+                    description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
+                  />
+                )}
+              </div>
+            </div>
           </div>
-          <div style={ this.state.ReadingList }>
-            <h1 style={{ color: '#828282' }}>Reading List</h1>
-            {this.state.readingListArticles.map((item) => 
-              <ArticlePreview
-                type={"horizontal"}
-                image={SampleImage}
-                title={"NJIT Student attempts to code a website unsuccessfully"}
-                description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
-            />)}
-          </div>
+
         </div>
-      </div>
+      </main>
     )
   }
 }
 
 export default MainPage;
-
-
-/*  -----------------------------------------------------  STYLES  -----------------------------------------------------  */
-
-const MainContent = {
-  display: 'flex',
-  flexDirection: 'column',
-  flexWrap: 'wrap',
-  flexFlow: 'column wrap',
-  flexBasis: '50%',
-  margin: 'auto',
-  maxHeight: '1080px',
-  width: '100%',
-  fontFamily: 'Roboto',
-}
-
-const SectionHeader = {
-  color: '#828282',
-  marginRight: 'auto',
-  paddingLeft: '40px',
-}
-
-const MostPopular = {
-  display: 'flex',
-  flexWrap: 'wrap',
-  flexDirection: 'column',
-  maxHeight: '600px',
-  marginRight: 'auto',
-  paddingBottom: '25px',
-  paddingLeft: '70px',
-  width: '50%',
-}
-
-const ReadingList = {
-  float: 'right',
-  marginLeft: 'auto',
-  paddingRight: '125px',
-  display: 'flex',
-  flexDirection: 'column',
-}
-
-const NetworkNews = {
-  display: 'flex',
-  flexDirection: 'row',
-  justifyContent: 'space-around',
-  width: '50%',
-  marginRight: 'auto',
-  paddingLeft: '40px',
-  flexWrap: 'wrap',
-  paddingBottom: '25px',
-}

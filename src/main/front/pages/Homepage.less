@@ -1,0 +1,82 @@
+
+main {
+
+}
+
+#homepage {
+	width: 100%;
+	display: flex;
+	flex-flow: column;
+
+	#content {
+		width: calc((100% - 80px) - 40px); // 100% - width of sidebar - left padding;
+		margin: 0 auto 0 0;
+		padding: 0 0 0 40px;
+
+		display: flex;
+		flex-flow: row nowrap;
+
+		#popnet, #reading {
+			.list {
+				display: flex;
+				flex-flow: column;
+
+				margin: 0 15px 0 0;
+				padding: 0 10px 0 0;
+			}
+		}
+
+		#popnet {
+			width: calc(100% - 400px);
+			display: flex;
+			flex-flow: column;
+
+			#popular {
+				display: flex;
+				flex-flow: column;
+
+				.inner {
+					display: flex;
+					flex-flow: row nowrap;
+
+					.list {
+						width: 50%;
+
+						.t4t-article.vertical {
+							.article-description  {
+								-webkit-line-clamp: 2;
+							}
+						}
+					}
+				}
+			}
+
+			#network {
+				display: flex;
+				flex-flow: column;
+
+				.inner {
+					.list {
+						display: flex;
+						flex-flow: row wrap;
+
+						.t4t-article {
+							max-width: calc(50% - 12.5px);
+							margin-right: 25px;
+
+							&:nth-of-type(2n) {
+								margin-right: 0;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		#reading {
+			width: 400px;
+			display: flex;
+			flex-flow: column;
+		}
+	}
+}
