@@ -1,0 +1,130 @@
+@import '../../styles/colors';
+
+.dashboard {
+	display: flex;
+	flex-flow: row nowrap;
+
+	margin: 0 80px 0 0 !important; // takes sidebar into account
+
+	.dashboard-page {
+		padding: 50px 0 0 0;
+		width: calc(100% - 310px);
+		
+		display: flex;
+		flex-flow: column;
+
+		> div {
+			margin: 0 0 35px 0 !important;
+
+			h3 {
+				font-weight: 500;
+				margin: 0 0 15px 0;
+			}
+
+			.inner {
+				display: flex;
+				flex-flow: row wrap;
+			}
+		}
+
+		.article-container {
+			margin: 0 0 0 0 !important;
+
+			.inner {
+				display: flex;
+				flex-flow: row wrap;
+				justify-content: flex-start;
+
+				.article {
+					width: calc((100%/4) - 25px);
+					min-width: 225px;
+					margin: 0 25px 35px 0;
+
+					&:last-of-type {
+						margin: 0 0 0 0;
+					}
+
+					// &:nth-last-child(-n+4) { // target last 4 ".article"s to remove margin from the bottom to not mess w/ even spacing of divs
+					// 	margin-bottom: 0 !important;
+					// }
+
+					.article-img {
+						img {
+							border-radius: 5px;
+							overflow: hidden;
+
+							width: 100%;
+							height: 100%;
+
+							object-fit: cover;
+						}
+					}
+
+					> p {
+						margin: 5px 0 0 0;
+					}
+				}
+			}
+		}
+
+		.article-topics {
+			display: flex;
+			flex-flow: row wrap;
+			margin: 0 0 0 0;
+
+			p {
+				color: @t4t-gray06;
+				margin: 0 0 15px 0;
+				cursor: pointer;
+
+				&:not(:last-child) {
+					margin: 0 15px 15px 0;
+				}
+
+				&.active {
+					color: @t4t-gray05;
+					font-weight: 700;
+				}
+			}
+		}
+
+		// responsive styling
+		@media only screen and (max-width: 1400px) {
+			width: calc(100% - 250px);
+
+			.article-container {
+				.inner {
+					.article {
+						width: calc((100%/3) - 25px);
+					}
+				}
+			}
+		}
+
+		@media only screen and (max-width: 1150px) {
+			width: calc(100% - 225px);
+
+			.article-container {
+				.inner {
+					.article {
+						width: calc((100%/2) - 25px);
+					}
+				}
+			}
+		}
+
+		@media only screen and (max-width: 900px) {
+			.article-container {
+				.inner {
+					.article {
+						width: 100%;
+
+						&:last-of-type {
+							margin: 0 25px 35px 0;
+						}
+					}
+				}
+			}
+		}
+	}
+}

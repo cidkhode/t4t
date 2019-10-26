@@ -89,8 +89,12 @@
         margin: -6px 30px 0 0;
       }
 
-      &:not(.topics-sub-menu):hover {
-        background: rgba(196, 196, 196, .6);
+      &:not(.topics-sub-menu):not(.is-selected):hover {
+        background: @t4t-gray09;
+      }
+
+      &.is-selected {
+        background: @t4t-gray02;
       }
     }
 
