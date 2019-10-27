@@ -26,7 +26,7 @@ class SigninForm extends PureComponent {
 					}
 					return errors;
 				}}
-				onSubmit={(values) => this.sendLogin(values)}
+				onSubmit={ (values) => this.sendLogin(values) }
 			>
 				{({ isSubmitting }) => (
 				<Form>

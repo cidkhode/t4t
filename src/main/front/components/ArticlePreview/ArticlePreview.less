@@ -1,0 +1,112 @@
+.t4t-article {
+    position: relative;
+
+    display: flex;
+    justify-content: start;
+
+    margin: 0 0 25px 0;
+    padding: 0 0 0 0;
+
+    display: flex;
+
+    .article-pic {
+        height: 150px;
+        max-height: 150px;
+
+        min-width: 200px;
+
+        overflow: hidden;
+        border-radius: 5px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .article-info {
+        display: flex;
+        flex-flow: row nowrap;
+
+        margin: 0 0 0 0;
+        padding: 0 0 0 10px;
+
+        .article-text {
+            display: flex;
+            flex-flow: column;
+
+            .article-description, .article-title {
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .article-title {
+                // white-space: nowrap;
+                max-height: 45px;
+                max-width: 100%;
+                margin: 0 0 10px 0;
+            }
+
+            .article-misc {
+                display: flex;
+                flex-flow: row nowrap;
+
+                .article-description {
+                    padding: 0 0 0 0;
+                    margin: 0 10px 0 0;
+
+                    line-height: 24px;
+
+                    // max-height: 65px;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 4;
+                    -webkit-box-orient: vertical;
+                }
+
+                .article-actions {
+                    display: flex;
+                    flex-flow: column;
+
+                    img {
+                        margin: 0 0 0 0;
+
+                        cursor: pointer;
+
+                        &:first-of-type {
+                            margin: 0 0 10px 0;
+                        }
+
+                        &.like {}
+                        &.save {}
+                    }
+                }
+            }
+        }
+    }
+
+
+    &.vertical {
+        flex-flow: column;
+
+        .article-info {
+            padding: 0 0 0 0;
+
+            .article-text {
+                .article-title {
+                    margin: 15px 0 5px 0;
+                }
+            }
+        }
+    }
+
+
+    @media only screen and (max-width: 1200px) {
+         min-width: 125px;
+
+        .article-pic {
+            height: 125px;
+            min-width: 125px;
+        }
+    }
+}

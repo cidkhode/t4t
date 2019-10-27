@@ -1,0 +1,36 @@
+@import '../../styles/colors';
+
+.navhead {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 40px 20px;
+
+  .navbar-left-floated-content {
+    float: left;
+
+    .logo {
+      font-size: 20px;
+      width: 160px;
+      padding: 10px;
+      color: @t4t-gray05;
+      background-color: @t4t-cyan-light;
+      border: none;
+      border-radius: 10px;
+    }
+  }
+
+  .navbar-right-floated-content {
+    float: right;
+    display: flex;
+
+    .nav-bar-sign-in-button {
+      color: @t4t-blue-light;
+      border: none;
+      background-color: @t4t-white;
+    }
+
+    .nav-bar-right-child {
+      margin-right: 40px;
+    }
+  }
+}
