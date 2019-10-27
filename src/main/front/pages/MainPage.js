@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 
 /* Components */
-import Button from "../components/Button/Button";
-import Signin from "../components/Modal/Signin/Signin";
-import Signup from "../components/Modal/Signup/Signup";
 import Sidebar from "../components/Sidebar/Sidebar";
+import Navbar from "../components/Navbar/Navbar";
+import ArticlePreview from "../components/ArticlePreview/ArticlePreview";
 
+/* Styles */
+import './Homepage.less';
 
 class MainPage extends Component {
   constructor(props) {
@@ -16,6 +17,10 @@ class MainPage extends Component {
       signupOpen: false,
       sideBarOpen: false,
       selectedSideBarOption: '',
+      mostPopularArticles: [0,1,2],
+      mostPopularBig: [0,1],
+      readingListArticles: [0,1,2,3,4],
+      networkArticles: [0,1],
     };
   }
 
@@ -76,13 +81,10 @@ class MainPage extends Component {
 
   selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption }, () => console.log(`Topic selected: `, selectedSideBarOption));
 
-  closeSignin = () => this.setState({ signinOpen: false });
-
-  closeSignup = () => this.setState({ signupOpen: false });
-
   render() {
     return (
-      <div>
+      <main id="homepage">
+        <Navbar />
         <Sidebar
           topics={ this.fetchTopics() }
           onTopicSelection={ this.selectTopic }
@@ -92,13 +94,75 @@ class MainPage extends Component {
           onSignOut={ this.signOut }
           selectedOption={ this.state.selectedSideBarOption }
         />
-        <Button handleClick={ this.toggleSignin } text="Log in" />
-        <Button handleClick={ this.toggleSignup } text="Register" />
-        <Button handleClick={ this.fetchTest } text="Add a user..." />
-        <Button handleClick={ this.getAllUsers } text="Retrieve all" />
-        <Signin closeSignin={ this.closeSignin } isActive={ this.state.signinOpen } />
-        <Signup closeSignup={ this.closeSignup } isActive={ this.state.signupOpen } />
-      </div>
+        <div id="content">
+          
+          <div id="popnet">  
+            <div id="popular">
+              <h2>Most Popular From Today</h2>
+
+              <div className="inner">
+                <div className="list">
+                  {this.state.mostPopularArticles.map((item) => 
+                    <ArticlePreview
+                      type={"horizontal"}
+                      image={'https://picsum.photos/150'}
+                      title={"NJIT Student attempts to code a website unsuccessfully"}
+                      description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
+                    />
+                  )}
+                </div>
+                
+                <div className="list">
+                  {this.state.mostPopularBig.map((item) => 
+                    <ArticlePreview
+                      type={"vertical"}
+                      image={'https://picsum.photos/400/150'}
+                      title={"NJIT Student attempts to code a website unsuccessfully"}
+                      description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
+                    />
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div id="network">
+              <h2>New From Your Network</h2>
+
+              <div className="inner">
+                <div className="list">
+                  {this.state.networkArticles.map((item) => 
+                    <ArticlePreview
+                      type={"vertical"}
+                      image={'https://picsum.photos/450/250'}
+                      title={"NJIT Student attempts to code a website unsuccessfully"}
+                      description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
+                    />
+                  )}
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <div id="reading">
+            <h2>Reading List</h2>
+
+            <div className="inner">
+              <div className="list">
+                {this.state.readingListArticles.map((item) => 
+                  <ArticlePreview
+                    type={"horizontal"}
+                    image={'https://picsum.photos/150'}
+                    title={"NJIT Student attempts to code a website unsuccessfully"}
+                    description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
     )
   }
 }

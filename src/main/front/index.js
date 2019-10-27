@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import MainPage from './pages/MainPage';
-import UserAccount from './pages/UserAccount';
+// import UserAccount from './pages/UserAccount';
 
 export class Thought4Thought extends Component {
   // TODO: we will be fetching all this info later on...
@@ -119,14 +119,14 @@ export class Thought4Thought extends Component {
   render() {
     return (
 		<div>
-			{ /* <MainPage /> */ }
-      <UserAccount
+			<MainPage />
+      { /* <UserAccount
         interests={ this.getInterests() }
         pointsOfView={ this.getPointsOfView() }
         userAccountDetails={ this.getUserAccountDetails() }
         savedArticles={ this.getSavedArticles() }
         followingUsers={ this.getFollowingUsers() }
-      />
+      /> */ }
 		</div>
     )
   }

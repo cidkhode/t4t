@@ -1,0 +1,158 @@
+
+main {
+
+}
+
+#homepage {
+	width: 100%;
+	display: flex;
+	flex-flow: column;
+
+	#content {
+		width: calc((100% - 80px) - 40px); // 100% - width of sidebar - left padding;
+		margin: 0 auto 0 0;
+		padding: 0 0 0 40px;
+
+		display: flex;
+		flex-flow: row wrap;
+
+		#popnet, #reading {
+			.list {
+				display: flex;
+				flex-flow: column;
+
+				margin: 0 15px 0 0;
+				padding: 0 10px 0 0;
+			}
+		}
+
+		#popnet {
+			width: calc(100% - 400px);
+			display: flex;
+			flex-flow: column;
+
+			#popular {
+				display: flex;
+				flex-flow: column;
+
+				.inner {
+					display: flex;
+					flex-flow: row nowrap;
+
+					.list {
+						min-width: 400px;
+						width: calc(50% - 25px);
+
+						.t4t-article.vertical {
+							.article-description  {
+								-webkit-line-clamp: 2;
+							}
+						}
+					}
+				}
+			}
+
+			#network {
+				display: flex;
+				flex-flow: column;
+
+				.inner {
+					.list {
+						display: flex;
+						flex-flow: row wrap;
+
+						.t4t-article {
+							max-width: calc(50% - 12.5px);
+							margin-right: 25px;
+
+							&:nth-of-type(2n) {
+								margin-right: 0;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		#reading {
+			width: 400px;
+			display: flex;
+			flex-flow: column;
+		}
+
+		@media only screen and (max-width: 1400px) {
+			#popnet {
+				width: calc(100% - 400px);
+
+				#popular {
+					.inner {
+						.list {
+							min-width: 125px;
+
+							.t4t-article {
+								.article-pic {
+									height: 125px;
+									min-width: 125px;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		@media only screen and (max-width: 1200px) {
+			flex-flow: column;
+
+			#popnet, #reading {
+				width: 100%;
+			}
+
+			#reading {
+				flex-flow: column;
+
+				.inner {
+					.list {
+						min-width: 125px;
+						flex-flow: row wrap;
+
+						.t4t-article {
+							margin-right: 25px;
+
+							&:nth-of-type(2n) {
+								margin-right: 0;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		@media only screen and (max-width: 700px) {
+			#popnet {
+				#popular {
+					.inner {
+						flex-flow: column;
+
+						.list {
+							width: calc(100% - 25px);
+						}
+					}
+				}
+
+				#network {
+					.inner {
+						.list {
+							.t4t-article {
+								width: 100%;
+								max-width: unset;
+
+								margin-right: 0;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
