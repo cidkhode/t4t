@@ -51,8 +51,19 @@ class MainPage extends Component {
     console.log('Trying to sign out');
   };
 
+  // TODO: Remove this later...
   fetchTest = () => {
-    fetch('/api/add?name=cid&email=test@email.com')
+    fetch('/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        firstName: 'Cid',
+        lastName: 'Khode',
+        email: 'fake@gmail.com',
+        password: 'somepass',
+        userType: 'Writer',
+      })
+    })
       .then(resp => console.log(`Successful adding!`, resp))
       .catch(error => console.error(`Something wrong happened...`, error));
   };
