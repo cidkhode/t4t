@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.t4t.thought4thought.utils.Thought4ThoughtResponseObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class UserController {
@@ -21,7 +22,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/api/register")
-    public Thought4ThoughtResponseObject registerUser(@RequestBody User user) {
-        return userService.registerNewUser(user);
+    public Thought4ThoughtResponseObject registerUser(@RequestBody User user, @RequestPart(value = "profileImage") MultipartFile profileImage) {
+        return userService.registerNewUser(user, profileImage);
     }
 }

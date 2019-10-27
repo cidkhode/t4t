@@ -1,0 +1,5 @@
+amazonProperties:
+  endpointUrl: https://s3.us-east-2.amazonaws.com
+  accessKey: AKIAIRCIAOK4AMIU26LQ
+  secretKey: 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
+  bucketName: t4t-storage
