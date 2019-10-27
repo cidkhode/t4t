@@ -2,15 +2,15 @@ import React, { PureComponent } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 class SigninForm extends PureComponent {
-	// TODO: when login endpoint is completed in backend, handle login functionality
 	sendLogin = (values) => {
-		console.log(`Values`, values);
-		const { email, password } = values;
+		const {email, password} = values;
 		fetch('/api/login', {
-			method: 'post',
-			body: JSON.stringify({ email, password })
-		}).then(resp => console.log(`All users`, resp))
-			.catch(error => console.error(`Something went wrong trying to get all users`, error));
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ email,password })
+		})
+			.then(resp => console.log('Login Successful', resp))
+			.catch(error => console.error("Something went wrong.", error));
 	};
 
 	render(){
@@ -36,7 +36,7 @@ class SigninForm extends PureComponent {
 					<Field type="password" name="password" placeholder="Password" />
 					<ErrorMessage name="password" component="div" />
 
-					<button type="submit" disabled={isSubmitting}><span>Sign in</span><div className="arrow"/></button>
+					<button className="formik-sign-in-button" type="submit" disabled={isSubmitting}> <span> Sign in </span> <div className="arrow"/> </button>
 				</Form>
 				)}
 			</Formik>

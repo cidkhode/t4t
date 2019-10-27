@@ -11,7 +11,7 @@ import './Signin.less';
 
 const Signin = props => (
 	<ModalSkeleton isActive={ props.isActive }>
-		<div id="signin-container" className="modal-content">
+		<div className="signin-container modal-content">
 			<span onClick={ props.closeSignin } className="closeModal" />
 			<div className="inner">
 				<h3> Welcome Back </h3>

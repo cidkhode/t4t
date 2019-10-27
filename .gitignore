@@ -34,3 +34,5 @@ build/
 ### MISC ###
 node_modules
 dist
+.git
+.DS_Store

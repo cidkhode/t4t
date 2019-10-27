@@ -1,25 +1,16 @@
 @import '../../../styles/colors';
 
-.modal-container {
-	> .inner {
-		padding: 69px 50px 56px 50px !important;
-	}
-}
-
-
-#signin-container {
+.signin-container {
 	.inner {
 		padding: 0;
 
 		h3 {
 			margin: 0 0 70px 0;
 			text-align: center;
-
 			font-family: Roboto;
 			font-style: normal;
 			font-weight: normal;
-			font-size: 40px;
-			line-height: 47px;
+			font-size: 30px;
 		}
 
 		form {
@@ -29,14 +20,11 @@
 
 			input[type="email"], input[type="password"] {
 				border: none;
-				font-size: 13px;
-				padding: 0 0 22px 0;
-				margin: 0 0 59px;
+				padding: 0 0 12px 0;
+				margin: 0 0 25px;
 				border-bottom: 1px solid @t4t-gray05;
 				background-color: transparent;
-
-				font-size: 25px;
-				line-height: 29px;
+				font-size: 15px;
 
 				&:focus {
 					outline: none;
@@ -48,23 +36,20 @@
 				display: none;
 			}
 
-			button {
+			.formik-sign-in-button {
 				font-family: Roboto;
 				font-style: normal;
-				font-weight: 500;
-				font-size: 35px;
-				line-height: 41px;
+				font-size: 20px;
 				background-color: transparent;
-				padding: 0 !important;
-				position: relative;
-
 				display: flex;
 				flex-flow: row nowrap;
-				justify-content: space-between;
 				align-items: center;
-
-				&, &:focus {
-					border: none;
+				outline: none;
+				border: none;
+				padding: 0;
+				cursor: pointer;
+				span {
+					margin-right: 10px;
 				}
 
 				.arrow {
@@ -78,13 +63,10 @@
 					&:before, &:after {
 						height: 4px;
 						background-color: @t4t-black;
-
 						position: absolute;
 						right: 0;
-
 						content: '';
 						border-radius: 5px;
-						background-color: @t4t-black;
 					}
 
 					&:before {
@@ -112,8 +94,7 @@
 			margin: 50px 0 0 0;
 
 			a {
-				font-size: 30px;
-				line-height: 35px;
+				font-size: 20px;
 				text-decoration-line: underline;
 			}
 		}
