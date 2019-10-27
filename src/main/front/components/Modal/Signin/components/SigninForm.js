@@ -3,12 +3,11 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 class SigninForm extends PureComponent {
 	sendLogin = (values) => {
-		console.log('Values', values);
 		const {email, password} = values;
 		fetch('/api/login', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({email,password})
+			body: JSON.stringify({ email,password })
 		})
 			.then(resp => console.log('Login Successful', resp))
 			.catch(error => console.error("Something went wrong.", error));
