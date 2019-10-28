@@ -1,8 +1,8 @@
 import React from 'react';
-import {
-  array, bool, func, string
-} from 'prop-types';
+import { array, bool, func, string } from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
+/* Styles */
 import './Sidebar.less';
 
 export const Sidebar = props => (
@@ -11,10 +11,16 @@ export const Sidebar = props => (
       { props.isOpen && <p className="side-bar-option-text">{ props.name }</p> }<span className={ `side-bar-arrow ${props.isOpen ? 'collapse' : 'expand'}-arrow` } />
     </div>
     <div onClick={ props.isOpen ? () => props.onTopicSelection('myDashboard') : null } className={ `side-bar-option ${props.selectedOption === 'myDashboard' ? 'is-selected' : ''}` }>
-      { props.isOpen && <p className="side-bar-option-text">Dashboard</p> }<span className="side-bar-option-type" />
+      { props.isOpen && <NavLink exact to="/"><p className="side-bar-option-text">Home</p></NavLink> }
+      <span className="side-bar-option-type" />
+    </div>
+    <div onClick={ props.isOpen ? () => props.onTopicSelection('myDashboard') : null } className={ `side-bar-option ${props.selectedOption === 'myDashboard' ? 'is-selected' : ''}` }>
+      { props.isOpen && <NavLink exact to="/dashboard"><p className="side-bar-option-text">Dashboard</p></NavLink> }
+      <span className="side-bar-option-type" />
     </div>
     <div onClick={ props.isOpen ? () => props.onTopicSelection('myAccount') : null } className={ `side-bar-option ${props.selectedOption === 'myAccount' ? 'is-selected' : ''}` }>
-      { props.isOpen && <p className="side-bar-option-text">Account</p> }<span className="side-bar-option-type" />
+      { props.isOpen && <NavLink exact to="/dashboard/account"><p className="side-bar-option-text">Account</p></NavLink> }
+      <span className="side-bar-option-type" />
     </div>
     <div className="side-bar-option topics-sub-menu">
       { props.isOpen && <p className="side-bar-option-text">Topics</p> }<hr />
@@ -46,4 +52,5 @@ Sidebar.defaultProps = {
   isOpen: false,
   selectedOption: ''
 };
+
 export default Sidebar;

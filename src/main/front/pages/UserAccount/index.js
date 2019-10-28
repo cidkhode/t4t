@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Sidebar from '../components/Sidebar/Sidebar';
-import DashboardContainer from '../components/Dashboard/DashboardContainer.js';
-import AccountView from '../components/Dashboard/Account/AccountView.js';
+
+/* Components */
+import Sidebar from "../../components/Sidebar/Sidebar";
+import Navbar from "../../components/Navbar/Navbar";
+import DashboardContainer from '../../components/Dashboard/DashboardContainer.js';
+import AccountView from '../../components/Dashboard/Account/AccountView.js';
+
+/* Styles */
+import './UserAccount.less';
 
 export class UserAccount extends Component {
   constructor(props) {
@@ -31,28 +37,29 @@ export class UserAccount extends Component {
 
   render() {
     return (
-      <DashboardContainer
-        interests={ this.props.interests }
-        pointsOfView={ this.props.pointsOfView }
-        userAccountDetails={this.props.userAccountDetails}
-      >
-        <>
+      <>
+        <Navbar />
+        <Sidebar
+          topics={ this.fetchTopics() }
+          onTopicSelection={ this.selectTopic }
+          onOpen={ this.openSideBar }
+          name={ this.props.userAccountDetails.name }
+          isOpen={ this.state.sideBarOpen }
+          onSignOut={ this.signOut }
+          selectedOption={ this.state.selectedSideBarOption }
+        />
+        <DashboardContainer
+          interests={ this.props.interests }
+          pointsOfView={ this.props.pointsOfView }
+          userAccountDetails={this.props.userAccountDetails}
+        >
           <AccountView
             savedArticles={ this.props.savedArticles }
             followingUsers={ this.props.followingUsers }
             userAccountDetails={ this.props.userAccountDetails }
           />
-          <Sidebar
-            topics={ this.fetchTopics() }
-            onTopicSelection={ this.selectTopic }
-            onOpen={ this.openSideBar }
-            name={ this.props.userAccountDetails.name }
-            isOpen={ this.state.sideBarOpen }
-            onSignOut={ this.signOut }
-            selectedOption={ this.state.selectedSideBarOption }
-          />
-        </>
-      </DashboardContainer>
+        </DashboardContainer>
+      </>
     )
   }
 }
