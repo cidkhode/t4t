@@ -8,6 +8,21 @@
   z-index: 10;
   font-family: 'Roboto';
 
+  > a {
+    text-decoration: none !important;
+
+    &.is-selected {
+      .side-bar-option {
+        color: @t4t-gray08;
+        background-color: @t4t-gray02 !important;
+
+        .side-bar-option-type {
+          background-color: @t4t-gray03;
+        }
+      }
+    }
+  }
+
   &.is-open {
     .side-bar-option {
       width: 200px;
@@ -26,6 +41,7 @@
       max-width: 100px;
       overflow: hidden;
       text-overflow: ellipsis;
+      text-decoration: none;
     }
   }
 
@@ -70,13 +86,7 @@
       margin-right: 30px;
     }
 
-    &.is-selected {
-      color: @t4t-gray08;
-
-      .side-bar-option-type {
-        background-color: @t4t-gray03;
-      }
-    }
+    &.is-selected {}
 
     &:not(.side-bar-expand) {
       background: @t4t-gray01;
