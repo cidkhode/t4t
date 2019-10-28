@@ -2,9 +2,20 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import MainPage from './pages/MainPage';
-// import UserAccount from './pages/UserAccount';
+import UserAccount from './pages/UserAccount';
 
 export class Thought4Thought extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userAccountDetails: {
+        name: 'Cid Khode',
+        email: 'cid@fakeemail.com',
+        image: 'https://i.pravatar.cc/175',
+        about: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+      }
+    };
+  }
   // TODO: we will be fetching all this info later on...
   getSavedArticles = () => [{
     title: 'Mock Article 1',
@@ -116,17 +127,35 @@ export class Thought4Thought extends Component {
     { title: 'Some view 8' },
   ];
 
+  getProfile = () => {
+    fetch('/api/user?userEmail=chidanandkhode@gmail.com')
+    .then(resp => {
+      return resp.json();
+    })
+    .then(json => {
+      const { profilePictureURL } = json;
+      this.setState({
+        userAccountDetails: {
+          ...this.state.userAccountDetails,
+          image: profilePictureURL
+        }
+      })
+    })
+    .catch(err => console.error(err));
+  };
+
   render() {
     return (
 		<div>
-			<MainPage />
-      { /* <UserAccount
+      <MainPage />
+      {/*<UserAccount
+        getProfile={ this.getProfile }
         interests={ this.getInterests() }
         pointsOfView={ this.getPointsOfView() }
-        userAccountDetails={ this.getUserAccountDetails() }
+        userAccountDetails={ this.state.userAccountDetails }
         savedArticles={ this.getSavedArticles() }
         followingUsers={ this.getFollowingUsers() }
-      /> */ }
+      />*/}
 		</div>
     )
   }

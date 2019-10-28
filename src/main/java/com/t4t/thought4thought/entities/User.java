@@ -26,6 +26,8 @@ public class User {
 
     private String viewPoints;
 
+    private String profilePictureURL;
+
     public Integer getId() {
         return id;
     }
@@ -104,5 +106,13 @@ public class User {
 
     public void setViewPoints(String viewPoints) {
         this.viewPoints = viewPoints;
+    }
+
+    public String getProfilePictureURL() {
+        return profilePictureURL;
+    }
+
+    public void setProfilePictureURL(String profilePictureURL) {
+        this.profilePictureURL = profilePictureURL;
     }
 }

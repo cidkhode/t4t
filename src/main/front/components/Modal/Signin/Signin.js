@@ -15,7 +15,7 @@ const Signin = props => (
 			<span onClick={ props.closeSignin } className="closeModal" />
 			<div className="inner">
 				<h3> Welcome Back </h3>
-				<SigninForm />
+				<SigninForm sendLogin={ props.sendLogin }/>
 
 				<div className="link-group">
 					<a href="#"> Sign up </a>
@@ -29,6 +29,7 @@ const Signin = props => (
 Signin.propTypes = {
 	isActive: bool.isRequired,
 	closeSignin: func.isRequired,
+	sendLogin: func.isRequired,
 };
 
 export default Signin;

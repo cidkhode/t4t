@@ -29,12 +29,34 @@ export class UserAccount extends Component {
 
   signOut = () => { console.log('Trying to sign out'); };
 
+  editProfilePic = (editProfilePicRef) => {
+    editProfilePicRef.click();
+  };
+
+  submitProfilePic = (e) => {
+    console.log(`FILES SELECTED`, e.target.files[0]);
+    const data = new FormData();
+    data.append('file', e.target.files[0]);
+    fetch('/api/storage/uploadFile', {
+      method: 'post',
+      body: data,
+    })
+    .then(resp => resp.json())
+    .then(json => {
+      if (json.status === 0) {
+        this.props.getProfile();
+      }
+    })
+  };
+
   render() {
     return (
       <DashboardContainer
         interests={ this.props.interests }
         pointsOfView={ this.props.pointsOfView }
         userAccountDetails={this.props.userAccountDetails}
+        editProfilePic={ this.editProfilePic }
+        submitProfilePic={ this.submitProfilePic }
       >
         <>
           <AccountView
@@ -81,6 +103,7 @@ UserAccount.propTypes = {
   pointsOfView: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
   })),
+  getProfile: PropTypes.func.isRequired,
 };
 
 UserAccount.defaultProps = {

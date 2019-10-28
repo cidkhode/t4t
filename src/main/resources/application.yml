@@ -1,5 +1,5 @@
 amazonProperties:
-  endpointUrl: https://s3.us-east-2.amazonaws.com
-  accessKey: AKIAIRCIAOK4AMIU26LQ
-  secretKey: 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
-  bucketName: t4t-storage
+  endpointUrl: ENC(qGDkCTsSoIYO1zPBYaKQWohHT10gyM3LifmCQJYnftjSNIJGpKYPs1ZvXO/eg6Gx)
+  accessKey: ENC(bZDiRZB+q3sUsqdHUojX5hnx6oCb+huxxKL6djl/jfc=)
+  secretKey: ENC(yxG4BW7eXlvRGSX1EEBCGZRmMYxPbDALcRHiVhocAL3oDigIOGt7Zyu987VNBTC9KdkXEz4cDzA=)
+  bucketName: ENC(ahkCtgBikLtGe2PkjK2EzdRZrw30DNio)

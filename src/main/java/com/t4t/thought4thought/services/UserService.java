@@ -8,6 +8,9 @@ import com.t4t.thought4thought.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import static com.t4t.thought4thought.utils.Constants.*;
 
 @Service
@@ -26,7 +29,11 @@ public class UserService {
                 .equals(passwordEncryptor.encryptPassword(password, user.getPasswordSalt()));
     }
 
-    public Thought4ThoughtResponseObject registerNewUser(User user, MultipartFile profileImage) {
+    public User getUserByEmail(String userEmail) {
+        return userRepository.findByEmail(userEmail);
+    }
+
+    public Thought4ThoughtResponseObject registerNewUser(User user) {
         Thought4ThoughtResponseObject thought4ThoughtResponseObject =
                 new Thought4ThoughtResponseObject().createResponse(T4T_SUCCESS_CODE, "Saved user successfully!");
         PasswordEncryptor passwordEncryptor = new PasswordEncryptor();
@@ -37,10 +44,6 @@ public class UserService {
             try {
                 user.setPassword(passwordEncryptor.encryptPassword(user.getPassword(), user.getPasswordSalt()));
                 userRepository.save(user);
-
-                /* Upload the user profile image to Amazon S3 bucket */
-                awsS3Service.uploadProfileImage(profileImage, user.getEmail());
-
             } catch (Exception e) {
                 thought4ThoughtResponseObject.setStatus(T4T_ERROR_CODE);
                 thought4ThoughtResponseObject.setInfo("Something went wrong...");

@@ -4,22 +4,23 @@ import Signin from "../Modal/Signin/Signin";
 import Signup from "../Modal/Signup/Signup";
 import Searchbar from '../Searchbar/Searchbar';
 import './Navbar.less';
-import { POPUP_KEYS } from '../../utils/constants';
+import { POPUP_KEYS, LOCAL_STORAGE_KEYS } from '../../utils/constants';
 import searchImg from '../../assets/search.png'
-
 
 class Navbar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      [POPUP_KEYS.loginPopupOpen]: false,
-      [POPUP_KEYS.signupPopupOpen]: false,
+      [POPUP_KEYS.LOGIN_POPUP_OPEN]: false,
+      [POPUP_KEYS.SIGNUP_POPUP_OPEN]: false,
       searchText: '',
     }
   }
 
   togglePopup = (key, isOpen) => {
-    this.setState({ [key]: isOpen });
+    this.setState({ [key]: isOpen }, () => {
+      console.log(`KEY`, key, isOpen)
+    });
   };
 
   onSearchInputChange = e => {
@@ -29,6 +30,23 @@ class Navbar extends Component {
 
   onSearch = () => {
     console.log(`Searching for: `, this.state.searchText);
+  };
+
+  sendLogin = (values) => {
+    const { email, password } = values;
+    fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email,password })
+    })
+      .then(resp => resp.json())
+      .then(json => {
+        if (json.status === 0) {
+          this.togglePopup(POPUP_KEYS.LOGIN_POPUP_OPEN, false);
+          localStorage.setItem(LOCAL_STORAGE_KEYS.LOGGED_IN_USER_EMAIL, email);
+        }
+      })
+      .catch(error => console.error("Something went wrong.", error));
   };
 
   render() {
@@ -47,21 +65,22 @@ class Navbar extends Component {
           />
           <Button
             extraClass="nav-bar-sign-in-button nav-bar-right-child"
-            handleClick={ () => this.togglePopup(POPUP_KEYS.loginPopupOpen, !this.state[POPUP_KEYS.loginPopupOpen]) }
+            handleClick={ () => this.togglePopup(POPUP_KEYS.LOGIN_POPUP_OPEN, !this.state[POPUP_KEYS.LOGIN_POPUP_OPEN]) }
             text="Log in"
           />
           <Button
             extraClass="nav-bar-sign-up-button"
-            handleClick={ () => this.togglePopup(POPUP_KEYS.loginPopupOpen, !this.state[POPUP_KEYS.loginPopupOpen]) }
+            handleClick={ () => this.togglePopup(POPUP_KEYS.SIGNUP_POPUP_OPEN, !this.state[POPUP_KEYS.SIGNUP_POPUP_OPEN]) }
             text="Register!"
           />
           <Signin
-            closeSignin={ () => this.togglePopup(POPUP_KEYS.loginPopupOpen, !this.state[POPUP_KEYS.loginPopupOpen]) }
-            isActive={ this.state[POPUP_KEYS.loginPopupOpen] }
+            sendLogin={ this.sendLogin }
+            closeSignin={ () => this.togglePopup(POPUP_KEYS.LOGIN_POPUP_OPEN, !this.state[POPUP_KEYS.LOGIN_POPUP_OPEN]) }
+            isActive={ this.state[POPUP_KEYS.LOGIN_POPUP_OPEN] }
           />
           <Signup
-            closeSignup={ () => this.togglePopup(POPUP_KEYS.signupPopupOpen, !this.state[POPUP_KEYS.signupPopupOpen]) }
-            isActive={ this.state[POPUP_KEYS.signupPopupOpen] }
+            closeSignup={ () => this.togglePopup(POPUP_KEYS.SIGNUP_POPUP_OPEN, !this.state[POPUP_KEYS.SIGNUP_POPUP_OPEN]) }
+            isActive={ this.state[POPUP_KEYS.SIGNUP_POPUP_OPEN] }
           />
         </div>
       </div>
