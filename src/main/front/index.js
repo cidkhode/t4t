@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 /* Components */
 import MainPage from './pages/MainPage/';
@@ -9,6 +11,9 @@ import UserDashboard from './pages/UserDashboard/';
 
 /* Styles */
 import './index.css';
+
+/* Redux Store */
+import store from './redux/store.js';
 
 export class Thought4Thought extends Component {
   // TODO: we will be fetching all this info later on...
@@ -124,33 +129,35 @@ export class Thought4Thought extends Component {
 
   render() {
     return (
-		  <Router>
-        <>
-          <Switch>
-          <Route path="/dashboard/account">
-              <UserAccount
-                interests={ this.getInterests() }
-                pointsOfView={ this.getPointsOfView() }
-                userAccountDetails={ this.getUserAccountDetails() }
-                savedArticles={ this.getSavedArticles() }
-                followingUsers={ this.getFollowingUsers() }
-              />
-            </Route>
-            <Route path="/dashboard">
-              <UserDashboard
-                interests={ this.getInterests() }
-                pointsOfView={ this.getPointsOfView() }
-                userAccountDetails={ this.getUserAccountDetails() }
-                allArticles={ this.getSavedArticles() }
-                latestArticles={ this.getSavedArticles() }
-              />
-            </Route>
-            <Route path="/">
-              <MainPage />
-            </Route>
-          </Switch>
-        </>
-      </Router>
+      <Provider store={store}>
+  		  <Router>
+          <>
+            <Switch>
+            <Route path="/dashboard/account">
+                <UserAccount
+                  interests={ this.getInterests() }
+                  pointsOfView={ this.getPointsOfView() }
+                  userAccountDetails={ this.getUserAccountDetails() }
+                  savedArticles={ this.getSavedArticles() }
+                  followingUsers={ this.getFollowingUsers() }
+                />
+              </Route>
+              <Route path="/dashboard">
+                <UserDashboard
+                  interests={ this.getInterests() }
+                  pointsOfView={ this.getPointsOfView() }
+                  userAccountDetails={ this.getUserAccountDetails() }
+                  allArticles={ this.getSavedArticles() }
+                  latestArticles={ this.getSavedArticles() }
+                />
+              </Route>
+              <Route path="/">
+                <MainPage />
+              </Route>
+            </Switch>
+          </>
+        </Router>
+      </Provider>
     )
   }
 }

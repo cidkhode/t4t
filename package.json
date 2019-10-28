@@ -25,10 +25,13 @@
     "react-dnd-html5-backend": "^9.4.0",
     "react-overlays": "^1.2.0",
     "react-prop-types": "^0.4.0",
+    "react-redux": "^7.1.1",
     "react-router": "^5.0.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.1.2",
     "react-select": "^3.0.5",
+    "redux": "^4.0.4",
+    "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "uncontrollable": "^7.0.1",
     "warning": "^4.0.3"
