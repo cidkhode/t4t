@@ -52,7 +52,7 @@ class Navbar extends Component {
           />
           <Button
             extraClass="nav-bar-sign-up-button"
-            handleClick={ () => this.togglePopup(POPUP_KEYS.loginPopupOpen, !this.state[POPUP_KEYS.loginPopupOpen]) }
+            handleClick={ () => this.togglePopup(POPUP_KEYS.signupPopupOpen, !this.state[POPUP_KEYS.signupPopupOpen]) }
             text="Register!"
           />
           <Signin
