@@ -1,26 +1,30 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+/* Components */
 import Button from "../Button/Button";
 import Signin from "../Modal/Signin/Signin";
 import Signup from "../Modal/Signup/Signup";
 import Searchbar from '../Searchbar/Searchbar';
-import './Navbar.less';
-import { POPUP_KEYS } from '../../utils/constants';
+
+/* Redux Actions - Modal Toggles */
+import { toggleSigninModal, toggleSignupModal } from '../../redux/actions/modal.js';
+
+/* Images */
 import searchImg from '../../assets/search.png'
 
+/* Styles */
+import './Navbar.less';
 
 class Navbar extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      [POPUP_KEYS.loginPopupOpen]: false,
-      [POPUP_KEYS.signupPopupOpen]: false,
       searchText: '',
     }
   }
-
-  togglePopup = (key, isOpen) => {
-    this.setState({ [key]: isOpen });
-  };
 
   onSearchInputChange = e => {
     const { target } = e;
@@ -47,25 +51,32 @@ class Navbar extends Component {
           />
           <Button
             extraClass="nav-bar-sign-in-button nav-bar-right-child"
-            handleClick={ () => this.togglePopup(POPUP_KEYS.loginPopupOpen, !this.state[POPUP_KEYS.loginPopupOpen]) }
+            handleClick={ this.props.toggleSigninModal }
             text="Log in"
           />
           <Button
             extraClass="nav-bar-sign-up-button"
-            handleClick={ () => this.togglePopup(POPUP_KEYS.loginPopupOpen, !this.state[POPUP_KEYS.loginPopupOpen]) }
+            handleClick={ this.props.toggleSignupModal }
             text="Register!"
           />
           <Signin
-            closeSignin={ () => this.togglePopup(POPUP_KEYS.loginPopupOpen, !this.state[POPUP_KEYS.loginPopupOpen]) }
-            isActive={ this.state[POPUP_KEYS.loginPopupOpen] }
+            closeSignin={ this.props.toggleSigninModal }
+            isActive={ this.props.modal_status.is_signin_open }
           />
           <Signup
-            closeSignup={ () => this.togglePopup(POPUP_KEYS.signupPopupOpen, !this.state[POPUP_KEYS.signupPopupOpen]) }
-            isActive={ this.state[POPUP_KEYS.signupPopupOpen] }
+            closeSignup={ this.props.toggleSignupModal }
+            isActive={ this.props.modal_status.is_signup_open }
           />
         </div>
       </div>
     );
   }
 }
-export default Navbar;
+
+const mapStateToProps = (state) => {
+  return { modal_status: state.modal_status };
+}
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({ toggleSigninModal, toggleSignupModal }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
