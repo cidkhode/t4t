@@ -2,13 +2,13 @@ package com.t4t.thought4thought.controllers;
 
 import com.t4t.thought4thought.services.AwsS3Service;
 import com.t4t.thought4thought.utils.Thought4ThoughtResponseObject;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/storage/")
@@ -23,8 +23,9 @@ public class AwsS3BucketController {
 
     @PostMapping("/uploadFile")
     public Thought4ThoughtResponseObject uploadFile(@RequestPart(value = "file") MultipartFile file, HttpServletRequest request, HttpSession session) {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         return this.amazonClient.saveUserProfilePicture(file,
-                Objects.requireNonNull(file.getOriginalFilename()),
+                extension,
                 (String) session.getAttribute("userEmail"));
     }
 

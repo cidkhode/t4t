@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { LOCAL_STORAGE_KEYS } from "./utils/constants";
 import './index.css';
 import MainPage from './pages/MainPage';
 import UserAccount from './pages/UserAccount';
@@ -128,7 +129,7 @@ export class Thought4Thought extends Component {
   ];
 
   getProfile = () => {
-    fetch('/api/user?userEmail=chidanandkhode@gmail.com')
+    fetch(`/api/user?userEmail=${localStorage.getItem(LOCAL_STORAGE_KEYS.LOGGED_IN_USER_EMAIL)}`)
     .then(resp => {
       return resp.json();
     })
@@ -147,15 +148,15 @@ export class Thought4Thought extends Component {
   render() {
     return (
 		<div>
-      <MainPage />
-      {/*<UserAccount
+      {/*<MainPage />*/}
+      <UserAccount
         getProfile={ this.getProfile }
         interests={ this.getInterests() }
         pointsOfView={ this.getPointsOfView() }
         userAccountDetails={ this.state.userAccountDetails }
         savedArticles={ this.getSavedArticles() }
         followingUsers={ this.getFollowingUsers() }
-      />*/}
+      />
 		</div>
     )
   }

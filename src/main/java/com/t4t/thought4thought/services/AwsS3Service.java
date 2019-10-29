@@ -7,6 +7,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.t4t.thought4thought.entities.User;
 import com.t4t.thought4thought.repositories.UserRepository;
 import com.t4t.thought4thought.utils.Constants;
 import com.t4t.thought4thought.utils.Thought4ThoughtResponseObject;
@@ -43,19 +44,30 @@ public class AwsS3Service {
     }
 
     public Thought4ThoughtResponseObject saveUserProfilePicture(MultipartFile multipartFile,
-                                                                String fileName,
+                                                                String fileExtension,
                                                                 String userEmailInSession) {
         Thought4ThoughtResponseObject thought4ThoughtResponseObject =
-                new Thought4ThoughtResponseObject().createResponse(0,
-                        "Successfully uploaded new profile picture!");
-        String userProfilePictureURL = uploadProfileImage(multipartFile, fileName);
-        if (userProfilePictureURL.length() > 0) {
-            if (userEmailInSession != null) {
-                userRepository.setUserProfilePictureURLByEmail(userProfilePictureURL, userEmailInSession);
-            }
+                new Thought4ThoughtResponseObject().createResponse(-1,
+                        "Couldn't upload; Something went terribly wrong!");
+        String trueExtension = "";
+        if (fileExtension == null) {
+            trueExtension = "jpg";
         } else {
-            thought4ThoughtResponseObject.setStatus(-1);
-            thought4ThoughtResponseObject.setInfo("Couldn't upload a new picture!");
+            trueExtension = fileExtension;
+        }
+        if (userEmailInSession != null) {
+            User userInSession = userRepository.findByEmail(userEmailInSession);
+            String fileName = userInSession.getFirstName() + "_" +
+                    userInSession.getLastName() + "_" + userInSession.getId() + "." + trueExtension;
+            String userProfilePictureURL = uploadProfileImage(multipartFile, fileName);
+            if (userProfilePictureURL.length() > 0) {
+                userRepository.setUserProfilePictureURLByEmail(userProfilePictureURL, userEmailInSession);
+                thought4ThoughtResponseObject.setStatus(0);
+                thought4ThoughtResponseObject.setInfo("Uploaded a new picture!");
+            } else {
+                thought4ThoughtResponseObject.setStatus(-1);
+                thought4ThoughtResponseObject.setInfo("Couldn't upload a new picture!");
+            }
         }
         return thought4ThoughtResponseObject;
     }
