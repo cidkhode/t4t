@@ -46,8 +46,8 @@ export class UserAccount extends Component {
     data.append('about', this.state.about);
     console.log(data);
     fetch('/api/update', {
-      method: 'get',
-      body: data,
+      method: 'post',
+      body: JSON.stringify(),
     }).then(resp => console.log(resp)).then(resp => resp.json())
     .then(json => {
       if(json.status === 0) {

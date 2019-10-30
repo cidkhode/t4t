@@ -39,9 +39,8 @@ public class UserController {
 
 
     // Edit the about me section (later pov and interest)
-    @GetMapping(path ="/api/update")
-    @ResponseBody
-    public Thought4ThoughtResponseObject updateAboutMe(@RequestParam String newAboutMe, @RequestParam String userEmail){
+    @PostMapping(path ="/api/update")
+    public Thought4ThoughtResponseObject updateAboutMe(@RequestBody ObjectNode String newAboutMe, @RequestParam String userEmail){
         return this.userService.saveAboutMe(newAboutMe, userEmail);
     }
 
