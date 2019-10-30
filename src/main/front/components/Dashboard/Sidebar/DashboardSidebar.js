@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { POPUP_KEYS, LOCAL_STORAGE_KEYS } from '../../../utils/constants';
+import AddInterest from '../../Modal/AddInterest/AddInterest';
 
 /* Styles */
 import './DashboardSidebar.less';
@@ -8,7 +10,17 @@ export class DashboardSidebar extends Component {
 	constructor(props){
 		super(props);
 		this.editProfilePicRef = null;
+		this.state = {
+			[POPUP_KEYS.INTERESTS_POPUP_OPEN]: false,
+			[POPUP_KEYS.VIEWS_POPUP_OPEN]: false,
+		}
 	}
+
+	togglePopup = (key, isOpen) => {
+		this.setState({ [key]: isOpen }, () => {
+		  console.log(`KEY`, key, isOpen)
+		});
+	};
 
 	getDashboardSidebarContent = data => (
 		data.map((interest, key, interestsArray) => {
@@ -18,21 +30,29 @@ export class DashboardSidebar extends Component {
 					if (key < interestsArray.length-1) {
 						return (
 							<div key={ key } className="split">
-								<div className="split-items"><span>{interest.title}</span><button className="x-button"/></div>
-								<div className="split-items"><span>{interestsArray[key+1].title}</span></div>
+								<div className="split-items"><span>{interest.title}</span><button className="x-button" onClick={ this.deleteInterest }/></div>
+								<div className="split-items"><span>{interestsArray[key+1].title}</span><button className="x-button"/></div>
 							</div>
 						)
 					} else {
-						return <div key={ key } className="split-items"><span>{interest.title}</span></div>
+						return <div key={ key } className="split-items"><span>{interest.title}</span><button className="x-button"/></div>
 					}
 				}
 				case 2: break;
 				case 0: {
-					return <div key={ key } className="split-items"><span>{interest.title}</span></div>
+					return <div key={ key } className="split-items"><span>{interest.title}</span><button className="x-button"/></div>
 				}
 			}
 		})
 	);
+
+	addInfo = (type) => {
+
+	}
+
+	delInfo = (type) => {
+
+	}
 
 	render() {
 		return(
@@ -55,13 +75,17 @@ export class DashboardSidebar extends Component {
 					</div>
 				</div>
 				<div className="dashboard-interests tag-container">
-					<h4> Interests </h4>
+					<h4> Interests <a href="javascript:void(0)" onClick={() => this.setState({[POPUP_KEYS.INTERESTS_POPUP_OPEN]: true})}>Add...</a></h4>
 					{ this.getDashboardSidebarContent(this.props.interests) }
 				</div>
 				<div id="dashboard-pov" className="tag-container">
-					<h4> Points of View </h4>
+					<h4> Points of View <a href="javascript:void(0)">Add...</a></h4>
 					{ this.getDashboardSidebarContent(this.props.pointsOfView) }
 				</div>
+				<AddInterest
+					closeWindow={ () => this.togglePopup(POPUP_KEYS.INTERESTS_POPUP_OPEN, !this.state[POPUP_KEYS.INTERESTS_POPUP_OPEN]) }
+					isActive= { this.state[POPUP_KEYS.INTERESTS_POPUP_OPEN] }
+				/>
 			</div>
 		);
 	}

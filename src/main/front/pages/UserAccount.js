@@ -48,7 +48,7 @@ export class UserAccount extends Component {
     fetch('/api/update', {
       method: 'post',
       body: data,
-    }).then(resp => console.log(resp)).then(resp => resp.json())
+    }).then(resp => resp.json())
     .then(json => {
       if(json.status === 0) {
         this.props.getProfile();
@@ -56,6 +56,18 @@ export class UserAccount extends Component {
       console.log(json);
     })
   }
+  
+  deleteInterest = (e) => {
+		fetch('/api/delete', {
+			method: 'post',
+			body: JSON.stringify(e.target.value)
+		}).then(resp => resp.json())
+		.then(json => {
+			if(json.status === 0) {
+				this.getProfile();
+			}
+		})
+	}
 
   submitProfilePic = (e) => {
     console.log(`FILES SELECTED`, e.target.files[0]);
@@ -64,11 +76,12 @@ export class UserAccount extends Component {
     fetch('/api/storage/uploadFile', {
       method: 'post',
       body: data,
-    }).then(resp => console.log(resp))
+    })
     .then(resp => resp.json())
     .then(json => {
       if (json.status === 0) {
         this.props.getProfile();
+        this.setState({editing: false});
       }
       console.log(json);
     })  
