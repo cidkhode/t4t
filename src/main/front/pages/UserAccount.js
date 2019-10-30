@@ -12,6 +12,7 @@ export class UserAccount extends Component {
       sideBarOpen: false,
       selectedSideBarOption: '',
       editing: false,
+      about: this.props.userAccountDetails.about,
     };
   }
 
@@ -37,6 +38,23 @@ export class UserAccount extends Component {
 
   edit = () => this.setState(prevState => ({ editing: !prevState.editing }));
 
+  onChange = (e) => this.setState({about: e.target.value});
+
+  updateAboutMe = () => {
+    console.log(this.state.about);
+    const data = new FormData();
+    data.append('about', this.state.about);
+    fetch('/api/update', {
+      method: 'post',
+      body: data,
+    }).then(resp => resp.json())
+    .then(json => {
+      if(json.status === 0) {
+        this.props.getProfile();
+      }
+    })
+  }
+
   submitProfilePic = (e) => {
     console.log(`FILES SELECTED`, e.target.files[0]);
     const data = new FormData();
@@ -50,7 +68,7 @@ export class UserAccount extends Component {
       if (json.status === 0) {
         this.props.getProfile();
       }
-    })
+    })  
   };
 
   render() {
@@ -68,8 +86,11 @@ export class UserAccount extends Component {
             followingUsers={ this.props.followingUsers }
             userAccountDetails={ this.props.userAccountDetails }
             editMode={ this.state.editing }
+            onChangeHandler= { this.onChange }
+            currentAbout= { this.state.about }
           />
           <Button text="Edit" handleClick={this.edit}/>
+          {this.state.editing && <button onClick={ this.updateAboutMe }>Submit</button>}
           <Sidebar
             topics={ this.fetchTopics() }
             onTopicSelection={ this.selectTopic }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { array, bool } from 'prop-types';
+import { array, bool, func, string } from 'prop-types';
 import './Account.less';
 
 const AccountView = props => (
@@ -7,7 +7,7 @@ const AccountView = props => (
 		<div id="account-user-info">
 			<p className="account-name">{props.userAccountDetails.name}</p>
 			<p className="account-email">{props.userAccountDetails.email}</p>
-			{props.editMode ? (<input type="text" value={props.userAccountDetails.about} className="account-about"/>) : (<p className="account-about">{props.userAccountDetails.about}</p>)}
+			{props.editMode ? (<input type="text" value={props.currentAbout} className="account-about" id="aboutMe" onChange={props.onChangeHandler}/>) : (<p className="account-about">{props.userAccountDetails.about}</p>)}
 		</div>
 
 		<div id="account-article-saved" className="article-container">
@@ -55,6 +55,8 @@ AccountView.propTypes = {
 	savedArticles: array.isRequired,
 	followingUsers: array.isRequired,
 	editMode: bool.isRequired,
+	onChangeHandler: func.isRequired,
+	currentAbout: string.isRequired,
 };
 
 export default AccountView;
