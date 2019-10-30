@@ -18,7 +18,7 @@ export class DashboardSidebar extends Component {
 					if (key < interestsArray.length-1) {
 						return (
 							<div key={ key } className="split">
-								<div className="split-items"><span>{interest.title}</span></div>
+								<div className="split-items"><span>{interest.title}</span><button className="x-button"/></div>
 								<div className="split-items"><span>{interestsArray[key+1].title}</span></div>
 							</div>
 						)

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Sidebar from '../components/Sidebar/Sidebar';
 import DashboardContainer from '../components/Dashboard/DashboardContainer.js';
 import AccountView from '../components/Dashboard/Account/AccountView.js';
+import Button from '../components/Button/Button';
 
 export class UserAccount extends Component {
   constructor(props) {
@@ -10,6 +11,7 @@ export class UserAccount extends Component {
     this.state = {
       sideBarOpen: false,
       selectedSideBarOption: '',
+      editing: false,
     };
   }
 
@@ -32,6 +34,8 @@ export class UserAccount extends Component {
   editProfilePic = (editProfilePicRef) => {
     editProfilePicRef.click();
   };
+
+  edit = () => this.setState(prevState => ({ editing: !prevState.editing }));
 
   submitProfilePic = (e) => {
     console.log(`FILES SELECTED`, e.target.files[0]);
@@ -63,7 +67,9 @@ export class UserAccount extends Component {
             savedArticles={ this.props.savedArticles }
             followingUsers={ this.props.followingUsers }
             userAccountDetails={ this.props.userAccountDetails }
+            editMode={ this.state.editing }
           />
+          <Button text="Edit" handleClick={this.edit}/>
           <Sidebar
             topics={ this.fetchTopics() }
             onTopicSelection={ this.selectTopic }
