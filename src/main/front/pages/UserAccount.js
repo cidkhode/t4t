@@ -44,14 +44,16 @@ export class UserAccount extends Component {
     console.log(this.state.about);
     const data = new FormData();
     data.append('about', this.state.about);
+    console.log(data);
     fetch('/api/update', {
       method: 'post',
       body: data,
-    }).then(resp => resp.json())
+    }).then(resp => console.log(resp)).then(resp => resp.json())
     .then(json => {
       if(json.status === 0) {
         this.props.getProfile();
       }
+      console.log(json);
     })
   }
 
@@ -62,12 +64,13 @@ export class UserAccount extends Component {
     fetch('/api/storage/uploadFile', {
       method: 'post',
       body: data,
-    })
+    }).then(resp => console.log(resp))
     .then(resp => resp.json())
     .then(json => {
       if (json.status === 0) {
         this.props.getProfile();
       }
+      console.log(json);
     })  
   };
 
