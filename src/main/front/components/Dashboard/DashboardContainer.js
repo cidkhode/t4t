@@ -12,6 +12,7 @@ const DashboardContainer = props => {
 				pointsOfView={ props.pointsOfView }
 				editProfilePic={ props.editProfilePic }
 				submitProfilePic={ props.submitProfilePic }
+				delete={ props.delete }
 			/>
 			{props.children}
 		</div>
@@ -25,6 +26,7 @@ DashboardContainer.propTypes = {
 	pointsOfView: PropTypes.array.isRequired,
 	editProfilePic: PropTypes.func.isRequired,
 	submitProfilePic: PropTypes.func.isRequired,
+	delete: PropTypes.func.isRequired,
 };
 
 export default DashboardContainer;

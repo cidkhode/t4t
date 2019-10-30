@@ -22,7 +22,7 @@ export class DashboardSidebar extends Component {
 		});
 	};
 
-	getDashboardSidebarContent = data => (
+	getDashboardSidebarContent = (data, type) => (
 		data.map((interest, key, interestsArray) => {
 			const mod = key % 3;
 			switch (mod) {
@@ -30,29 +30,21 @@ export class DashboardSidebar extends Component {
 					if (key < interestsArray.length-1) {
 						return (
 							<div key={ key } className="split">
-								<div className="split-items"><span>{interest.title}</span><button className="x-button" onClick={ this.deleteInterest }/></div>
-								<div className="split-items"><span>{interestsArray[key+1].title}</span><button className="x-button"/></div>
+								<div className="split-items"><span>{interest.title}</span><button className="x-button" onClick={ this.props.delete } id={key} name={type}/></div>
+								<div className="split-items"><span>{interestsArray[key+1].title}</span><button className="x-button" onClick={ this.props.delete } id={key+1} name={type}/></div>
 							</div>
 						)
 					} else {
-						return <div key={ key } className="split-items"><span>{interest.title}</span><button className="x-button"/></div>
+						return <div key={ key } className="split-items"><span>{interest.title}</span><button className="x-button" onClick={ this.props.delete } id={key} name={type}/></div>
 					}
 				}
 				case 2: break;
 				case 0: {
-					return <div key={ key } className="split-items"><span>{interest.title}</span><button className="x-button"/></div>
+					return <div key={ key } className="split-items"><span>{interest.title}</span><button className="x-button" onClick={ this.props.delete } id={key} name={type}/></div>
 				}
 			}
 		})
 	);
-
-	addInfo = (type) => {
-
-	}
-
-	delInfo = (type) => {
-
-	}
 
 	render() {
 		return(
@@ -76,11 +68,11 @@ export class DashboardSidebar extends Component {
 				</div>
 				<div className="dashboard-interests tag-container">
 					<h4> Interests <a href="javascript:void(0)" onClick={() => this.setState({[POPUP_KEYS.INTERESTS_POPUP_OPEN]: true})}>Add...</a></h4>
-					{ this.getDashboardSidebarContent(this.props.interests) }
+					{ this.getDashboardSidebarContent(this.props.interests, "interest") }
 				</div>
 				<div id="dashboard-pov" className="tag-container">
 					<h4> Points of View <a href="javascript:void(0)">Add...</a></h4>
-					{ this.getDashboardSidebarContent(this.props.pointsOfView) }
+					{ this.getDashboardSidebarContent(this.props.pointsOfView, "view") }
 				</div>
 				<AddInterest
 					closeWindow={ () => this.togglePopup(POPUP_KEYS.INTERESTS_POPUP_OPEN, !this.state[POPUP_KEYS.INTERESTS_POPUP_OPEN]) }

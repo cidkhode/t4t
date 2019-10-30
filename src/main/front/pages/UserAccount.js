@@ -56,11 +56,12 @@ export class UserAccount extends Component {
     })
   }
   
-  deleteInterest = (e) => {
+  deleteInfo = (e) => {
+    console.log(e.target.id + " " + e.target.name);
 		fetch('/api/delete', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(e.target.value)
+			body: JSON.stringify(e.target.value) + "," + JSON.stringify(e.target.name)
 		}).then(resp => resp.json())
 		.then(json => {
 			if(json.status === 0) {
@@ -95,6 +96,7 @@ export class UserAccount extends Component {
         userAccountDetails={this.props.userAccountDetails}
         editProfilePic={ this.editProfilePic }
         submitProfilePic={ this.submitProfilePic }
+        delete={ this.deleteInfo }
       >
         <>
           <AccountView
@@ -106,7 +108,7 @@ export class UserAccount extends Component {
             currentAbout= { this.state.about }
           />
           <Button text="Edit" handleClick={this.edit}/>
-          {this.state.editing && <button onClick={ this.updateAboutMe }>Submit</button>}
+          {this.state.editing && <button onClick={ this.updateAboutMe }>Save</button>}
           <Sidebar
             topics={ this.fetchTopics() }
             onTopicSelection={ this.selectTopic }
