@@ -41,21 +41,20 @@ export class UserAccount extends Component {
   onChange = (e) => this.setState({about: e.target.value});
 
   updateAboutMe = () => {
-    console.log(this.state.about);
-    const data = new FormData();
-    data.append('about', this.state.about);
-    console.log(data);
+    const { about } = this.state;
     fetch('/api/update', {
       method: 'post',
-      body: JSON.stringify(),
-    }).then(resp => console.log(resp)).then(resp => resp.json())
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ about }),
+    })
+    .then(resp => resp.json())
     .then(json => {
       if(json.status === 0) {
         this.props.getProfile();
       }
       console.log(json);
     })
-  }
+  };
 
   submitProfilePic = (e) => {
     console.log(`FILES SELECTED`, e.target.files[0]);
