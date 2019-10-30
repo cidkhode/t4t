@@ -37,11 +37,13 @@ public class UserController {
         return userService.registerNewUser(user);
     }
 
-    /*
+
     // Edit the about me section (later pov and interest)
-    @PostMapping(path ="/api/update")
-    public Thought4ThoughtResponseObject updateAboutMe()
+    @GetMapping(path ="/api/update")
+    @ResponseBody
+    public Thought4ThoughtResponseObject updateAboutMe(@RequestParam String newAboutMe, @RequestParam String userEmail){
+        return this.userService.saveAboutMe(newAboutMe, userEmail);
+    }
 
 
-     */
 }
