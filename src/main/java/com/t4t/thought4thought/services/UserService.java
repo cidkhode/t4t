@@ -56,6 +56,24 @@ public class UserService {
         return thought4ThoughtResponseObject;
     }
 
+    public Thought4ThoughtResponseObject editAboutMe(String newAboutMe, String userEmailInSession) {
+        Thought4ThoughtResponseObject thought4ThoughtResponseObject =
+                new Thought4ThoughtResponseObject().createResponse(T4T_SUCCESS_CODE, "Saved user successfully!");
+
+        if (userEmailInSession != null) {
+            User userInSession = userRepository.findByEmail(userEmailInSession);
+
+            if (newAboutMe.length() > 0) {
+                userRepository.setUserAboutMeByEmail(newAboutMe, userEmailInSession);
+                thought4ThoughtResponseObject.setStatus(0);
+                thought4ThoughtResponseObject.setInfo("Updated about you!");
+            } else {
+                thought4ThoughtResponseObject.setStatus(-1);
+                thought4ThoughtResponseObject.setInfo("Failed to update about you.");
+            }
+        }
+        return thought4ThoughtResponseObject;
+    }
     public Iterable<User> getAllUsers() {
         return userRepository.findAll();
     }

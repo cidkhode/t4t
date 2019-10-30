@@ -16,6 +16,11 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Query("update User user set user.profilePictureURL = ?1 where user.email = ?2")
     int setUserProfilePictureURLByEmail(String profilePictureURL, String userEmail);
 
+    @Modifying
+    @Transactional
+    @Query("update User u set u.aboutMe=?1 where u.email = ?2")
+    int setUserAboutMeByEmail(String aboutMe, String userEmail);
+
 //    @Modifying
 //    @Query("update User u set u.profilePictureURL = ?1 where u.email = ?2")
 //    void setUserInfoById(String firstname, String lastname, Integer userId);

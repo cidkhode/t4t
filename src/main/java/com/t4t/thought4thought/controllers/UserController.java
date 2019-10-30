@@ -36,4 +36,12 @@ public class UserController {
     public Thought4ThoughtResponseObject registerUser(@RequestBody User user) {
         return userService.registerNewUser(user);
     }
+
+    /*
+    // Edit the about me section (later pov and interest)
+    @PostMapping(path ="/api/update")
+    public Thought4ThoughtResponseObject updateAboutMe()
+
+
+     */
 }
