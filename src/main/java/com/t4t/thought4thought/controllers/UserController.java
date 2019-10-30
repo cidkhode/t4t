@@ -37,11 +37,13 @@ public class UserController {
         return userService.registerNewUser(user);
     }
 
-    /*
+
     // Edit the about me section (later pov and interest)
     @PostMapping(path ="/api/update")
-    public Thought4ThoughtResponseObject updateAboutMe()
+    public Thought4ThoughtResponseObject updateAboutMe(@RequestBody ObjectNode newAboutMe, HttpServletRequest request, HttpSession session) {
+        String userEmail = (String) session.getAttribute("userEmail");
+        return this.userService.saveAboutMe(newAboutMe.get("about").asText(), userEmail);
+    }
 
 
-     */
 }

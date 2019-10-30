@@ -41,14 +41,13 @@ export class UserAccount extends Component {
   onChange = (e) => this.setState({about: e.target.value});
 
   updateAboutMe = () => {
-    console.log(this.state.about);
-    const data = new FormData();
-    data.append('about', this.state.about);
-    console.log(data);
+    const { about } = this.state;
     fetch('/api/update', {
       method: 'post',
-      body: data,
-    }).then(resp => resp.json())
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ about }),
+    })
+    .then(resp => resp.json())
     .then(json => {
       if(json.status === 0) {
         this.props.getProfile();
@@ -59,12 +58,13 @@ export class UserAccount extends Component {
   
   deleteInterest = (e) => {
 		fetch('/api/delete', {
-			method: 'post',
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(e.target.value)
 		}).then(resp => resp.json())
 		.then(json => {
 			if(json.status === 0) {
-				this.getProfile();
+				this.props.getProfile();
 			}
 		})
 	}
