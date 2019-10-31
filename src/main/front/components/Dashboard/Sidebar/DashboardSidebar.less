@@ -69,6 +69,11 @@
 		align-items: center;
 		width: 100%;
 
+		.add-interests, .add-view-points {
+			color: @t4t-blue-light;
+			display: inline;
+			cursor: pointer;
+		}
 		.split-items {
 			span {
 				text-overflow: ellipsis;
@@ -113,7 +118,13 @@
 			}
 			&:not(.split):hover .x-button, > div:hover .x-button {
 				opacity: 1.0;
+				display: block;
+				cursor: pointer;
 				transition: 0.3s;
+				outline: none;
+				&:active {
+					color: @t4t-red;
+				}
 			}
 		}
 	}
@@ -127,7 +138,7 @@
 	}
 }
 .x-button {
-	opacity: 0;
+	display: none;
 	line-height: 15px;
 	text-align: center;
 	background: transparent;

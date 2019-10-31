@@ -5,6 +5,7 @@ import AddInfo from '../../Modal/AddInfo/AddInfo';
 
 /* Styles */
 import './DashboardSidebar.less';
+import Dropdown from "../../Dropdown/Dropdown";
 
 export class DashboardSidebar extends Component {
 	constructor(props){
@@ -13,13 +14,16 @@ export class DashboardSidebar extends Component {
 		this.state = {
 			[POPUP_KEYS.ADD_POPUP_OPEN]: false,
 			addType: "Interest",
+			valuesToUpdate: []
 		}
 	}
 
-	togglePopup = (key, isOpen) => {
-		this.setState({ [key]: isOpen }, () => {
-		  console.log(`KEY`, key, isOpen)
-		});
+	toggleAddPopup = (key, isOpen) => {
+		this.setState({ [key]: isOpen, valuesToUpdate: [], addType: '' });
+	};
+
+	togglePopupSelection = (key, addType) => {
+		this.setState({ [key]: true, [POPUP_KEYS.ADD_POPUP_OPEN]: true, addType })
 	};
 
 	getDashboardSidebarContent = (data, type) => (
@@ -58,7 +62,23 @@ export class DashboardSidebar extends Component {
 		})
 	);
 
+	selectOption = (interests) => {
+		this.setState({ valuesToUpdate: interests });
+	};
+
+	updateProfile = () => {
+		const { addType, valuesToUpdate } = this.state;
+		fetch('/api/update-profile', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ addType, valuesToUpdate })
+		}).then(resp => resp.json())
+			.then(json => console.log(`JSON RESPONSE`, json))
+			.catch(error => console.error(error));
+	};
+
 	render() {
+		console.log(`SELECTED OPTIONS`, this.state.valuesToUpdate)
 		return(
 			<div id="dashboard-sidebar">
 				<div id="dashboard-user-info">
@@ -79,19 +99,24 @@ export class DashboardSidebar extends Component {
 					</div>
 				</div>
 				<div className="dashboard-interests tag-container">
-					<h4> Interests <a href="javascript:void(0)" onClick={() => this.setState({[POPUP_KEYS.INTERESTS_POPUP_OPEN]: true, addType: "Interest"})}>Add...</a></h4>
+					<h4> Interests <div className="add-interests" onClick={ () => this.togglePopupSelection(POPUP_KEYS.INTERESTS_POPUP_OPEN, 'Interests') }>Add...</div></h4>
 					{ this.getDashboardSidebarContent(this.props.interests, "interest") }
 				</div>
 				<div id="dashboard-pov" className="tag-container">
-					<h4> Points of View <a href="javascript:void(0)" onClick={() => this.setState({[POPUP_KEYS.INTERESTS_POPUP_OPEN]: true, addType: "View"})}>Add...</a></h4>
+					<h4> Points of Views <div className="add-view-points" onClick={ () => this.togglePopupSelection(POPUP_KEYS.INTERESTS_POPUP_OPEN, 'Views') }>Add...</div></h4>
 					{ this.getDashboardSidebarContent(this.props.pointsOfView, "view") }
 				</div>
 				<AddInfo
 					type={ this.state.addType }
-					closeWindow={ () => this.togglePopup(POPUP_KEYS.ADD_POPUP_OPEN, !this.state[POPUP_KEYS.ADD_POPUP_OPEN]) }
+					selectOption={ this.selectOption }
+					isMulti
+					selectedOptions={ this.state.valuesToUpdate }
+					closeWindow={ () => this.toggleAddPopup(POPUP_KEYS.ADD_POPUP_OPEN, !this.state[POPUP_KEYS.ADD_POPUP_OPEN]) }
 					isActive={ this.state[POPUP_KEYS.ADD_POPUP_OPEN] }
-					addFunc={ this.props.addFunc }
+					addFunc={ this.updateProfile }
+					addInfoPopupExtraClass="add-info-dashboard-sidebar"
 				/>
+				<Dropdown onChange={ this.selectOption } options={[]} />
 			</div>
 		);
 	}

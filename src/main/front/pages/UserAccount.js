@@ -42,7 +42,7 @@ export class UserAccount extends Component {
 
   updateAboutMe = () => {
     const { about } = this.state;
-    fetch('/api/update', {
+    fetch('/api/update-profile', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ about }),

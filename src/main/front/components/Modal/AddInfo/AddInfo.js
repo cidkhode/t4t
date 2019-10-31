@@ -1,21 +1,28 @@
 import React from 'react';
 import { bool, func, string } from 'prop-types';
+import { SAMPLE_INTERESTS_TO_SELECT_FROM } from '../../../utils/constants';
 
 /* Components */
 import ModalSkeleton from '../ModalSkeleton.js';
+import CreatableDropdown from '../../Dropdown/CreatableDropdown';
 
 /* Styles */
 import '../ModalSkeleton.less';
 import './AddInfo.less';
+import Button from "../../Button/Button";
 
 const AddInfo = props => (
-	<ModalSkeleton isActive={props.isActive}>
-		<div id="add-info-container" className="modal-content">
+	<ModalSkeleton extraClass={ props.addInfoPopupExtraClass } isActive={props.isActive}>
+		<div className="add-info-container modal-content">
 			<span onClick={ props.closeWindow } className="closeModal" />
 			<h2> Add { props.type } </h2>
-			<input type="text" placeholder={`Enter ${props.type} here`} />
-			<input type="text" placeholder={`Enter ${props.type} here`} />
-			<button onClick={props.addFunc} id={ props.type }>Add</button>
+			<CreatableDropdown
+				isMulti={ props.isMulti }
+				value={ props.selectedOptions }
+				onChange={ props.selectOption }
+				options={ SAMPLE_INTERESTS_TO_SELECT_FROM }
+			/>
+			<Button handleClick={ props.addFunc } text="Add to Profile" />
 		</div>
 	</ModalSkeleton>
 );
@@ -25,6 +32,13 @@ AddInfo.propTypes = {
 	isActive: bool.isRequired,
 	closeWindow: func.isRequired,
 	addFunc: func.isRequired,
+	isMulti: bool.isRequired,
+	selectOption: func.isRequired,
+	addInfoPopupExtraClass: string,
+};
+
+AddInfo.defaultProps = {
+	addInfoPopupExtraClass: ''
 };
 
 export default AddInfo;

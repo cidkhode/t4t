@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Select from 'react-select';
-import { bool, func, string, array } from "prop-types";
+import CreatableSelect from 'react-select/creatable';
+import { bool, func, string, array, object, oneOfType } from "prop-types";
 
 const customStyles = {
   option: (provided, state) => ({
@@ -12,17 +12,18 @@ const customStyles = {
     ...base,
     '&:hover': { borderColor: '#2D9CDB'},
     boxShadow: 'none',
-    border: state.isFocused ? 'solid 2px #0015FF' : 'solid 1px #000000'
+    border: state.isFocused ? 'solid 2px #56CCF2' : 'solid 1px #000000'
   }),
 };
 
-export default class Dropdown extends Component {
+export default class CreatableDropdown extends Component {
   static propTypes = {
     extraClass: string,
     options: array.isRequired,
     onChange: func.isRequired,
     disabled: bool,
-    isMulti: bool
+    isMulti: bool,
+    value: oneOfType([array, object]),
   };
 
   static defaultProps = {
@@ -37,12 +38,13 @@ export default class Dropdown extends Component {
   render() {
     return (
       <div className={ `t4t-dropdown-container ${this.props.extraClass}` }>
-        <Select
+        <CreatableSelect
           styles={ customStyles }
           options={ this.props.options }
           disabled={ this.props.disabled }
           onChange={ this.props.onChange }
           isMulti={ this.props.isMulti }
+          value={ this.props.value }
         />
       </div>
     )
