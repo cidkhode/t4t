@@ -89,6 +89,10 @@ AccountView.propTypes = {
 	followingUsers: array.isRequired,
 	editMode: bool.isRequired,
 	onChangeHandler: func.isRequired,
-	currentAbout: string.isRequired,
+	currentAbout: string,
 	toggleAboutMeEditMode: func.isRequired,
+};
+
+AccountView.defaultProps = {
+	currentAbout: '',
 };

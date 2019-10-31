@@ -17,7 +17,7 @@ export class DashboardSidebar extends Component {
 	}
 
 	getDashboardSidebarContent = (data, type) => (
-		data.map((interest, key, interestsArray) => {
+		data && data.map((interest, key, interestsArray) => {
 			const mod = key % 3;
 			switch (mod) {
 				case 1: {
@@ -26,18 +26,18 @@ export class DashboardSidebar extends Component {
 							<div key={ key } className="split">
 								<div className="split-items">
 									<span>{interest.title}</span>
-									<button className="x-button" onClick={ () => this.props.delete(interest) } id={ key } name={ type }/>
+									<button className="x-button" onClick={ () => this.props.delete(interest, type) } id={ key } name={ type }/>
 								</div>
 								<div className="split-items">
 									<span>{interestsArray[key+1].title}</span>
-									<button className="x-button" onClick={ () => this.props.delete(interest) } id={ key+1 } name={ type }/>
+									<button className="x-button" onClick={ () => this.props.delete(interest, type) } id={ key+1 } name={ type }/>
 								</div>
 							</div>
 						)
 					} else {
 						return <div key={ key } className="split-items">
 							<span>{interest.title}</span>
-							<button className="x-button" onClick={ () => this.props.delete(interest) } id={ key } name={ type }/>
+							<button className="x-button" onClick={ () => this.props.delete(interest, type) } id={ key } name={ type }/>
 						</div>
 					}
 				}
@@ -45,7 +45,7 @@ export class DashboardSidebar extends Component {
 				case 0: {
 					return <div key={ key } className="split-items">
 						<span>{interest.title}</span>
-						<button className="x-button" onClick={ () => this.props.delete(interest) } id={ key } name={ type }/>
+						<button className="x-button" onClick={ () => this.props.delete(interest, type) } id={ key } name={ type }/>
 					</div>
 				}
 			}
@@ -57,7 +57,7 @@ export class DashboardSidebar extends Component {
 			<div id="dashboard-sidebar">
 				<div id="dashboard-user-info">
 					<div onClick={() => this.props.editProfilePic(this.editProfilePicRef)} className="dashboard-img">
-						<img src={this.props.userAccountDetails.image}/>
+						<img src={ this.props.userAccountDetails.profilePictureURL }/>
 						<div className="edit-profile-hover-over">Edit!</div>
 						<input
 							type="file"
@@ -80,7 +80,7 @@ export class DashboardSidebar extends Component {
 							Add...
 						</div>
 					</h4>
-					{ this.getDashboardSidebarContent(this.props.interests, "interest") }
+					{ this.getDashboardSidebarContent(this.props.interests, "Interests") }
 				</div>
 				<div id="dashboard-pov" className="tag-container">
 					<h4> Points of Views
@@ -89,7 +89,7 @@ export class DashboardSidebar extends Component {
 							Add...
 						</div>
 					</h4>
-					{ this.getDashboardSidebarContent(this.props.pointsOfView, "view") }
+					{ this.getDashboardSidebarContent(this.props.viewPoints, "Views") }
 				</div>
 				<AddInfo
 					isMulti
@@ -111,7 +111,7 @@ DashboardSidebar.propTypes = {
 	interests: PropTypes.arrayOf(PropTypes.shape({
 		title: PropTypes.string.isRequired,
 	})).isRequired,
-	pointsOfView: PropTypes.arrayOf(PropTypes.shape({
+	viewPoints: PropTypes.arrayOf(PropTypes.shape({
 		title: PropTypes.string.isRequired,
 	})).isRequired,
 	userAccountDetails: PropTypes.object.isRequired,

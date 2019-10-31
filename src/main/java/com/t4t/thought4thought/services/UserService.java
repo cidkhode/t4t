@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.t4t.thought4thought.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import static com.t4t.thought4thought.utils.Constants.*;
 
 @Service
@@ -52,7 +55,7 @@ public class UserService {
         return thought4ThoughtResponseObject;
     }
 
-    public Thought4ThoughtResponseObject saveProfileChanges(String keyToUpdate,
+    public Thought4ThoughtResponseObject saveProfileUpdates(String keyToUpdate,
                                                             String changesInProfile,
                                                             String userEmailInSession) {
         Thought4ThoughtResponseObject thought4ThoughtResponseObject =
@@ -78,6 +81,35 @@ public class UserService {
         }
         return thought4ThoughtResponseObject;
     }
+
+    public Thought4ThoughtResponseObject deleteValueFromProfile(String keyToUpdate,
+                                                              String valueToDelete,
+                                                              String userEmailInSession) {
+        Thought4ThoughtResponseObject thought4ThoughtResponseObject =
+                new Thought4ThoughtResponseObject().createResponse(-1,
+                        "Couldn't update profile; something went wrong.");
+        if (userEmailInSession != null) {
+            User userProfileToUpdate = userRepository.findByEmail(userEmailInSession);
+            switch(keyToUpdate) {
+                case "Interests": {
+                    ArrayList<String> interests = new ArrayList<>(Arrays.asList(userProfileToUpdate.getInterests().split(",")));
+                    interests.remove(valueToDelete);
+                    userRepository.setUserInterestsByEmail(String.join(",", interests), userEmailInSession);
+                    break;
+                }
+                case "Views": {
+                    ArrayList<String> views = new ArrayList<>(Arrays.asList(userProfileToUpdate.getViewPoints().split(",")));
+                    views.remove(valueToDelete);
+                    userRepository.setUserViewPointsByEmail(String.join(",", views), userEmailInSession);
+                    break;
+                }
+            }
+            thought4ThoughtResponseObject.setStatus(0);
+            thought4ThoughtResponseObject.setInfo("Updated user profile!");
+        }
+        return thought4ThoughtResponseObject;
+    }
+
     public Thought4ThoughtResponseObject saveAboutMe(String newAboutMe, String userEmailInSession) {
         Thought4ThoughtResponseObject thought4ThoughtResponseObject =
                 new Thought4ThoughtResponseObject().createResponse(-1,

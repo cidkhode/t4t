@@ -34,7 +34,7 @@ export class UserDashboard extends Component {
       <DashboardContainer
         userAccountDetails={this.props.userAccountDetails }
         interests={ this.props.interests }
-        pointsOfView={ this.props.pointsOfView }
+        viewPoints={ this.props.viewPoints }
       >
         <>
           <DashboardView
@@ -78,7 +78,7 @@ UserDashboard.propTypes = {
   interests: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
   })).isRequired,
-  pointsOfView: PropTypes.arrayOf(PropTypes.shape({
+  viewPoints: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
   })),
 };

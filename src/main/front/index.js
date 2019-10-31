@@ -9,14 +9,14 @@ export class Thought4Thought extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userAccountDetails: {
-        name: 'Cid Khode',
-        email: 'cid@unrealmail.com',
-        image: 'https://i.pravatar.cc/175',
-        about: 'Arielius tryus toum editatium abouticus ipsum.'
-      }
+      userAccountDetails: {}
     };
   }
+
+  componentDidMount() {
+    this.getProfile();
+  }
+
   // TODO: we will be fetching all this info later on...
   getSavedArticles = () => [{
     title: 'Mock Article 1',
@@ -99,50 +99,25 @@ export class Thought4Thought extends Component {
     followingUserImage: 'https://i.pravatar.cc/120'
   }];
 
-  getUserAccountDetails = () => ({
-    name: 'Cid Khode',
-    email: 'cid@fakeemail.com',
-    image: 'https://i.pravatar.cc/175',
-    about: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
-  });
-
-  getInterests = () => [
-    { title: 'Some interest 1' },
-    { title: 'Some interest 2' },
-    { title: 'Some interest 3' },
-    { title: 'Some interest 4' },
-    { title: 'Some long long interest 5' },
-    { title: 'Some interest 6' },
-    { title: 'Some interest 7' },
-    { title: 'Some interest 8' },
-  ];
-
-  getPointsOfView = () => [
-    { title: 'Some view 1' },
-    { title: 'Some view 2' },
-    { title: 'Some view 3' },
-    { title: 'Some view 4' },
-    { title: 'Some view 5' },
-    { title: 'Some view 6' },
-    { title: 'Some view 7' },
-    { title: 'Some view 8' },
-  ];
-
   getProfile = () => {
-    fetch(`/api/user?userEmail=${localStorage.getItem(LOCAL_STORAGE_KEYS.LOGGED_IN_USER_EMAIL)}`)
-    .then(resp => {
-      return resp.json();
-    })
-    .then(json => {
-      const { profilePictureURL } = json;
-      this.setState({
-        userAccountDetails: {
-          ...this.state.userAccountDetails,
-          image: profilePictureURL
-        }
-      })
-    })
-    .catch(err => console.error(err));
+    const userEmail = localStorage.getItem(LOCAL_STORAGE_KEYS.LOGGED_IN_USER_EMAIL);
+    if (!userEmail) {
+      fetch(`/api/user?userEmail=${localStorage.getItem(LOCAL_STORAGE_KEYS.LOGGED_IN_USER_EMAIL)}`)
+        .then(resp => {
+          return resp.json();
+        })
+        .then(userAccountDetails => {
+          this.setState({
+            userAccountDetails: {
+              ...userAccountDetails,
+              name: `${userAccountDetails.firstName} ${userAccountDetails.lastName}`,
+              interests: userAccountDetails.interests.split(',').map(interest => ({ title: interest })),
+              viewPoints: userAccountDetails.viewPoints.split(',').map(viewPoint => ({ title: viewPoint })),
+            },
+          })
+        })
+        .catch(err => console.error(err));
+    }
   };
 
   render() {
@@ -151,8 +126,6 @@ export class Thought4Thought extends Component {
        {/*<MainPage />*/}
        <UserAccount
         getProfile={ this.getProfile }
-        interests={ this.getInterests() }
-        pointsOfView={ this.getPointsOfView() }
         userAccountDetails={ this.state.userAccountDetails }
         savedArticles={ this.getSavedArticles() }
         followingUsers={ this.getFollowingUsers() }

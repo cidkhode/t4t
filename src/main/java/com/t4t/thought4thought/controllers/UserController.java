@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.t4t.thought4thought.utils.Thought4ThoughtResponseObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -38,13 +37,23 @@ public class UserController {
     }
 
     // Edit the about me section (later pov and interest)
-    @PostMapping(path ="/api/update-profile")
-    public Thought4ThoughtResponseObject updateAboutMe(@RequestBody ObjectNode objectNode,
-                                                       HttpServletRequest request,
-                                                       HttpSession session) {
+    @PostMapping(path = "/api/update-profile")
+    public Thought4ThoughtResponseObject updateUserProfile(@RequestBody ObjectNode objectNode,
+                                                           HttpServletRequest request,
+                                                           HttpSession session) {
         String keyToUpdate = objectNode.get("keyToUpdate").asText();
         String changesInProfile = objectNode.get("changesInProfile").asText();
         String userEmail = (String) session.getAttribute("userEmail");
-        return this.userService.saveProfileChanges(keyToUpdate, changesInProfile, userEmail);
+        return this.userService.saveProfileUpdates(keyToUpdate, changesInProfile, userEmail);
+    }
+
+    @PostMapping(path = "/api/delete-from-profile")
+    public Thought4ThoughtResponseObject deleteFromUserProfile(@RequestBody ObjectNode objectNode,
+                                                               HttpServletRequest request,
+                                                               HttpSession session) {
+        String keyToUpdate = objectNode.get("keyToUpdate").asText();
+        String valueToDelete = objectNode.get("valueToDelete").asText();
+        String userEmail = (String) session.getAttribute("userEmail");
+        return this.userService.deleteValueFromProfile(keyToUpdate, valueToDelete, userEmail);
     }
 }

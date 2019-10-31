@@ -12,11 +12,20 @@ export class UserAccount extends Component {
       sideBarOpen: false,
       selectedSideBarOption: '',
       editing: false,
-      about: this.props.userAccountDetails.about,
+      aboutMe: '',
       keyToUpdate: '',
       dropdownValuesToUpdate: [],
       [POPUP_KEYS.ADD_POPUP_OPEN]: false,
     };
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.props !== prevProps) {
+      this.setState({
+        userAccountDetails: this.props.userAccountDetails,
+        aboutMe: this.props.userAccountDetails.aboutMe,
+      });
+    }
   }
 
   // TODO: when we implement login system, take username and pass it into a fetch get request to retrieve selected topics of user, and remove this mock array
@@ -47,7 +56,7 @@ export class UserAccount extends Component {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             keyToUpdate: 'aboutMe',
-            changesInProfile: this.state.about
+            changesInProfile: this.state.aboutMe
           }),
         })
         .then(resp => resp.json())
@@ -56,7 +65,7 @@ export class UserAccount extends Component {
     });
   };
 
-  onChange = (e) => this.setState({ about: e.target.value });
+  onChange = (e) => this.setState({ aboutMe: e.target.value });
 
   updateInterestsAndViews = () => {
     const { keyToUpdate, dropdownValuesToUpdate } = this.state;
@@ -69,7 +78,11 @@ export class UserAccount extends Component {
       })
       .then(resp => resp.json())
       .then(json => {
-        this.setState({ [POPUP_KEYS.ADD_POPUP_OPEN]: false });
+        this.setState({ [POPUP_KEYS.ADD_POPUP_OPEN]: false }, () => {
+          if(json.status === 0) {
+            this.props.getProfile();
+          }
+        });
       })
       .catch(error => console.error(error));
   };
@@ -78,12 +91,17 @@ export class UserAccount extends Component {
     this.setState({ dropdownValuesToUpdate });
   };
 
-  deleteInfo = (e) => {
-		fetch('/api/delete', {
+  deleteInfo = (val, keyToUpdate) => {
+    const valueToDelete = val.title;
+		fetch('/api/delete-from-profile', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(e) + "," + JSON.stringify(e)
-		}).then(resp => resp.json())
+			body: JSON.stringify({
+        valueToDelete,
+        keyToUpdate
+      })
+		})
+    .then(resp => resp.json())
 		.then(json => {
 			if(json.status === 0) {
 				this.props.getProfile();
@@ -118,8 +136,8 @@ export class UserAccount extends Component {
   render() {
     return (
       <DashboardContainer
-        interests={ this.props.interests }
-        pointsOfView={ this.props.pointsOfView }
+        interests={ this.props.userAccountDetails.interests }
+        viewPoints={ this.props.userAccountDetails.viewPoints }
         userAccountDetails={this.props.userAccountDetails}
         editProfilePic={ this.editProfilePic }
         submitProfilePic={ this.submitProfilePic }
@@ -139,14 +157,14 @@ export class UserAccount extends Component {
             userAccountDetails={ this.props.userAccountDetails }
             editMode={ this.state.editing }
             onChangeHandler= { this.onChange }
-            currentAbout= { this.state.about }
+            currentAbout= { this.state.aboutMe }
             toggleAboutMeEditMode={ this.toggleAboutMeEditMode }
           />
           <Sidebar
             topics={ this.fetchTopics() }
             onTopicSelection={ this.selectTopic }
             onOpen={ this.openSideBar }
-            name={ this.props.userAccountDetails.name }
+            name={ `${this.props.userAccountDetails.firstName} ${this.props.userAccountDetails.lastName}` }
             isOpen={ this.state.sideBarOpen }
             onSignOut={ this.signOut }
             selectedOption={ this.state.selectedSideBarOption }
@@ -159,11 +177,17 @@ export class UserAccount extends Component {
 
 UserAccount.propTypes = {
   userAccountDetails: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    about: PropTypes.string.isRequired,
-  }),
+    name: PropTypes.string,
+    email: PropTypes.string,
+    profilePictureURL: PropTypes.string,
+    aboutMe: PropTypes.string,
+    viewPoints: PropTypes.arrayOf(PropTypes.shape({
+      title: PropTypes.string.isRequired,
+    })),
+    interests: PropTypes.arrayOf(PropTypes.shape({
+      title: PropTypes.string.isRequired,
+    })),
+  }).isRequired,
   savedArticles: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
     author: PropTypes.string.isRequired,
@@ -174,12 +198,6 @@ UserAccount.propTypes = {
     followingUserName: PropTypes.string.isRequired,
     followingUserEmail: PropTypes.string.isRequired,
     followingUserImage: PropTypes.string.isRequired,
-  })),
-  interests: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired,
-  })).isRequired,
-  pointsOfView: PropTypes.arrayOf(PropTypes.shape({
-    title: PropTypes.string.isRequired,
   })),
   getProfile: PropTypes.func.isRequired,
 };
