@@ -1,11 +1,11 @@
 import React from 'react';
-import { element, bool } from 'prop-types';
+import { element, bool, string } from 'prop-types';
 
 /* Styles */
 import './ModalSkeleton.less';
 
 const ModalSkeleton = props => (
-  <div className={ `modal-container ${props.isActive ? "active" : ""}` }>
+  <div className={ `modal-container ${props.extraClass} ${props.isActive ? "active" : ""}` }>
     <div className="inner">
       {props.children}
     </div>
@@ -13,8 +13,13 @@ const ModalSkeleton = props => (
 );
 
 ModalSkeleton.propTypes = {
-    isActive: bool.isRequired,
-    children: element,
+  isActive: bool.isRequired,
+  children: element.isRequired,
+  extraClass: string,
+};
+
+ModalSkeleton.defaultProps = {
+  extraClass: '',
 };
 
 export default ModalSkeleton;
