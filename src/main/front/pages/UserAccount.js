@@ -57,11 +57,11 @@ export class UserAccount extends Component {
   }
   
   deleteInfo = (e) => {
-    console.log(e.target.id + " " + e.target.name);
+    console.log(e);
 		fetch('/api/delete', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(e.target.value) + "," + JSON.stringify(e.target.name)
+			body: JSON.stringify(e) + "," + JSON.stringify(e)
 		}).then(resp => resp.json())
 		.then(json => {
 			if(json.status === 0) {

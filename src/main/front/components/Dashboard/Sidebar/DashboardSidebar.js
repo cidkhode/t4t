@@ -30,17 +30,29 @@ export class DashboardSidebar extends Component {
 					if (key < interestsArray.length-1) {
 						return (
 							<div key={ key } className="split">
-								<div className="split-items"><span>{interest.title}</span><button className="x-button" onClick={ this.props.delete } id={key} name={type}/></div>
-								<div className="split-items"><span>{interestsArray[key+1].title}</span><button className="x-button" onClick={ this.props.delete } id={key+1} name={type}/></div>
+								<div className="split-items">
+									<span>{interest.title}</span>
+									<button className="x-button" onClick={ () => this.props.delete(interest) } id={ key } name={ type }/>
+								</div>
+								<div className="split-items">
+									<span>{interestsArray[key+1].title}</span>
+									<button className="x-button" onClick={ () => this.props.delete(interest) } id={ key+1 } name={ type }/>
+								</div>
 							</div>
 						)
 					} else {
-						return <div key={ key } className="split-items"><span>{interest.title}</span><button className="x-button" onClick={ this.props.delete } id={key} name={type}/></div>
+						return <div key={ key } className="split-items">
+							<span>{interest.title}</span>
+							<button className="x-button" onClick={ () => this.props.delete(interest) } id={ key } name={ type }/>
+						</div>
 					}
 				}
 				case 2: break;
 				case 0: {
-					return <div key={ key } className="split-items"><span>{interest.title}</span><button className="x-button" onClick={ this.props.delete } id={key} name={type}/></div>
+					return <div key={ key } className="split-items">
+						<span>{interest.title}</span>
+						<button className="x-button" onClick={ () => this.props.delete(interest) } id={ key } name={ type }/>
+					</div>
 				}
 			}
 		})
@@ -93,6 +105,7 @@ DashboardSidebar.propTypes = {
 	userAccountDetails: PropTypes.object.isRequired,
 	editProfilePic: PropTypes.func.isRequired,
 	submitProfilePic: PropTypes.func.isRequired,
+	delete: PropTypes.func.isRequired,
 };
 
 DashboardSidebar.defaultProps = {
