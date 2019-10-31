@@ -68,7 +68,27 @@ export class UserAccount extends Component {
 				this.props.getProfile();
 			}
 		})
-	}
+  }
+  
+  addInfo = (e) => {
+    console.log(e.target.parentElement.children[2].value);
+    const info = e.target.parentElement.children;
+    let data = [];
+    data.push(e.target.id);
+    for(let i = 2; i < info.length - 1; i++) {
+      data.push(info[i].value);
+    }
+    console.log(data);
+    fetch('/api/add', {
+      method: 'post',
+      body: data
+    }).then(resp => resp.json())
+    .then(json => {
+      if(json.status === 0) {
+        this.props.getProfile();
+      }
+    })
+  }
 
   submitProfilePic = (e) => {
     console.log(`FILES SELECTED`, e.target.files[0]);
@@ -97,6 +117,7 @@ export class UserAccount extends Component {
         editProfilePic={ this.editProfilePic }
         submitProfilePic={ this.submitProfilePic }
         delete={ this.deleteInfo }
+        addFunc={ this.addInfo }
       >
         <>
           <AccountView

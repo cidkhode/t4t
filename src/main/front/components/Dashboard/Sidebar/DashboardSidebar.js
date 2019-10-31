@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { POPUP_KEYS, LOCAL_STORAGE_KEYS } from '../../../utils/constants';
-import AddInterest from '../../Modal/AddInterest/AddInterest';
+import AddInfo from '../../Modal/AddInfo/AddInfo';
 
 /* Styles */
 import './DashboardSidebar.less';
@@ -11,8 +11,8 @@ export class DashboardSidebar extends Component {
 		super(props);
 		this.editProfilePicRef = null;
 		this.state = {
-			[POPUP_KEYS.INTERESTS_POPUP_OPEN]: false,
-			[POPUP_KEYS.VIEWS_POPUP_OPEN]: false,
+			[POPUP_KEYS.ADD_POPUP_OPEN]: false,
+			addType: "Interest",
 		}
 	}
 
@@ -67,16 +67,18 @@ export class DashboardSidebar extends Component {
 					</div>
 				</div>
 				<div className="dashboard-interests tag-container">
-					<h4> Interests <a href="javascript:void(0)" onClick={() => this.setState({[POPUP_KEYS.INTERESTS_POPUP_OPEN]: true})}>Add...</a></h4>
+					<h4> Interests <a href="javascript:void(0)" onClick={() => this.setState({[POPUP_KEYS.INTERESTS_POPUP_OPEN]: true, addType: "Interest"})}>Add...</a></h4>
 					{ this.getDashboardSidebarContent(this.props.interests, "interest") }
 				</div>
 				<div id="dashboard-pov" className="tag-container">
-					<h4> Points of View <a href="javascript:void(0)">Add...</a></h4>
+					<h4> Points of View <a href="javascript:void(0)" onClick={() => this.setState({[POPUP_KEYS.INTERESTS_POPUP_OPEN]: true, addType: "View"})}>Add...</a></h4>
 					{ this.getDashboardSidebarContent(this.props.pointsOfView, "view") }
 				</div>
-				<AddInterest
-					closeWindow={ () => this.togglePopup(POPUP_KEYS.INTERESTS_POPUP_OPEN, !this.state[POPUP_KEYS.INTERESTS_POPUP_OPEN]) }
-					isActive= { this.state[POPUP_KEYS.INTERESTS_POPUP_OPEN] }
+				<AddInfo
+					type={ this.state.addType }
+					closeWindow={ () => this.togglePopup(POPUP_KEYS.ADD_POPUP_OPEN, !this.state[POPUP_KEYS.ADD_POPUP_OPEN]) }
+					isActive={ this.state[POPUP_KEYS.ADD_POPUP_OPEN] }
+					addFunc={ this.props.addFunc }
 				/>
 			</div>
 		);
