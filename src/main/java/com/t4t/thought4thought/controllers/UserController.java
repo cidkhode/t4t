@@ -45,5 +45,21 @@ public class UserController {
         return this.userService.saveAboutMe(newAboutMe.get("about").asText(), userEmail);
     }
 
+    @PostMapping(path ="/api/update")
+    public Thought4ThoughtResponseObject updateInterests(@RequestBody ObjectNode newData, HttpServletRequest request, HttpSession session) {
+        String userEmail = (String) session.getAttribute("userEmail");
+        return this.userService.addInterests(newData.get("title").asText(), userEmail);
+    }
+
+    @PostMapping(path ="/api/update")
+    public Thought4ThoughtResponseObject updateViewPoints(@RequestBody ObjectNode newData, HttpServletRequest request, HttpSession session) {
+        String userEmail = (String) session.getAttribute("userEmail");
+        return this.userService.addViewPoints(newData.get("title").asText(), userEmail);
+    }
+
+
+   /* @PostMapping(path ="/api/delete")
+    public Thought4ThoughtResponseObject deleteValue(@RequestBody ObjectNode)*/
+
 
 }

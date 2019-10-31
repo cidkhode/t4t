@@ -148,8 +148,8 @@ export class Thought4Thought extends Component {
   render() {
     return (
 		<div>
-      {/*<MainPage />*/}
-      <UserAccount
+       {/*<MainPage />*/}
+        <UserAccount
         getProfile={ this.getProfile }
         interests={ this.getInterests() }
         pointsOfView={ this.getPointsOfView() }

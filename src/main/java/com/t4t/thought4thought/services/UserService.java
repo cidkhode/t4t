@@ -72,6 +72,41 @@ public class UserService {
         }
         return thought4ThoughtResponseObject;
     }
+
+    public Thought4ThoughtResponseObject addInterests(String newInterests, String userEmailInSession) {
+        Thought4ThoughtResponseObject thought4ThoughtResponseObject =
+                new Thought4ThoughtResponseObject().createResponse(-1,
+                        "Couldn't edit information; Something went terribly wrong!");
+        if (userEmailInSession != null) {
+            if (newInterests.length() > 0) {
+                userRepository.addUserInterestsByEmail(newInterests, userEmailInSession);
+                thought4ThoughtResponseObject.setStatus(0);
+                thought4ThoughtResponseObject.setInfo("Updated about you!");
+            } else {
+                thought4ThoughtResponseObject.setStatus(-1);
+                thought4ThoughtResponseObject.setInfo("Failed to update about you.");
+            }
+        }
+        return thought4ThoughtResponseObject;
+    }
+
+    public Thought4ThoughtResponseObject addViewPoints(String newViewPoints, String userEmailInSession) {
+        Thought4ThoughtResponseObject thought4ThoughtResponseObject =
+                new Thought4ThoughtResponseObject().createResponse(-1,
+                        "Couldn't edit information; Something went terribly wrong!");
+        if (userEmailInSession != null) {
+            if (newViewPoints.length() > 0) {
+                userRepository.addUserViewPointsByEmail(newViewPoints, userEmailInSession);
+                thought4ThoughtResponseObject.setStatus(0);
+                thought4ThoughtResponseObject.setInfo("Updated about you!");
+            } else {
+                thought4ThoughtResponseObject.setStatus(-1);
+                thought4ThoughtResponseObject.setInfo("Failed to update about you.");
+            }
+        }
+        return thought4ThoughtResponseObject;
+    }
+
     public Iterable<User> getAllUsers() {
         return userRepository.findAll();
     }

@@ -18,10 +18,24 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     @Modifying
     @Transactional
-    //@Query("update ebdb.user u set about_me=?1 where email=?2")
-    // ^^^ This works in MySQL Workbench Query
     @Query("update User user set user.aboutMe= ?1 where user.email = ?2")
     int setUserAboutMeByEmail(String aboutMe, String userEmail);
+
+    //Example Query Works in MYSQL
+    //UPDATE user SET interests=CONCAT(interests,',','topgolf') where email='crkhode@yahoo.com'
+    @Modifying
+    @Transactional
+    @Query("update User user set user.interests=concat(user.interests,', ','?1') where user.email =?2")
+    int addUserInterestsByEmail(String interests, String userEmail);
+
+    @Modifying
+    @Transactional
+    @Query("update User user set user.viewPoints=concat(user.viewPoints,', ','?1') where user.email =?2")
+    int addUserViewPointsByEmail(String viewpoints, String userEmail);
+
+   /* @Modifying
+    @Transactional
+    @Query("update User user delete user.")*/
 
 
 //    @Modifying
