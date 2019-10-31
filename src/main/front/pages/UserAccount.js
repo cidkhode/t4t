@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { POPUP_KEYS } from '../utils/constants';
 import Sidebar from '../components/Sidebar/Sidebar';
 import DashboardContainer from '../components/Dashboard/DashboardContainer.js';
 import AccountView from '../components/Dashboard/Account/AccountView.js';
-import Button from '../components/Button/Button';
 
 export class UserAccount extends Component {
   constructor(props) {
@@ -13,6 +13,9 @@ export class UserAccount extends Component {
       selectedSideBarOption: '',
       editing: false,
       about: this.props.userAccountDetails.about,
+      keyToUpdate: '',
+      dropdownValuesToUpdate: [],
+      [POPUP_KEYS.ADD_POPUP_OPEN]: false,
     };
   }
 
@@ -26,7 +29,7 @@ export class UserAccount extends Component {
     ]
   };
 
-  selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption }, () => console.log(`Topic selected: `, selectedSideBarOption));
+  selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption });
 
   openSideBar = () => this.setState({ sideBarOpen: !this.state.sideBarOpen });
 
@@ -36,28 +39,46 @@ export class UserAccount extends Component {
     editProfilePicRef.click();
   };
 
-  edit = () => this.setState(prevState => ({ editing: !prevState.editing }));
-
-  onChange = (e) => this.setState({about: e.target.value});
-
-  updateAboutMe = () => {
-    const { about } = this.state;
-    fetch('/api/update-profile', {
-      method: 'post',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ about }),
-    })
-    .then(resp => resp.json())
-    .then(json => {
-      if(json.status === 0) {
-        this.props.getProfile();
+  toggleAboutMeEditMode = (editMode) => {
+    this.setState({ editing: !this.state.editing }, () => {
+      if (editMode === 'Submit') {
+        fetch('/api/update-profile', {
+          method: 'post',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            keyToUpdate: 'aboutMe',
+            changesInProfile: this.state.about
+          }),
+        })
+        .then(resp => resp.json())
+        .catch(error => error);
       }
-      console.log(json);
-    })
-  }
-  
+    });
+  };
+
+  onChange = (e) => this.setState({ about: e.target.value });
+
+  updateInterestsAndViews = () => {
+    const { keyToUpdate, dropdownValuesToUpdate } = this.state;
+    fetch('/api/update-profile', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        keyToUpdate,
+        changesInProfile: dropdownValuesToUpdate.map(value => value.label).join(',') })
+      })
+      .then(resp => resp.json())
+      .then(json => {
+        this.setState({ [POPUP_KEYS.ADD_POPUP_OPEN]: false });
+      })
+      .catch(error => console.error(error));
+  };
+
+  selectNewValueToAdd = (dropdownValuesToUpdate) => {
+    this.setState({ dropdownValuesToUpdate });
+  };
+
   deleteInfo = (e) => {
-    console.log(e);
 		fetch('/api/delete', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
@@ -68,30 +89,9 @@ export class UserAccount extends Component {
 				this.props.getProfile();
 			}
 		})
-  }
-  
-  addInfo = (e) => {
-    console.log(e.target.parentElement.children[2].value);
-    const info = e.target.parentElement.children;
-    let data = [];
-    data.push(e.target.id);
-    for(let i = 2; i < info.length - 1; i++) {
-      data.push(info[i].value);
-    }
-    console.log(data);
-    fetch('/api/add', {
-      method: 'post',
-      body: data
-    }).then(resp => resp.json())
-    .then(json => {
-      if(json.status === 0) {
-        this.props.getProfile();
-      }
-    })
-  }
+  };
 
   submitProfilePic = (e) => {
-    console.log(`FILES SELECTED`, e.target.files[0]);
     const data = new FormData();
     data.append('file', e.target.files[0]);
     fetch('/api/storage/uploadFile', {
@@ -104,8 +104,15 @@ export class UserAccount extends Component {
         this.props.getProfile();
         this.setState({editing: false});
       }
-      console.log(json);
     })  
+  };
+
+  toggleAddPopup = (key, isOpen) => {
+    this.setState({ [key]: isOpen, dropdownValuesToUpdate: [], keyToUpdate: '' });
+  };
+
+  togglePopupSelection = (key, keyToUpdate) => {
+    this.setState({ [key]: true, [POPUP_KEYS.ADD_POPUP_OPEN]: true, keyToUpdate })
   };
 
   render() {
@@ -117,7 +124,13 @@ export class UserAccount extends Component {
         editProfilePic={ this.editProfilePic }
         submitProfilePic={ this.submitProfilePic }
         delete={ this.deleteInfo }
-        addFunc={ this.addInfo }
+        updateInterestsAndViews={ this.updateInterestsAndViews }
+        selectNewValueToAdd={ this.selectNewValueToAdd }
+        keyToUpdate={ this.state.keyToUpdate }
+        dropdownValuesToUpdate={ this.state.dropdownValuesToUpdate }
+        isAddPopupActive={ this.state[POPUP_KEYS.ADD_POPUP_OPEN] }
+        toggleAddPopup={ this.toggleAddPopup }
+        togglePopupSelection={ this.togglePopupSelection }
       >
         <>
           <AccountView
@@ -127,9 +140,8 @@ export class UserAccount extends Component {
             editMode={ this.state.editing }
             onChangeHandler= { this.onChange }
             currentAbout= { this.state.about }
+            toggleAboutMeEditMode={ this.toggleAboutMeEditMode }
           />
-          <Button text="Edit" handleClick={this.edit}/>
-          {this.state.editing && <button onClick={ this.updateAboutMe }>Save</button>}
           <Sidebar
             topics={ this.fetchTopics() }
             onTopicSelection={ this.selectTopic }

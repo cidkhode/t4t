@@ -71,8 +71,20 @@
 
 		.add-interests, .add-view-points {
 			color: @t4t-blue-light;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
 			display: inline;
 			cursor: pointer;
+			float: right;
+			transition: 0.3s;
+			&:hover {
+				color: @t4t-cyan-light
+			}
+			&:active {
+				color: @t4t-blue;
+			}
 		}
 		.split-items {
 			span {
@@ -85,6 +97,7 @@
 		}
 
 		h4 {
+			width: inherit;
 			font-weight: 700;
 			margin: 30px 0 20px 0;
 		}

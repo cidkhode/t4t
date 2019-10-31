@@ -92,7 +92,6 @@ class SignupForm extends Component {
 						fieldsOfStudy: values.fieldsOfStudy,
 						viewPoints: values.viewPoints,
 					};
-					console.log(`Second page values: `, secondPageValues);
 					for (let key in secondPageValues) {
 						if (secondPageValues.hasOwnProperty(key) && secondPageValues[key] === '') {
 							isInvalid = true;

@@ -56,14 +56,6 @@ class MainPage extends Component {
     console.log('Trying to sign out');
   };
 
-  // TODO: Remove this later...
-
-  getAllUsers = () => {
-    fetch('/api/all')
-      .then(resp => console.log(`All users`, resp))
-      .catch(error => console.error(`Something went wrong trying to get all users`, error));
-  };
-
   selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption }, () => console.log(`Topic selected: `, selectedSideBarOption));
 
   render() {

@@ -1,6 +1,5 @@
 import React from 'react';
-import { bool, func, string } from 'prop-types';
-import { SAMPLE_INTERESTS_TO_SELECT_FROM } from '../../../utils/constants';
+import { array, bool, func, string } from 'prop-types';
 
 /* Components */
 import ModalSkeleton from '../ModalSkeleton.js';
@@ -19,8 +18,8 @@ const AddInfo = props => (
 			<CreatableDropdown
 				isMulti={ props.isMulti }
 				value={ props.selectedOptions }
-				onChange={ props.selectOption }
-				options={ SAMPLE_INTERESTS_TO_SELECT_FROM }
+				onChange={ props.selectNewValueToAdd }
+				options={ props.options }
 			/>
 			<Button handleClick={ props.addFunc } text="Add to Profile" />
 		</div>
@@ -33,8 +32,9 @@ AddInfo.propTypes = {
 	closeWindow: func.isRequired,
 	addFunc: func.isRequired,
 	isMulti: bool.isRequired,
-	selectOption: func.isRequired,
+	selectNewValueToAdd: func.isRequired,
 	addInfoPopupExtraClass: string,
+	options: array.isRequired,
 };
 
 AddInfo.defaultProps = {

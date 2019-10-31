@@ -6,10 +6,6 @@ import com.t4t.thought4thought.utils.Thought4ThoughtResponseObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.t4t.thought4thought.repositories.UserRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import static com.t4t.thought4thought.utils.Constants.*;
 
@@ -56,6 +52,32 @@ public class UserService {
         return thought4ThoughtResponseObject;
     }
 
+    public Thought4ThoughtResponseObject saveProfileChanges(String keyToUpdate,
+                                                            String changesInProfile,
+                                                            String userEmailInSession) {
+        Thought4ThoughtResponseObject thought4ThoughtResponseObject =
+                new Thought4ThoughtResponseObject().createResponse(-1,
+                        "Couldn't update profile; something went wrong.");
+        if (userEmailInSession != null) {
+            switch(keyToUpdate) {
+                case "aboutMe": {
+                    userRepository.setUserAboutMeByEmail(changesInProfile, userEmailInSession);
+                    break;
+                }
+                case "Interests": {
+                    userRepository.setUserInterestsByEmail(changesInProfile, userEmailInSession);
+                    break;
+                }
+                case "Views": {
+                    userRepository.setUserViewPointsByEmail(changesInProfile, userEmailInSession);
+                    break;
+                }
+            }
+            thought4ThoughtResponseObject.setStatus(0);
+            thought4ThoughtResponseObject.setInfo("Updated user profile!");
+        }
+        return thought4ThoughtResponseObject;
+    }
     public Thought4ThoughtResponseObject saveAboutMe(String newAboutMe, String userEmailInSession) {
         Thought4ThoughtResponseObject thought4ThoughtResponseObject =
                 new Thought4ThoughtResponseObject().createResponse(-1,
@@ -79,7 +101,7 @@ public class UserService {
                         "Couldn't edit information; Something went terribly wrong!");
         if (userEmailInSession != null) {
             if (newInterests.length() > 0) {
-                userRepository.addUserInterestsByEmail(newInterests, userEmailInSession);
+                userRepository.setUserInterestsByEmail(newInterests, userEmailInSession);
                 thought4ThoughtResponseObject.setStatus(0);
                 thought4ThoughtResponseObject.setInfo("Updated about you!");
             } else {
@@ -96,7 +118,7 @@ public class UserService {
                         "Couldn't edit information; Something went terribly wrong!");
         if (userEmailInSession != null) {
             if (newViewPoints.length() > 0) {
-                userRepository.addUserViewPointsByEmail(newViewPoints, userEmailInSession);
+                userRepository.setUserViewPointsByEmail(newViewPoints, userEmailInSession);
                 thought4ThoughtResponseObject.setStatus(0);
                 thought4ThoughtResponseObject.setInfo("Updated about you!");
             } else {

@@ -37,29 +37,14 @@ public class UserController {
         return userService.registerNewUser(user);
     }
 
-
     // Edit the about me section (later pov and interest)
-    @PostMapping(path ="/api/update")
-    public Thought4ThoughtResponseObject updateAboutMe(@RequestBody ObjectNode newAboutMe, HttpServletRequest request, HttpSession session) {
+    @PostMapping(path ="/api/update-profile")
+    public Thought4ThoughtResponseObject updateAboutMe(@RequestBody ObjectNode objectNode,
+                                                       HttpServletRequest request,
+                                                       HttpSession session) {
+        String keyToUpdate = objectNode.get("keyToUpdate").asText();
+        String changesInProfile = objectNode.get("changesInProfile").asText();
         String userEmail = (String) session.getAttribute("userEmail");
-        return this.userService.saveAboutMe(newAboutMe.get("about").asText(), userEmail);
+        return this.userService.saveProfileChanges(keyToUpdate, changesInProfile, userEmail);
     }
-
-    @PostMapping(path ="/api/update")
-    public Thought4ThoughtResponseObject updateInterests(@RequestBody ObjectNode newData, HttpServletRequest request, HttpSession session) {
-        String userEmail = (String) session.getAttribute("userEmail");
-        return this.userService.addInterests(newData.get("title").asText(), userEmail);
-    }
-
-    @PostMapping(path ="/api/update")
-    public Thought4ThoughtResponseObject updateViewPoints(@RequestBody ObjectNode newData, HttpServletRequest request, HttpSession session) {
-        String userEmail = (String) session.getAttribute("userEmail");
-        return this.userService.addViewPoints(newData.get("title").asText(), userEmail);
-    }
-
-
-   /* @PostMapping(path ="/api/delete")
-    public Thought4ThoughtResponseObject deleteValue(@RequestBody ObjectNode)*/
-
-
 }
