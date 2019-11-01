@@ -43,7 +43,10 @@ class SignupForm extends Component {
 					fetch('/api/register', {
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify(formAnswers)
+						body: JSON.stringify({
+							...formAnswers,
+							userType: this.state.userType,
+						})
 					})
 						.then(resp => console.log('Registration Successful', resp))
 						.catch(error => console.error("Something went wrong with registering a new user", error));
@@ -55,7 +58,9 @@ class SignupForm extends Component {
 	resendVerification = () => {}; // TODO: implement this when BE is ready
 
 	onUserTypeChange = (userType) => {
-		this.setState({ userType });
+		this.setState({ userType }, () => {
+			console.log(`USER TYPE: `, userType);
+		});
 	};
 
 	isFormPageInvalid = (pageNumber, values, errors) => {

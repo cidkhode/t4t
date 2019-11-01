@@ -11,7 +11,7 @@ export class DashboardSidebar extends Component {
 		super(props);
 		this.editProfilePicRef = null;
 		this.state = {
-			keyToUpdate: "Interest",
+			keyToUpdate: "Interests",
 			valuesToUpdate: []
 		}
 	}
@@ -53,6 +53,7 @@ export class DashboardSidebar extends Component {
 	);
 
 	render() {
+		console.log(`INTERESTS`, this.props.interests);
 		return(
 			<div id="dashboard-sidebar">
 				<div id="dashboard-user-info">

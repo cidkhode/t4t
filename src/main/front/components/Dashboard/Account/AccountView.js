@@ -35,7 +35,8 @@ export default class AccountView extends Component {
 							text={ this.props.editMode ? 'Save Changes' : 'Edit Description' }
 						/>
 						<Button
-							extraClass="cancel-editing-about-me-button"
+							disabled={ !this.props.editMode }
+							extraClass={ `cancel-editing-about-me-button ${!this.props.editMode ? 'disabled' : '' }` }
 							handleClick={ () => this.props.toggleAboutMeEditMode('Cancel') }
 							text="Cancel"
 						/>

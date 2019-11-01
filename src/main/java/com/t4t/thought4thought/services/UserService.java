@@ -55,6 +55,16 @@ public class UserService {
         return thought4ThoughtResponseObject;
     }
 
+    private ArrayList<String> addDataToList(String existingData, String data) {
+        ArrayList<String> addedInterests = new ArrayList<>(Arrays.asList(data.split(",")));
+        ArrayList<String> newContents = new ArrayList<>();
+        if (existingData.length() > 0) {
+            newContents.addAll(Arrays.asList(existingData.split(",")));
+        }
+        newContents.addAll(addedInterests);
+        return newContents;
+    }
+
     public Thought4ThoughtResponseObject saveProfileUpdates(String keyToUpdate,
                                                             String changesInProfile,
                                                             String userEmailInSession) {
@@ -62,17 +72,20 @@ public class UserService {
                 new Thought4ThoughtResponseObject().createResponse(-1,
                         "Couldn't update profile; something went wrong.");
         if (userEmailInSession != null) {
+            User user = userRepository.findByEmail(userEmailInSession);
             switch(keyToUpdate) {
                 case "aboutMe": {
                     userRepository.setUserAboutMeByEmail(changesInProfile, userEmailInSession);
                     break;
                 }
                 case "Interests": {
-                    userRepository.setUserInterestsByEmail(changesInProfile, userEmailInSession);
+                    String existingInterests = user.getInterests();
+                    userRepository.setUserInterestsByEmail(String.join(",", addDataToList(existingInterests, changesInProfile)), userEmailInSession);
                     break;
                 }
                 case "Views": {
-                    userRepository.setUserViewPointsByEmail(changesInProfile, userEmailInSession);
+                    String existingViewPoints = user.getViewPoints();
+                    userRepository.setUserViewPointsByEmail(String.join(",", addDataToList(existingViewPoints, changesInProfile)), userEmailInSession);
                     break;
                 }
             }

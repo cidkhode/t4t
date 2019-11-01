@@ -76,7 +76,7 @@ export class UserAccount extends Component {
       })
       .then(resp => resp.json())
       .then(json => {
-        this.setState({ [POPUP_KEYS.ADD_POPUP_OPEN]: false }, () => {
+        this.setState({ [POPUP_KEYS.ADD_POPUP_OPEN]: false, dropdownValuesToUpdate: [] }, () => {
           if(json.status === 0) {
             this.props.getProfile();
           }
@@ -124,7 +124,9 @@ export class UserAccount extends Component {
   };
 
   toggleAddPopup = (key, isOpen) => {
-    this.setState({ [key]: isOpen, dropdownValuesToUpdate: [], keyToUpdate: '' });
+    this.setState({ [key]: isOpen, dropdownValuesToUpdate: [], keyToUpdate: '' }, () => {
+      console.log(this.state.dropdownValuesToUpdate);
+    });
   };
 
   togglePopupSelection = (key, keyToUpdate) => {

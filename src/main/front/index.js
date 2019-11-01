@@ -123,8 +123,8 @@ export class Thought4Thought extends Component {
             userAccountDetails: {
               ...userAccountDetails,
               name: `${userAccountDetails.firstName} ${userAccountDetails.lastName}`,
-              interests: userAccountDetails.interests.split(',').map(interest => ({ title: interest })),
-              viewPoints: userAccountDetails.viewPoints.split(',').map(viewPoint => ({ title: viewPoint })),
+              interests: userAccountDetails.interests ? userAccountDetails.interests.split(',').map(interest => ({ title: interest })) : [],
+              viewPoints: userAccountDetails.viewPoints ? userAccountDetails.viewPoints.split(',').map(viewPoint => ({ title: viewPoint })) : [],
             },
           })
         })
