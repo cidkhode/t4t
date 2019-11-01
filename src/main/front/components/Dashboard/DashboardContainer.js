@@ -1,11 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
+/* Components */
 import DashboardSidebar from './Sidebar/DashboardSidebar.js';
+
+/* Styles */
 import './Dashboard.less';
 
 const DashboardContainer = props => {
 	return (
-		<div className="dashboard">
+		<main id="content" className="dashboard">
 			<DashboardSidebar
 				updateInterestsAndViews={ props.updateInterestsAndViews }
 				userAccountDetails={ props.userAccountDetails }
@@ -22,7 +26,7 @@ const DashboardContainer = props => {
 				togglePopupSelection={ props.togglePopupSelection }
 			/>
 			{props.children}
-		</div>
+		</main>
 	);
 };
 

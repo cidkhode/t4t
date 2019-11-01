@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
 /* Components */
-import Sidebar from "../components/Sidebar/Sidebar";
-import Navbar from "../components/Navbar/Navbar";
-import ArticlePreview from "../components/ArticlePreview/ArticlePreview";
+import Sidebar from "../../components/Sidebar/Sidebar";
+import Navbar from "../../components/Navbar/Navbar";
+import ArticlePreview from "../../components/ArticlePreview/ArticlePreview";
 
 /* Styles */
-import './Homepage.less';
+import './MainPage.less';
 
 class MainPage extends Component {
   constructor(props) {

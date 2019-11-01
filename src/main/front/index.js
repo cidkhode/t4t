@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
 import { LOCAL_STORAGE_KEYS } from "./utils/constants";
+
+/* Components */
+import MainPage from './pages/MainPage/';
+import UserAccount from './pages/UserAccount/';
+import UserDashboard from './pages/UserDashboard/';
+
+/* Styles */
 import './index.css';
-import MainPage from './pages/MainPage';
-import UserAccount from './pages/UserAccount';
+
+/* Redux Store */
+import store from './redux/store.js';
 
 export class Thought4Thought extends Component {
   constructor(props) {
@@ -101,7 +113,7 @@ export class Thought4Thought extends Component {
 
   getProfile = () => {
     const userEmail = localStorage.getItem(LOCAL_STORAGE_KEYS.LOGGED_IN_USER_EMAIL);
-    if (!userEmail) {
+    if (userEmail) {
       fetch(`/api/user?userEmail=${localStorage.getItem(LOCAL_STORAGE_KEYS.LOGGED_IN_USER_EMAIL)}`)
         .then(resp => {
           return resp.json();
@@ -122,15 +134,34 @@ export class Thought4Thought extends Component {
 
   render() {
     return (
-		<div>
-       {/*<MainPage />*/}
-       <UserAccount
-        getProfile={ this.getProfile }
-        userAccountDetails={ this.state.userAccountDetails }
-        savedArticles={ this.getSavedArticles() }
-        followingUsers={ this.getFollowingUsers() }
-      />
-		</div>
+      <Provider store={store}>
+  		  <Router>
+          <>
+            <Switch>
+              <Route path="/account">
+                <UserAccount
+                  getProfile={ this.getProfile }
+                  userAccountDetails={ this.state.userAccountDetails }
+                  savedArticles={ this.getSavedArticles() }
+                  followingUsers={ this.getFollowingUsers() }
+                />
+              </Route>
+              <Route path="/dashboard">
+                <UserDashboard
+                  interests={ this.state.userAccountDetails.interests }
+                  pointsOfView={ this.state.userAccountDetails.viewPoints }
+                  userAccountDetails={ this.state.userAccountDetails }
+                  allArticles={ this.getSavedArticles() }
+                  latestArticles={ this.getSavedArticles() }
+                />
+              </Route>
+              <Route path="/">
+                <MainPage />
+              </Route>
+            </Switch>
+          </>
+        </Router>
+      </Provider>
     )
   }
 }

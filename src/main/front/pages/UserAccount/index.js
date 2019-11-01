@@ -1,9 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { POPUP_KEYS } from '../utils/constants';
-import Sidebar from '../components/Sidebar/Sidebar';
-import DashboardContainer from '../components/Dashboard/DashboardContainer.js';
-import AccountView from '../components/Dashboard/Account/AccountView.js';
+
+import { POPUP_KEYS } from '../../utils/constants';
+
+/* Components */
+import Sidebar from "../../components/Sidebar/Sidebar";
+import Navbar from "../../components/Navbar/Navbar";
+import DashboardContainer from '../../components/Dashboard/DashboardContainer.js';
+import AccountView from '../../components/Dashboard/Account/AccountView.js';
+
+/* Styles */
+import './UserAccount.less';
 
 export class UserAccount extends Component {
   constructor(props) {
@@ -12,20 +19,11 @@ export class UserAccount extends Component {
       sideBarOpen: false,
       selectedSideBarOption: '',
       editing: false,
-      aboutMe: '',
+      aboutMe: this.props.userAccountDetails.aboutMe,
       keyToUpdate: '',
       dropdownValuesToUpdate: [],
       [POPUP_KEYS.ADD_POPUP_OPEN]: false,
     };
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.props !== prevProps) {
-      this.setState({
-        userAccountDetails: this.props.userAccountDetails,
-        aboutMe: this.props.userAccountDetails.aboutMe,
-      });
-    }
   }
 
   // TODO: when we implement login system, take username and pass it into a fetch get request to retrieve selected topics of user, and remove this mock array
@@ -42,7 +40,7 @@ export class UserAccount extends Component {
 
   openSideBar = () => this.setState({ sideBarOpen: !this.state.sideBarOpen });
 
-  signOut = () => { console.log('Trying to sign out'); };
+  signOut = () => console.log('Trying to sign out');
 
   editProfilePic = (editProfilePicRef) => {
     editProfilePicRef.click();
@@ -122,7 +120,7 @@ export class UserAccount extends Component {
         this.props.getProfile();
         this.setState({editing: false});
       }
-    })  
+    })
   };
 
   toggleAddPopup = (key, isOpen) => {
@@ -135,42 +133,45 @@ export class UserAccount extends Component {
 
   render() {
     return (
-      <DashboardContainer
-        interests={ this.props.userAccountDetails.interests }
-        viewPoints={ this.props.userAccountDetails.viewPoints }
-        userAccountDetails={this.props.userAccountDetails}
-        editProfilePic={ this.editProfilePic }
-        submitProfilePic={ this.submitProfilePic }
-        delete={ this.deleteInfo }
-        updateInterestsAndViews={ this.updateInterestsAndViews }
-        selectNewValueToAdd={ this.selectNewValueToAdd }
-        keyToUpdate={ this.state.keyToUpdate }
-        dropdownValuesToUpdate={ this.state.dropdownValuesToUpdate }
-        isAddPopupActive={ this.state[POPUP_KEYS.ADD_POPUP_OPEN] }
-        toggleAddPopup={ this.toggleAddPopup }
-        togglePopupSelection={ this.togglePopupSelection }
-      >
-        <>
-          <AccountView
-            savedArticles={ this.props.savedArticles }
-            followingUsers={ this.props.followingUsers }
-            userAccountDetails={ this.props.userAccountDetails }
-            editMode={ this.state.editing }
-            onChangeHandler= { this.onChange }
-            currentAbout= { this.state.aboutMe }
-            toggleAboutMeEditMode={ this.toggleAboutMeEditMode }
-          />
-          <Sidebar
-            topics={ this.fetchTopics() }
-            onTopicSelection={ this.selectTopic }
-            onOpen={ this.openSideBar }
-            name={ `${this.props.userAccountDetails.firstName} ${this.props.userAccountDetails.lastName}` }
-            isOpen={ this.state.sideBarOpen }
-            onSignOut={ this.signOut }
-            selectedOption={ this.state.selectedSideBarOption }
-          />
-        </>
-      </DashboardContainer>
+      <>
+        <Navbar />
+        <DashboardContainer
+          interests={ this.props.userAccountDetails.interests }
+          viewPoints={ this.props.userAccountDetails.viewPoints }
+          userAccountDetails={this.props.userAccountDetails}
+          editProfilePic={ this.editProfilePic }
+          submitProfilePic={ this.submitProfilePic }
+          delete={ this.deleteInfo }
+          updateInterestsAndViews={ this.updateInterestsAndViews }
+          selectNewValueToAdd={ this.selectNewValueToAdd }
+          keyToUpdate={ this.state.keyToUpdate }
+          dropdownValuesToUpdate={ this.state.dropdownValuesToUpdate }
+          isAddPopupActive={ this.state[POPUP_KEYS.ADD_POPUP_OPEN] }
+          toggleAddPopup={ this.toggleAddPopup }
+          togglePopupSelection={ this.togglePopupSelection }
+        >
+          <>
+            <AccountView
+              savedArticles={ this.props.savedArticles }
+              followingUsers={ this.props.followingUsers }
+              userAccountDetails={ this.props.userAccountDetails }
+              editMode={ this.state.editing }
+              onChangeHandler= { this.onChange }
+              currentAbout= { this.state.aboutMe }
+              toggleAboutMeEditMode={ this.toggleAboutMeEditMode }
+            />
+            <Sidebar
+              topics={ this.fetchTopics() }
+              onTopicSelection={ this.selectTopic }
+              onOpen={ this.openSideBar }
+              name={ `${this.props.userAccountDetails.firstName} ${this.props.userAccountDetails.lastName}` }
+              isOpen={ this.state.sideBarOpen }
+              onSignOut={ this.signOut }
+              selectedOption={ this.state.selectedSideBarOption }
+              />
+          </>
+        </DashboardContainer>
+      </>
     )
   }
 }
