@@ -16,6 +16,8 @@ import './index.css';
 
 /* Redux Store */
 import store from './redux/store.js';
+import CustomRouter from "./components/CustomRouter/CustomRouter";
+import { isUserLoggedIn } from "./utils/utils";
 
 export class Thought4Thought extends Component {
   constructor(props) {
@@ -139,20 +141,28 @@ export class Thought4Thought extends Component {
           <>
             <Switch>
               <Route path="/account">
-                <UserAccount
-                  getProfile={ this.getProfile }
-                  userAccountDetails={ this.state.userAccountDetails }
-                  savedArticles={ this.getSavedArticles() }
-                  followingUsers={ this.getFollowingUsers() }
+                <CustomRouter
+                  isLoggedIn={ isUserLoggedIn() }
+                  component={ UserAccount }
+                  componentProps={ {
+                    getProfile: this.getProfile,
+                    userAccountDetails: this.state.userAccountDetails,
+                    savedArticles: this.getSavedArticles(),
+                    followingUsers: this.getFollowingUsers(),
+                  } }
                 />
               </Route>
               <Route path="/dashboard">
-                <UserDashboard
-                  interests={ this.state.userAccountDetails.interests }
-                  pointsOfView={ this.state.userAccountDetails.viewPoints }
-                  userAccountDetails={ this.state.userAccountDetails }
-                  allArticles={ this.getSavedArticles() }
-                  latestArticles={ this.getSavedArticles() }
+                <CustomRouter
+                  isLoggedIn={ isUserLoggedIn() }
+                  component={ UserDashboard }
+                  componentProps={ {
+                    interests: this.state.userAccountDetails.interests,
+                    pointsOfView: this.state.userAccountDetails.viewPoints,
+                    userAccountDetails: this.state.userAccountDetails,
+                    allArticles: this.getSavedArticles(),
+                    latestArticles: this.getSavedArticles(),
+                  }}
                 />
               </Route>
               <Route path="/">

@@ -124,9 +124,7 @@ export class UserAccount extends Component {
   };
 
   toggleAddPopup = (key, isOpen) => {
-    this.setState({ [key]: isOpen, dropdownValuesToUpdate: [], keyToUpdate: '' }, () => {
-      console.log(this.state.dropdownValuesToUpdate);
-    });
+    this.setState({ [key]: isOpen, dropdownValuesToUpdate: [], keyToUpdate: '' });
   };
 
   togglePopupSelection = (key, keyToUpdate) => {

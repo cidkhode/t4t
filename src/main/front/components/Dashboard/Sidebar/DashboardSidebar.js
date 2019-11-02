@@ -53,7 +53,6 @@ export class DashboardSidebar extends Component {
 	);
 
 	render() {
-		console.log(`INTERESTS`, this.props.interests);
 		return(
 			<div id="dashboard-sidebar">
 				<div id="dashboard-user-info">

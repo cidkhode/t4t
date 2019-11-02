@@ -57,9 +57,9 @@ export class Navbar extends Component {
       .then(resp => resp.json())
       .then(json => {
         if (json.status === 0) {
-          this.props.history.push('/account');
           this.props.toggleSigninModal();
           localStorage.setItem(LOCAL_STORAGE_KEYS.LOGGED_IN_USER_EMAIL, email);
+          this.props.history.push('/account');
         }
       })
       .catch(error => console.error("Something went wrong.", error));
@@ -106,7 +106,7 @@ export class Navbar extends Component {
 
 const mapStateToProps = (state) => {
   return { modal_status: state.modal_status };
-}
+};
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({ toggleSigninModal, toggleSignupModal }, dispatch);
 
