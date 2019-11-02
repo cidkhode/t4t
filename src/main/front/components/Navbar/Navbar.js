@@ -1,4 +1,6 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -14,10 +16,20 @@ import { toggleSigninModal, toggleSignupModal } from '../../redux/actions/modal.
 /* Images */
 import searchImg from '../../assets/search.png'
 
+import { POPUP_KEYS, LOCAL_STORAGE_KEYS } from '../../utils/constants';
+
 /* Styles */
 import './Navbar.less';
 
-class Navbar extends Component {
+export class Navbar extends Component {
+  static PropTypes = {
+    history: PropTypes.object,
+  };
+
+  static defaultProps = {
+
+  };
+
   constructor(props) {
     super(props);
 
@@ -33,6 +45,24 @@ class Navbar extends Component {
 
   onSearch = () => {
     console.log(`Searching for: `, this.state.searchText);
+  };
+
+  sendLogin = (values) => {
+    const { email, password } = values;
+    fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email,password })
+    })
+      .then(resp => resp.json())
+      .then(json => {
+        if (json.status === 0) {
+          this.props.history.push('/account');
+          this.props.toggleSigninModal();
+          localStorage.setItem(LOCAL_STORAGE_KEYS.LOGGED_IN_USER_EMAIL, email);
+        }
+      })
+      .catch(error => console.error("Something went wrong.", error));
   };
 
   render() {
@@ -60,6 +90,7 @@ class Navbar extends Component {
             text="Register!"
           />
           <Signin
+            sendLogin={ this.sendLogin }
             closeSignin={ this.props.toggleSigninModal }
             isActive={ this.props.modal_status.is_signin_open }
           />
@@ -79,4 +110,4 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({ toggleSigninModal, toggleSignupModal }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));

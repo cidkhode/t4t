@@ -11,16 +11,37 @@
 	align-items: center;
 
 	#dashboard-user-info {
+		.edit-profile-hover-over {
+			position: absolute;
+			width: inherit;
+			top: 130px;
+			opacity: 0;
+			transition: .5s ease;
+			text-decoration: underline;
+			font-size: 25px;
+			color: @t4t-blue-light;
+		}
 		.dashboard-img {
-			max-width: 175px;
-			max-height: 175px;
+			cursor: pointer;
+			width: 175px;
+			height: 175px;
 			border-radius: 100px;
 			overflow: hidden;
+			text-align: center;
+
+			&:hover .edit-profile-hover-over {
+				opacity: 1;
+			}
+
+			&:hover img {
+				opacity: .2;
+			}
 
 			img {
 				width: 100%;
 				height: 100%;
 				object-fit: cover;
+				transition: .5s ease;
 			}
 		}
 
@@ -48,6 +69,23 @@
 		align-items: center;
 		width: 100%;
 
+		.add-interests, .add-view-points {
+			color: @t4t-blue-light;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+			display: inline;
+			cursor: pointer;
+			float: right;
+			transition: 0.3s;
+			&:hover {
+				color: @t4t-cyan-light
+			}
+			&:active {
+				color: @t4t-blue;
+			}
+		}
 		.split-items {
 			span {
 				text-overflow: ellipsis;
@@ -59,6 +97,7 @@
 		}
 
 		h4 {
+			width: inherit;
 			font-weight: 700;
 			margin: 30px 0 20px 0;
 		}
@@ -90,13 +129,37 @@
 				width: calc((100%/2) - (10px/2));
 				border-radius: 5px;
 			}
+			&:not(.split):hover .x-button, > div:hover .x-button {
+				opacity: 1.0;
+				display: block;
+				cursor: pointer;
+				transition: 0.3s;
+				outline: none;
+				&:active {
+					color: @t4t-red;
+				}
+			}
 		}
 	}
 
 	#dashboard-pov {}
+	
 
 	// responsive styling
 	@media only screen and (max-width: 1400px) {
 		width: 190px;
 	}
 }
+.x-button {
+	display: none;
+	line-height: 15px;
+	text-align: center;
+	background: transparent;
+	border: none;
+	font-size: 15px;
+	transition: 0.3s;
+}
+
+.x-button:before {
+	content: 'x';
+}	

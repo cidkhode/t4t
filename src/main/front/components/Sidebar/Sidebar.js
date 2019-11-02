@@ -22,7 +22,7 @@ export const Sidebar = props => (
         <span className="side-bar-option-type" />
       </div>
     </NavLink>
-    <NavLink exact to="/dashboard/account" activeClassName="is-selected">
+    <NavLink exact to="/account" activeClassName="is-selected">
       <div className="side-bar-option">
         { props.isOpen && <p className="side-bar-option-text">Account</p> }
         <span className="side-bar-option-type" />

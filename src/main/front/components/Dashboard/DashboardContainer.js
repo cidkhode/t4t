@@ -11,9 +11,19 @@ const DashboardContainer = props => {
 	return (
 		<main id="content" className="dashboard">
 			<DashboardSidebar
+				updateInterestsAndViews={ props.updateInterestsAndViews }
 				userAccountDetails={ props.userAccountDetails }
 				interests={ props.interests }
-				pointsOfView={ props.pointsOfView }
+				viewPoints={ props.viewPoints }
+				editProfilePic={ props.editProfilePic }
+				submitProfilePic={ props.submitProfilePic }
+				delete={ props.delete }
+				selectNewValueToAdd={ props.selectNewValueToAdd }
+				keyToUpdate={ props.keyToUpdate }
+				dropdownValuesToUpdate={ props.dropdownValuesToUpdate }
+				isAddPopupActive={ props.isAddPopupActive }
+				toggleAddPopup={ props.toggleAddPopup }
+				togglePopupSelection={ props.togglePopupSelection }
 			/>
 			{props.children}
 		</main>
@@ -21,10 +31,26 @@ const DashboardContainer = props => {
 };
 
 DashboardContainer.propTypes = {
-	userAccountDetails: PropTypes.object.isRequired,
+	userAccountDetails: PropTypes.object,
 	children: PropTypes.element.isRequired,
-	interests: PropTypes.array.isRequired,
-	pointsOfView: PropTypes.array.isRequired,
+	interests: PropTypes.array,
+	viewPoints: PropTypes.array,
+	editProfilePic: PropTypes.func.isRequired,
+	submitProfilePic: PropTypes.func.isRequired,
+	delete: PropTypes.func.isRequired,
+	updateInterestsAndViews: PropTypes.func.isRequired,
+	selectNewValueToAdd: PropTypes.func.isRequired,
+	keyToUpdate: PropTypes.string.isRequired,
+	dropdownValuesToUpdate: PropTypes.array.isRequired,
+	isAddPopupActive: PropTypes.bool.isRequired,
+	toggleAddPopup: PropTypes.func.isRequired,
+	togglePopupSelection: PropTypes.func.isRequired,
+};
+
+DashboardContainer.defaultProps = {
+	interests: [],
+	viewPoints: [],
+	userAccountDetails: {}
 };
 
 export default DashboardContainer;

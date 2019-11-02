@@ -56,29 +56,6 @@ class MainPage extends Component {
     console.log('Trying to sign out');
   };
 
-  // TODO: Remove this later...
-  fetchTest = () => {
-    fetch('/api/register', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        firstName: 'Cid',
-        lastName: 'Khode',
-        email: 'fake@gmail.com',
-        password: 'somepass',
-        userType: 'Writer',
-      })
-    })
-      .then(resp => console.log(`Successful adding!`, resp))
-      .catch(error => console.error(`Something wrong happened...`, error));
-  };
-
-  getAllUsers = () => {
-    fetch('/api/all')
-      .then(resp => console.log(`All users`, resp))
-      .catch(error => console.error(`Something went wrong trying to get all users`, error));
-  };
-
   selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption }, () => console.log(`Topic selected: `, selectedSideBarOption));
 
   render() {
@@ -102,8 +79,9 @@ class MainPage extends Component {
 
               <div className="inner">
                 <div className="list">
-                  {this.state.mostPopularArticles.map((item) => 
+                  {this.state.mostPopularArticles.map((item, key) =>
                     <ArticlePreview
+                      key={ key }
                       type={"horizontal"}
                       image={'https://picsum.photos/150'}
                       title={"NJIT Student attempts to code a website unsuccessfully"}
@@ -113,8 +91,9 @@ class MainPage extends Component {
                 </div>
                 
                 <div className="list">
-                  {this.state.mostPopularBig.map((item) => 
+                  {this.state.mostPopularBig.map((item, key) =>
                     <ArticlePreview
+                      key={ key }
                       type={"vertical"}
                       image={'https://picsum.photos/400/150'}
                       title={"NJIT Student attempts to code a website unsuccessfully"}
@@ -130,8 +109,9 @@ class MainPage extends Component {
 
               <div className="inner">
                 <div className="list">
-                  {this.state.networkArticles.map((item) => 
+                  {this.state.networkArticles.map((item, key) =>
                     <ArticlePreview
+                      key={ key }
                       type={"vertical"}
                       image={'https://picsum.photos/450/250'}
                       title={"NJIT Student attempts to code a website unsuccessfully"}
@@ -149,8 +129,9 @@ class MainPage extends Component {
 
             <div className="inner">
               <div className="list">
-                {this.state.readingListArticles.map((item) => 
+                {this.state.readingListArticles.map((item, key) =>
                   <ArticlePreview
+                    key={ key }
                     type={"horizontal"}
                     image={'https://picsum.photos/150'}
                     title={"NJIT Student attempts to code a website unsuccessfully"}

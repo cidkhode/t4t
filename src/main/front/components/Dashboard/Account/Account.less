@@ -7,11 +7,38 @@
 
 		p {
 			margin: 0 0 15px 0;
+		}
+		.account-about {
+			border: 1px solid @t4t-gray08;
+			padding: 10px;
+			border-radius: 5px;
+			margin: 0 0 15px 0;
+			max-width: 700px;
+			line-height: 21px;
 
-			&:last-child {
-				margin: 0 auto 0 0;
-				max-width: 700px;
-				line-height: 21px;
+			&:focus {
+				outline: none;
+				border: 2px solid @t4t-blue-light
+			}
+		}
+		.about-me-button-controllers {
+			display: flex;
+			.edit-about-me-button {
+				font-size: 15px;
+				opacity: 1;
+				margin-right: 10px;
+			}
+
+			.cancel-editing-about-me-button {
+				color: @t4t-blue-light;
+				border: none;
+				background-color: @t4t-white;
+				font-size: 15px;
+				opacity: 1;
+				&.disabled {
+					color: @t4t-gray03;
+					opacity: .5;
+				}
 			}
 		}
 	}
