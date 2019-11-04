@@ -134,7 +134,16 @@ export class UserAccount extends Component {
   render() {
     return (
       <>
-        <Navbar />
+        <Navbar isLoggedIn />
+        <Sidebar
+          topics={ this.fetchTopics() }
+          onTopicSelection={ this.selectTopic }
+          onOpen={ this.openSideBar }
+          name={ `${this.props.userAccountDetails.firstName} ${this.props.userAccountDetails.lastName}` }
+          isOpen={ this.state.sideBarOpen }
+          onSignOut={ this.signOut }
+          selectedOption={ this.state.selectedSideBarOption }
+        />
         <DashboardContainer
           interests={ this.props.userAccountDetails.interests }
           viewPoints={ this.props.userAccountDetails.viewPoints }
@@ -160,15 +169,6 @@ export class UserAccount extends Component {
               currentAbout= { this.state.aboutMe }
               toggleAboutMeEditMode={ this.toggleAboutMeEditMode }
             />
-            <Sidebar
-              topics={ this.fetchTopics() }
-              onTopicSelection={ this.selectTopic }
-              onOpen={ this.openSideBar }
-              name={ `${this.props.userAccountDetails.firstName} ${this.props.userAccountDetails.lastName}` }
-              isOpen={ this.state.sideBarOpen }
-              onSignOut={ this.signOut }
-              selectedOption={ this.state.selectedSideBarOption }
-              />
           </>
         </DashboardContainer>
       </>

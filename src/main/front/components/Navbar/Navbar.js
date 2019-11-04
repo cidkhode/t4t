@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -22,12 +21,15 @@ import { POPUP_KEYS, LOCAL_STORAGE_KEYS } from '../../utils/constants';
 import './Navbar.less';
 
 export class Navbar extends Component {
-  static PropTypes = {
+  static propTypes = {
     history: PropTypes.object,
+    handleLogin: PropTypes.func,
+    isLoggedIn: PropTypes.bool,
   };
 
   static defaultProps = {
-
+    handleLogin: () => {},
+    isLoggedIn: false,
   };
 
   constructor(props) {
@@ -59,7 +61,7 @@ export class Navbar extends Component {
         if (json.status === 0) {
           this.props.toggleSigninModal();
           localStorage.setItem(LOCAL_STORAGE_KEYS.LOGGED_IN_USER_EMAIL, email);
-          this.props.history.push('/account');
+          this.props.handleLogin();
         }
       })
       .catch(error => console.error("Something went wrong.", error));
@@ -79,16 +81,20 @@ export class Navbar extends Component {
             onSearchInputChange={ this.onSearchInputChange }
             searchIconPath={ searchImg }
           />
-          <Button
-            extraClass="nav-bar-sign-in-button nav-bar-right-child"
-            handleClick={ this.props.toggleSigninModal }
-            text="Log in"
-          />
-          <Button
-            extraClass="nav-bar-sign-up-button"
-            handleClick={ this.props.toggleSignupModal }
-            text="Register!"
-          />
+          {!this.props.isLoggedIn &&
+            <>
+              <Button
+                extraClass="nav-bar-sign-in-button nav-bar-right-child"
+                handleClick={this.props.toggleSigninModal}
+                text="Log in"
+              />
+              <Button
+                extraClass="nav-bar-sign-up-button"
+                handleClick={this.props.toggleSignupModal}
+                text="Register!"
+              />
+            </>
+          }
           <Signin
             sendLogin={ this.sendLogin }
             closeSignin={ this.props.toggleSigninModal }
@@ -110,4 +116,4 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({ toggleSigninModal, toggleSignupModal }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Navbar));
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

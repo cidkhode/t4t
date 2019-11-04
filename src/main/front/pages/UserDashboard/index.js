@@ -39,7 +39,7 @@ export class UserDashboard extends Component {
   render() {
     return (
       <>
-        <Navbar />
+        <Navbar isLoggedIn />
         <Sidebar
           topics={ this.fetchTopics() }
           onTopicSelection={ this.selectTopic }

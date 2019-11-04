@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-
-import { LOCAL_STORAGE_KEYS } from "./utils/constants";
 
 /* Components */
 import MainPage from './pages/MainPage/';
@@ -17,7 +14,7 @@ import './index.css';
 /* Redux Store */
 import store from './redux/store.js';
 import CustomRouter from "./components/CustomRouter/CustomRouter";
-import { isUserLoggedIn } from "./utils/utils";
+import { getUserLoggedIn } from "./utils/utils";
 
 export class Thought4Thought extends Component {
   constructor(props) {
@@ -28,8 +25,29 @@ export class Thought4Thought extends Component {
   }
 
   componentDidMount() {
-    this.getProfile();
+    const userEmail = getUserLoggedIn();
+    if (userEmail) {
+      fetch('/api/get-user-session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userEmail })
+      }).then(resp => resp.json())
+        .then(json => {
+          if (json.status === 0) {
+            this.getProfile();
+          } else {
+            this.setState({
+              isLoggedIn: false,
+            })
+          }
+        });
+    }
   }
+
+  onLogin = () => {
+    this.getProfile();
+    this.props.history.push('/account');
+  };
 
   // TODO: we will be fetching all this info later on...
   getSavedArticles = () => [{
@@ -114,14 +132,15 @@ export class Thought4Thought extends Component {
   }];
 
   getProfile = () => {
-    const userEmail = localStorage.getItem(LOCAL_STORAGE_KEYS.LOGGED_IN_USER_EMAIL);
+    const userEmail = getUserLoggedIn();
     if (userEmail) {
-      fetch(`/api/user?userEmail=${localStorage.getItem(LOCAL_STORAGE_KEYS.LOGGED_IN_USER_EMAIL)}`)
+      fetch(`/api/user?userEmail=${userEmail}`)
         .then(resp => {
           return resp.json();
         })
         .then(userAccountDetails => {
           this.setState({
+            isLoggedIn: true,
             userAccountDetails: {
               ...userAccountDetails,
               name: `${userAccountDetails.firstName} ${userAccountDetails.lastName}`,
@@ -136,41 +155,48 @@ export class Thought4Thought extends Component {
 
   render() {
     return (
-      <Provider store={store}>
-  		  <Router>
-          <>
-            <Switch>
-              <Route path="/account">
-                <CustomRouter
-                  isLoggedIn={ isUserLoggedIn() }
-                  component={ UserAccount }
-                  componentProps={ {
-                    getProfile: this.getProfile,
-                    userAccountDetails: this.state.userAccountDetails,
-                    savedArticles: this.getSavedArticles(),
-                    followingUsers: this.getFollowingUsers(),
-                  } }
-                />
-              </Route>
-              <Route path="/dashboard">
-                <CustomRouter
-                  isLoggedIn={ isUserLoggedIn() }
-                  component={ UserDashboard }
-                  componentProps={ {
-                    interests: this.state.userAccountDetails.interests,
-                    pointsOfView: this.state.userAccountDetails.viewPoints,
-                    userAccountDetails: this.state.userAccountDetails,
-                    allArticles: this.getSavedArticles(),
-                    latestArticles: this.getSavedArticles(),
-                  }}
-                />
-              </Route>
-              <Route path="/">
-                <MainPage />
-              </Route>
-            </Switch>
-          </>
-        </Router>
+      <Provider store={ store }>
+        { this.state.isLoggedIn ?
+          <Router>
+            <>
+              <Switch>
+                <Route path="/account">
+                  <CustomRouter
+                    isLoggedIn={ this.state.isLoggedIn }
+                    component={ UserAccount }
+                    componentProps={ {
+                      getProfile: this.getProfile,
+                      userAccountDetails: this.state.userAccountDetails,
+                      savedArticles: this.getSavedArticles(),
+                      followingUsers: this.getFollowingUsers(),
+                    } }
+                  />
+                </Route>
+                <Route path="/dashboard">
+                  <CustomRouter
+                    isLoggedIn={ this.state.isLoggedIn }
+                    component={ UserDashboard }
+                    componentProps={ {
+                      interests: this.state.userAccountDetails.interests,
+                      pointsOfView: this.state.userAccountDetails.viewPoints,
+                      userAccountDetails: this.state.userAccountDetails,
+                      allArticles: this.getSavedArticles(),
+                      latestArticles: this.getSavedArticles(),
+                    }}
+                  />
+                </Route>
+                <Route path="/">
+                  <MainPage isLoggedIn />
+                </Route>
+              </Switch>
+            </>
+          </Router> :
+          <MainPage
+            isLoggedIn={ false }
+            handleLogin={ this.onLogin }
+            showSidebar={ false }
+          />
+        }
       </Provider>
     )
   }
