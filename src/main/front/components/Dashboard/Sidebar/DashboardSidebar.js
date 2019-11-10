@@ -57,7 +57,7 @@ export class DashboardSidebar extends Component {
 			<div id="dashboard-sidebar">
 				<div id="dashboard-user-info">
 					<div onClick={() => this.props.editProfilePic(this.editProfilePicRef)} className="dashboard-img">
-						<img src={ this.props.userAccountDetails.profilePictureURL }/>
+						<img src={ `${this.props.userAccountDetails.profilePictureURL}?${new Date().getTime()}` }/>
 						<div className="edit-profile-hover-over">Edit</div>
 						<input
 							type="file"

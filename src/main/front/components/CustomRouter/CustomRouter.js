@@ -1,29 +1,21 @@
-import React from 'react';
-import { Redirect, Route } from 'react-router-dom'
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect, withRouter } from 'react-router-dom'
 
-export const CustomRouter = ({ component: Component, isLoggedIn, componentProps, ...props }) => {
-  return (
-    <Route
-      { ...props }
-      render={ () =>
-        isLoggedIn ? (
-          <Component { ...componentProps } />
-        ) : (
-          <Redirect to={{ pathname: '/', state: { from: props.location } }} />
-        )
-      }
-    />
-  )
-};
+export class CustomRouter extends Component {
+  render() {
+    const { component: Component, isLoggedIn, componentProps, ...props } = this.props;
+    console.log(`is logged in in custom router`, isLoggedIn);
+    return (
+      isLoggedIn ? <Component {...componentProps } /> : <Redirect to={ { pathname: '/', state: { from: props.location } } } />
+    );
+  }
+}
 
 CustomRouter.propTypes = {
-  isLoggedIn: PropTypes.bool,
-  component: PropTypes.any,
+  isLoggedIn: PropTypes.bool.isRequired,
+  componentToRender: PropTypes.any,
 };
 
-CustomRouter.defaultProps = {
-  isLoggedIn: false,
-};
 
-export default CustomRouter;
+export default withRouter(CustomRouter);

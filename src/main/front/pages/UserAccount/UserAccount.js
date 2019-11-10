@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-import { POPUP_KEYS } from '../../utils/constants';
+import { bindActionCreators } from 'redux';
+import connect from 'react-redux/es/connect/connect';
 
 /* Components */
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Navbar from "../../components/Navbar/Navbar";
 import DashboardContainer from '../../components/Dashboard/DashboardContainer.js';
 import AccountView from '../../components/Dashboard/Account/AccountView.js';
+
+import { POPUP_KEYS } from '../../utils/constants';
+import { getUserAccountDetails } from '../../redux/selectors/user.selector';
 
 /* Styles */
 import './UserAccount.less';
@@ -207,4 +210,12 @@ UserAccount.defaultProps = {
 
 };
 
-export default UserAccount;
+
+const mapStateToProps = (state) => ({
+  userAccountDetails: getUserAccountDetails(state),
+})
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserAccount);

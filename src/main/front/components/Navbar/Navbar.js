@@ -9,8 +9,10 @@ import Signin from "../Modal/Signin/Signin";
 import Signup from "../Modal/Signup/Signup";
 import Searchbar from '../Searchbar/Searchbar';
 
-/* Redux Actions - Modal Toggles */
-import { toggleSigninModal, toggleSignupModal } from '../../redux/actions/modal.js';
+/* Redux Actions - Popup Toggles */
+import { togglePopup } from '../../redux/actions/popup.action';
+import { fetchUserAccountDetails } from '../../redux/actions/user.action';
+import { getPopupActive, getPopupType } from '../../redux/selectors/popup.selector';
 
 /* Images */
 import searchImg from '../../assets/search.png'
@@ -22,9 +24,13 @@ import './Navbar.less';
 
 export class Navbar extends Component {
   static propTypes = {
-    history: PropTypes.object,
+    history: PropTypes.any,
     handleLogin: PropTypes.func,
     isLoggedIn: PropTypes.bool,
+    fetchUserAccountDetails: PropTypes.func.isRequired,
+    togglePopup: PropTypes.func.isRequired,
+    popupType: PropTypes.string.isRequired,
+    isPopupActive: PropTypes.bool.isRequired,
   };
 
   static defaultProps = {
@@ -34,7 +40,6 @@ export class Navbar extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       searchText: '',
     }
@@ -59,9 +64,9 @@ export class Navbar extends Component {
       .then(resp => resp.json())
       .then(json => {
         if (json.status === 0) {
-          this.props.toggleSigninModal();
+          this.props.togglePopup(POPUP_KEYS.LOGIN_POPUP);
           localStorage.setItem(LOCAL_STORAGE_KEYS.LOGGED_IN_USER_EMAIL, email);
-          this.props.handleLogin();
+          this.props.fetchUserAccountDetails(email);
         }
       })
       .catch(error => console.error("Something went wrong.", error));
@@ -81,28 +86,28 @@ export class Navbar extends Component {
             onSearchInputChange={ this.onSearchInputChange }
             searchIconPath={ searchImg }
           />
-          {!this.props.isLoggedIn &&
+          { !this.props.isLoggedIn &&
             <>
               <Button
                 extraClass="nav-bar-sign-in-button nav-bar-right-child"
-                handleClick={this.props.toggleSigninModal}
+                handleClick={ () => this.props.togglePopup(POPUP_KEYS.LOGIN_POPUP) }
                 text="Log in"
               />
               <Button
                 extraClass="nav-bar-sign-up-button"
-                handleClick={this.props.toggleSignupModal}
+                handleClick={() => this.props.togglePopup(POPUP_KEYS.SIGNUP_POPUP)}
                 text="Register!"
               />
             </>
           }
           <Signin
             sendLogin={ this.sendLogin }
-            closeSignin={ this.props.toggleSigninModal }
-            isActive={ this.props.modal_status.is_signin_open }
+            closeSignin={ () => this.props.togglePopup(POPUP_KEYS.LOGIN_POPUP) }
+            isActive={ (this.props.popupType === POPUP_KEYS.LOGIN_POPUP) && this.props.isPopupActive }
           />
           <Signup
-            closeSignup={ this.props.toggleSignupModal }
-            isActive={ this.props.modal_status.is_signup_open }
+            closeSignup={ () => this.props.togglePopup(POPUP_KEYS.SIGNUP_POPUP) }
+            isActive={ (this.props.popupType === POPUP_KEYS.SIGNUP_POPUP) && this.props.isPopupActive }
           />
         </div>
       </div>
@@ -110,10 +115,14 @@ export class Navbar extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return { modal_status: state.modal_status };
-};
+const mapStateToProps = (state) => ({
+  isPopupActive: getPopupActive(state),
+  popupType: getPopupType(state)
+});
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({ toggleSigninModal, toggleSignupModal }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  togglePopup,
+  fetchUserAccountDetails,
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
