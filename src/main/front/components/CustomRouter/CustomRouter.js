@@ -7,7 +7,7 @@ export class CustomRouter extends Component {
     const { component: Component, isLoggedIn, componentProps, ...props } = this.props;
     console.log(`is logged in in custom router`, isLoggedIn);
     return (
-      isLoggedIn ? <Component {...componentProps } /> : <Redirect to={ { pathname: '/', state: { from: props.location } } } />
+      isLoggedIn ? <Component {...componentProps } /> : <Redirect to={{ pathname: window.location.pathname }} />
     );
   }
 }
