@@ -11,7 +11,6 @@ import CustomRouter from '../components/CustomRouter/CustomRouter';
 import UserAccount from './UserAccount/UserAccount';
 import UserDashboard from './UserDashboard/UserDashboard';
 import MainPage from './MainPage';
-import { LoadingIcon } from '../components/LoadingIcon/LoadingIcon';
 
 export class Thought extends Component {
   constructor(props) {
@@ -32,9 +31,8 @@ export class Thought extends Component {
   }
 
   // TODO: we will be fetching all this info later on...
-  getSavedArticles = () => {
-    return
-    [{
+  getSavedArticles = () => [
+    {
       title: 'Mock Article 1',
       author: 'Cid Khode',
       image: 'https://picsum.photos/450/285',
@@ -79,8 +77,8 @@ export class Thought extends Component {
       author: 'Cid Khode',
       image: 'https://picsum.photos/450/285',
       description: 'Some description we might need somewhere else in the project so we\'re keeping it as a prop for now.'
-    }];
-  };
+    }
+  ];
 
   getFollowingUsers = () => [
     {

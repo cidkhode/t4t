@@ -14,3 +14,5 @@ export const LoadingIcon = () => (
     </div>
   </div>
 );
+
+export default LoadingIcon;

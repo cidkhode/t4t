@@ -47,10 +47,12 @@ export const Sidebar = props => (
         </div>
       ))
     }
-    <div onClick={ () => { props.signUserOut(); props.history.push("/"); } } className="side-bar-option">
-      { props.isOpen && <p className="side-bar-option-text">Sign Out</p> }
-      <span className="side-bar-three-dots">...</span>
-    </div>
+    <NavLink exact to="/">
+      <div onClick={ props.signUserOut } className="side-bar-option">
+        { props.isOpen && <p className="side-bar-option-text">Sign Out</p> }
+        <span className="side-bar-three-dots">...</span>
+      </div>
+    </NavLink>
   </div>
 );
 

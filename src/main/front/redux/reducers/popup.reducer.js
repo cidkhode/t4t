@@ -1,6 +1,6 @@
 import { TOGGLE_POPUP } from '../actions/popup.action.js';
 
-const initialState = {
+export const initialState = {
 	popupType: '',
 	isPopupActive: false,
 };

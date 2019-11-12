@@ -20,13 +20,11 @@ export const fetchUserAccountDetails = (userEmail) => (dispatch) => {
   return fetch(`/api/user?userEmail=${userEmail}`)
     .then(response => response.json())
     .then(userAccountDetails => {
-      console.log(userAccountDetails);
       dispatch({ type: SAVE_USER_DETAILS, userAccountDetails })
     })
     .catch(err => console.error(err));
 };
 
 export const signUserOut = () => (dispatch) => {
-  console.log("sign me out of here!!!");
   dispatch({ type: SIGN_USER_OUT });
 };

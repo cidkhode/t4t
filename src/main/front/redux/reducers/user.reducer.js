@@ -34,7 +34,6 @@ export const user = (state = initialState, action) => {
       };
 
     case userActions.SAVE_USER_DETAILS:
-      console.log(`ACTIONS FOR SAVING: `, action);
       const { userAccountDetails } = action;
       return {
         ...state,
@@ -50,9 +49,14 @@ export const user = (state = initialState, action) => {
 
     case userActions.SIGN_USER_OUT:
       localStorage.removeItem(LOCAL_STORAGE_KEYS.LOGGED_IN_USER_EMAIL);
+      return {
+        ...state,
+        isLoggedIn: false,
+        userAccountDetails: {},
+      };
 
     default:
-      return initialState;
+      return state;
   }
 };
 
