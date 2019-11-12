@@ -58,9 +58,7 @@ class SignupForm extends Component {
 	resendVerification = () => {}; // TODO: implement this when BE is ready
 
 	onUserTypeChange = (userType) => {
-		this.setState({ userType }, () => {
-			console.log(`USER TYPE: `, userType);
-		});
+		this.setState({ userType });
 	};
 
 	isFormPageInvalid = (pageNumber, values, errors) => {

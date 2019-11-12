@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
-import { POPUP_KEYS } from '../../utils/constants';
+import { bindActionCreators } from 'redux';
+import connect from 'react-redux/es/connect/connect';
 
 /* Components */
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Navbar from "../../components/Navbar/Navbar";
 import DashboardContainer from '../../components/Dashboard/DashboardContainer.js';
 import AccountView from '../../components/Dashboard/Account/AccountView.js';
+
+import { POPUP_KEYS } from '../../utils/constants';
+import { getUserAccountDetails } from '../../redux/selectors/user.selector';
 
 /* Styles */
 import './UserAccount.less';
@@ -39,8 +42,6 @@ export class UserAccount extends Component {
   selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption });
 
   openSideBar = () => this.setState({ sideBarOpen: !this.state.sideBarOpen });
-
-  signOut = () => console.log('Trying to sign out');
 
   editProfilePic = (editProfilePicRef) => {
     editProfilePicRef.click();
@@ -124,9 +125,7 @@ export class UserAccount extends Component {
   };
 
   toggleAddPopup = (key, isOpen) => {
-    this.setState({ [key]: isOpen, dropdownValuesToUpdate: [], keyToUpdate: '' }, () => {
-      console.log(this.state.dropdownValuesToUpdate);
-    });
+    this.setState({ [key]: isOpen, dropdownValuesToUpdate: [], keyToUpdate: '' });
   };
 
   togglePopupSelection = (key, keyToUpdate) => {
@@ -136,7 +135,15 @@ export class UserAccount extends Component {
   render() {
     return (
       <>
-        <Navbar />
+        <Navbar isLoggedIn />
+        <Sidebar
+          topics={ this.fetchTopics() }
+          onTopicSelection={ this.selectTopic }
+          onOpen={ this.openSideBar }
+          name={ `${this.props.userAccountDetails.firstName} ${this.props.userAccountDetails.lastName}` }
+          isOpen={ this.state.sideBarOpen }
+          selectedOption={ this.state.selectedSideBarOption }
+        />
         <DashboardContainer
           interests={ this.props.userAccountDetails.interests }
           viewPoints={ this.props.userAccountDetails.viewPoints }
@@ -162,15 +169,6 @@ export class UserAccount extends Component {
               currentAbout= { this.state.aboutMe }
               toggleAboutMeEditMode={ this.toggleAboutMeEditMode }
             />
-            <Sidebar
-              topics={ this.fetchTopics() }
-              onTopicSelection={ this.selectTopic }
-              onOpen={ this.openSideBar }
-              name={ `${this.props.userAccountDetails.firstName} ${this.props.userAccountDetails.lastName}` }
-              isOpen={ this.state.sideBarOpen }
-              onSignOut={ this.signOut }
-              selectedOption={ this.state.selectedSideBarOption }
-              />
           </>
         </DashboardContainer>
       </>
@@ -209,4 +207,12 @@ UserAccount.defaultProps = {
 
 };
 
-export default UserAccount;
+
+const mapStateToProps = (state) => ({
+  userAccountDetails: getUserAccountDetails(state),
+})
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserAccount);

@@ -1,6 +1,10 @@
 import React from 'react';
 import { array, bool, func, string } from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { signUserOut } from '../../redux/actions/user.action';
 
 /* Styles */
 import './Sidebar.less';
@@ -11,19 +15,19 @@ export const Sidebar = props => (
       { props.isOpen && <p className="side-bar-option-text">{ props.name }</p> }<span className={ `side-bar-arrow ${props.isOpen ? 'collapse' : 'expand'}-arrow` } />
     </div>
     <NavLink exact to="/" activeClassName="is-selected">
-      <div className="side-bar-option">
+      <div className="side-bar-option" title="Home" >
         { props.isOpen && <p className="side-bar-option-text">Home</p> }
         <span className="side-bar-option-type" />
       </div>
     </NavLink>
     <NavLink exact to="/dashboard" activeClassName="is-selected">
-      <div className="side-bar-option">
+      <div className="side-bar-option" title="Dashboard">
         { props.isOpen && <p className="side-bar-option-text">Dashboard</p> }
         <span className="side-bar-option-type" />
       </div>
     </NavLink>
     <NavLink exact to="/account" activeClassName="is-selected">
-      <div className="side-bar-option">
+      <div className="side-bar-option" title="Account">
         { props.isOpen && <p className="side-bar-option-text">Account</p> }
         <span className="side-bar-option-type" />
       </div>
@@ -33,16 +37,22 @@ export const Sidebar = props => (
     </div>
     {
       props.topics.map((topic, key) => (
-        <div onClick={ props.isOpen ? () => props.onTopicSelection(topic.key) : null } className={ `side-bar-option ${props.selectedOption === topic.key ? 'is-selected' : ''}` } key={ key }>
+        <div
+          onClick={ props.isOpen ? () => props.onTopicSelection(topic.key) : null }
+          className={ `side-bar-option ${props.selectedOption === topic.key ? 'is-selected' : ''}` } key={ key }
+          title={ topic.title }
+        >
           { props.isOpen && <p className="side-bar-option-text">{topic.title}</p> }
           <span className="side-bar-option-type" />
         </div>
       ))
     }
-    <div onClick={ props.isOpen ? props.onSignOut : null } className="side-bar-option">
-      { props.isOpen && <p className="side-bar-option-text">Sign Out</p> }
-      <span className="side-bar-three-dots">...</span>
-    </div>
+    <NavLink exact to="/">
+      <div onClick={ props.signUserOut } className="side-bar-option">
+        { props.isOpen && <p className="side-bar-option-text">Sign Out</p> }
+        <span className="side-bar-three-dots">...</span>
+      </div>
+    </NavLink>
   </div>
 );
 
@@ -52,7 +62,6 @@ Sidebar.propTypes = {
   name: string.isRequired,
   topics: array.isRequired,
   onTopicSelection: func.isRequired,
-  onSignOut: func.isRequired,
   selectedOption: string,
 };
 
@@ -61,4 +70,6 @@ Sidebar.defaultProps = {
   selectedOption: ''
 };
 
-export default Sidebar;
+const mapDispatchToProps = (dispatch) => bindActionCreators({ signUserOut }, dispatch);
+
+export default connect(null, mapDispatchToProps)(withRouter(Sidebar));
