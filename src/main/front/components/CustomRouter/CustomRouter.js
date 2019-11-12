@@ -9,12 +9,12 @@ export class CustomRouter extends Component {
     const { component: Component, isLoggedIn, isLoading, waitingToCheck, componentProps } = this.props;
 
     if (isLoading) {
-    	return <LoadingIcon />
+      return <LoadingIcon />
    	} else if (waitingToCheck || isLoggedIn || window.location.pathname === '/') {
-   		return(<Component { ...componentProps } isLoggedIn={ isLoggedIn } />);
+      return <Component { ...componentProps } isLoggedIn={ isLoggedIn } />;
    	} else {
       return <Redirect to='/' from={`${window.location.pathname}`} />
-	  }
+    }
   }
 }
 
