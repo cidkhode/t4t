@@ -1,2 +1,0 @@
-export const TOGGLE_SIGNIN = 'TOGGLE_SIGNIN';
-export const TOGGLE_SIGNUP = 'TOGGLE_SIGNUP';
