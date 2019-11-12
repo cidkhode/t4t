@@ -1,6 +1,6 @@
 import React from 'react';
 import { array, bool, func, string } from 'prop-types';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -47,7 +47,7 @@ export const Sidebar = props => (
         </div>
       ))
     }
-    <div onClick={ props.signUserOut } className="side-bar-option">
+    <div onClick={ () => { props.signUserOut(); props.history.push("/"); } } className="side-bar-option">
       { props.isOpen && <p className="side-bar-option-text">Sign Out</p> }
       <span className="side-bar-three-dots">...</span>
     </div>
@@ -70,4 +70,4 @@ Sidebar.defaultProps = {
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({ signUserOut }, dispatch);
 
-export default connect(null, mapDispatchToProps)(Sidebar);
+export default connect(null, mapDispatchToProps)(withRouter(Sidebar));
