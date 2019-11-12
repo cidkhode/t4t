@@ -34,8 +34,6 @@ export class UserDashboard extends Component {
 
   openSideBar = () => this.setState({ sideBarOpen: !this.state.sideBarOpen });
 
-  signOut = () => console.log('Trying to sign out');
-
   render() {
     return (
       <>
@@ -46,7 +44,6 @@ export class UserDashboard extends Component {
           onOpen={ this.openSideBar }
           name={ this.props.userAccountDetails.name }
           isOpen={ this.state.sideBarOpen }
-          onSignOut={ this.signOut }
           selectedOption={ this.state.selectedSideBarOption }
         />
         <DashboardContainer

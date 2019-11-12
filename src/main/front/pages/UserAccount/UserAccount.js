@@ -43,8 +43,6 @@ export class UserAccount extends Component {
 
   openSideBar = () => this.setState({ sideBarOpen: !this.state.sideBarOpen });
 
-  signOut = () => console.log('Trying to sign out');
-
   editProfilePic = (editProfilePicRef) => {
     editProfilePicRef.click();
   };
@@ -144,7 +142,6 @@ export class UserAccount extends Component {
           onOpen={ this.openSideBar }
           name={ `${this.props.userAccountDetails.firstName} ${this.props.userAccountDetails.lastName}` }
           isOpen={ this.state.sideBarOpen }
-          onSignOut={ this.signOut }
           selectedOption={ this.state.selectedSideBarOption }
         />
         <DashboardContainer

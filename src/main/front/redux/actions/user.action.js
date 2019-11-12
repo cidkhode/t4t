@@ -1,5 +1,6 @@
 export const IS_USER_LOGGED_IN = 'IS_USER_LOGGED_IN';
 export const REQUEST_USER_LOGGED_IN = 'REQUEST_USER_LOGGED_IN';
+export const SIGN_USER_OUT = 'SIGN_USER_OUT';
 export const REQUEST_USER_DETAILS = 'REQUEST_USER_DETAILS';
 export const SAVE_USER_DETAILS = 'SAVE_USER_DETAILS';
 
@@ -23,4 +24,9 @@ export const fetchUserAccountDetails = (userEmail) => (dispatch) => {
       dispatch({ type: SAVE_USER_DETAILS, userAccountDetails })
     })
     .catch(err => console.error(err));
+};
+
+export const signUserOut = () => (dispatch) => {
+  console.log("sign me out of here!!!");
+  dispatch({ type: SIGN_USER_OUT });
 };

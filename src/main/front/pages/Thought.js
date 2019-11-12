@@ -140,7 +140,6 @@ export class Thought extends Component {
   };
   render() {
     return (
-      (this.props.isLoading || this.props.waitingToCheck) ? <LoadingIcon /> :
       <Router>
         <>
           <Switch>
@@ -148,6 +147,8 @@ export class Thought extends Component {
               <CustomRouter
                 component={ UserAccount }
                 isLoggedIn={ this.props.isLoggedIn }
+                isLoading={ this.props.isLoading }
+                waitingToCheck={ this.props.waitingToCheck }
                 componentProps={ {
                   getProfile: this.getProfile,
                   savedArticles: this.getSavedArticles(),
@@ -159,6 +160,8 @@ export class Thought extends Component {
               <CustomRouter
                 component={ UserDashboard }
                 isLoggedIn={ this.props.isLoggedIn }
+                isLoading={ this.props.isLoading }
+                waitingToCheck={ this.props.waitingToCheck }
                 componentProps={ {
                   interests: this.state.userAccountDetails.interests,
                   pointsOfView: this.state.userAccountDetails.viewPoints,
@@ -169,7 +172,13 @@ export class Thought extends Component {
               />
             </Route>
             <Route path="/">
-              <MainPage isLoggedIn={ this.props.isLoggedIn } showSidebar={ this.props.isLoggedIn }/>
+              <CustomRouter
+                component={ MainPage }
+                isLoggedIn={ this.props.isLoggedIn }
+                isLoading={ this.props.isLoading }
+                waitingToCheck={ this.props.waitingToCheck }
+                componentProps={{ showSidebar: this.props.isLoggedIn }}
+              />
             </Route>
           </Switch>
         </>

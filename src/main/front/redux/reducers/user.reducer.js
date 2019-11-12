@@ -2,7 +2,7 @@ import * as userActions from '../actions/user.action';
 import { LOCAL_STORAGE_KEYS } from '../../utils/constants';
 
 export const initialState = {
-  waitingToCheck: false,
+  waitingToCheck: true,
   isLoading: false,
   isLoggedIn: false,
   userAccountDetails: {},
@@ -11,6 +11,11 @@ export const initialState = {
 export const user = (state = initialState, action) => {
   switch (action.type) {
     case userActions.REQUEST_USER_LOGGED_IN:
+       return {
+        ...state,
+        waitingToCheck: true
+      };
+      
     case userActions.REQUEST_USER_DETAILS:
       return {
         ...state,
@@ -23,8 +28,8 @@ export const user = (state = initialState, action) => {
       }
       return {
         ...state,
-        isLoading: false,
         waitingToCheck: false,
+        isLoading: false,
         isLoggedIn: action.result.status === 0
       };
 
@@ -42,6 +47,9 @@ export const user = (state = initialState, action) => {
           viewPoints: userAccountDetails.viewPoints ? userAccountDetails.viewPoints.split(',').map(viewPoint => ({ title: viewPoint })) : [],
         }
       };
+
+    case userActions.SIGN_USER_OUT:
+      localStorage.removeItem(LOCAL_STORAGE_KEYS.LOGGED_IN_USER_EMAIL);
 
     default:
       return initialState;

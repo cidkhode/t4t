@@ -61,10 +61,6 @@ export class MainPage extends Component {
 
   openSideBar = () => this.setState({ sideBarOpen: !this.state.sideBarOpen });
 
-  signOut = () => {
-    console.log('Trying to sign out');
-  };
-
   selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption }, () => console.log(`Topic selected: `, selectedSideBarOption));
 
   render() {
@@ -78,7 +74,6 @@ export class MainPage extends Component {
             onOpen={ this.openSideBar }
             name="Cid Khode"
             isOpen={ this.state.sideBarOpen }
-            onSignOut={ this.signOut }
             selectedOption={ this.state.selectedSideBarOption }
             />
         }
