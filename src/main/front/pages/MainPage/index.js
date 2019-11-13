@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import Sidebar from "../../components/Sidebar/Sidebar";
 import Navbar from "../../components/Navbar/Navbar";
 import ArticlePreview from "../../components/ArticlePreview/ArticlePreview";
+import DetailedPreview from "../../components/ArticlePreview/DetailedPreview";
 
 /* Styles */
 import './MainPage.less';
@@ -16,11 +17,15 @@ class MainPage extends Component {
       signinOpen: false,
       signupOpen: false,
       sideBarOpen: false,
+      topicOpen: false,
       selectedSideBarOption: '',
       mostPopularArticles: [0,1,2],
       mostPopularBig: [0,1],
       readingListArticles: [0,1,2,3,4],
       networkArticles: [0,1],
+      topicDisplay: ['Politics','Economics'],
+      topics: ["Regional","Health","Technology","National"],
+      showArticles: true,
     };
   }
 
@@ -58,6 +63,18 @@ class MainPage extends Component {
 
   selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption }, () => console.log(`Topic selected: `, selectedSideBarOption));
 
+  saveArticle = () => {
+
+  }
+
+  collapse = () => {
+    this.setState({topicOpen: !this.state.topicOpen});
+  }
+
+  rightSwitch = () => {
+    this.setState({showArticles: !this.state.showArticles});
+  }
+
   render() {
     return (
       <main id="homepage">
@@ -73,33 +90,53 @@ class MainPage extends Component {
         />
         <div id="content">
           
-          <div id="popnet">  
+          <div id="popnet">
+            <div id="topics">
+              <h2>Topics</h2>
+
+              <div className="inner">
+                <div className="list">
+                  {this.state.topicDisplay.map((item, key) => 
+                    <ArticlePreview 
+                      key={ key }
+                      type={"topic"}
+                      image={'https://picsum.photos/450/250'}
+                      title={item}
+                      description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
+                    />
+                  )}
+                </div>
+              </div>
+              <div className={this.state.topicOpen ? 'open' : 'collapsed'}>
+                <div className="inner">
+                  <div className="list">
+                    {this.state.topics.map((item, key) =>
+                      <ArticlePreview 
+                        key={ key }
+                        type={"topic"}
+                        image={'https://picsum.photos/450/250'}
+                        title={item}
+                        description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
+                      />
+                    )}
+                  </div>
+                </div>
+              </div>
+              
+              <div className="underspace">
+                <button onClick={this.collapse} className={this.state.topicOpen ? "press less" : "press more"}>Show</button>
+              </div>
+            </div>
             <div id="popular">
               <h2>Most Popular From Today</h2>
 
               <div className="inner">
                 <div className="list">
-                  {this.state.mostPopularArticles.map((item, key) =>
-                    <ArticlePreview
-                      key={ key }
-                      type={"horizontal"}
-                      image={'https://picsum.photos/150'}
+                    <DetailedPreview
+                      image={'https://picsum.photos/800/300'}
                       title={"NJIT Student attempts to code a website unsuccessfully"}
                       description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
                     />
-                  )}
-                </div>
-                
-                <div className="list">
-                  {this.state.mostPopularBig.map((item, key) =>
-                    <ArticlePreview
-                      key={ key }
-                      type={"vertical"}
-                      image={'https://picsum.photos/400/150'}
-                      title={"NJIT Student attempts to code a website unsuccessfully"}
-                      description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
-                    />
-                  )}
                 </div>
               </div>
             </div>
@@ -125,21 +162,45 @@ class MainPage extends Component {
           </div>
 
           <div id="reading">
-            <h2>Reading List</h2>
+            <h2><button 
+              className={`link ${this.state.showArticles ? '' : 'active'}`} 
+              onClick={this.rightSwitch}
+              disabled={this.state.showArticles}>Articles</button> 
+              &nbsp;|&nbsp; 
+              <button
+              className={`link ${this.state.showArticles ? 'active' : ''}`} 
+              onClick={this.rightSwitch}
+              disabled={!this.state.showArticles}>Writers</button></h2>
 
+            {this.state.showArticles &&
             <div className="inner">
               <div className="list">
                 {this.state.readingListArticles.map((item, key) =>
                   <ArticlePreview
                     key={ key }
                     type={"horizontal"}
-                    image={'https://picsum.photos/150'}
+                    image={'https://picsum.photos/200'}
                     title={"NJIT Student attempts to code a website unsuccessfully"}
                     description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
                   />
                 )}
               </div>
-            </div>
+            </div>}
+
+            {!this.state.showArticles &&
+            <div className="inner">
+              <div className="list">
+              {this.state.readingListArticles.map((item, key) =>
+                  <ArticlePreview
+                    key={ key }
+                    type={"horizontal"}
+                    image={'https://picsum.photos/201'}
+                    title={"NJIT Student attempts to code a website unsuccessfully"}
+                    description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
+                  />
+                )}
+              </div>
+            </div>}
           </div>
 
         </div>
