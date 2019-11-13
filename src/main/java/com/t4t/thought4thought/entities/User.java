@@ -30,6 +30,8 @@ public class User {
 
     private String aboutMe;
 
+    private String topicIds;
+
     public Integer getId() {
         return id;
     }
