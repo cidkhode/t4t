@@ -7,9 +7,25 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ArticleService{
-    public Thought4ThoughtResponseObject storeArticle(Article article){
+
+    /* publish article */
+    public Thought4ThoughtResponseObject publishArticle(Article article){
         Thought4ThoughtResponseObject thought4ThoughtResponseObject =
                 new Thought4ThoughtResponseObject().createResponse(T4T_SUCCESS_CODE, "Article uploaded successfully!");
         return thought4ThoughtResponseObject;
     }
+
+    /* delete article */
+    public Thought4ThoughtResponseObject deleteArticle(Article article){
+        Thought4ThoughtResponseObject thought4ThoughtResponseObject =
+                new Thought4ThoughtResponseObject().createResponse(T4T_SUCCESS_CODE, "Article successfully deleted.");
+        return thought4ThoughtResponseObject;
+
+    }
+
+    //create article
+
+    //modify article
+
+    
 }
