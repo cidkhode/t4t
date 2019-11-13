@@ -1,0 +1,56 @@
+@import '../../styles/colors';
+
+#thought4thought-app {
+	max-height: 100vh;
+}
+
+#content.new-article {
+	padding: 0 40px;
+
+	#t4t-title-wrapper {
+		margin: 0 0 0 -5px;
+
+		form {
+			input {
+				box-shadow: none;
+				font-size: 24px;
+				min-width: 300px;
+				margin: 0 0 5px 0;
+				padding: 5px 5px 5px 10px;
+				border: 1px solid @t4t-white;
+				border-radius: 2px;
+
+				&:hover, &:active, &:focus {
+					border-color: @t4t-gray07 !important;
+					outline: none;
+				}
+			}
+		}
+	}
+
+	#t4t-editor-wrapper {
+		.rdw-editor-toolbar {
+			padding: 5px !important;
+
+			> div {
+				margin: 0 0 0 0;
+			}
+		}
+
+		.rdw-editor-main {
+			padding: 0;
+
+			.public-DraftEditorPlaceholder-root {
+				padding: 20px 0 0 36px;
+			}
+
+			.public-DraftEditor-content {
+				padding: 5px 35px;
+				border: 1px solid #F0F0F0;
+				border-top: 0;
+				border-bottom: 0;
+				height: calc(100vh - 179px - 40px); // 100vh - height from top - padding from bottom
+			}
+		}
+	}
+}

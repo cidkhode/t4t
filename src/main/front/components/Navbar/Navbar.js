@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Link } from 'react-router-dom';
 
 /* Components */
 import Button from "../Button/Button";
@@ -75,9 +76,10 @@ export class Navbar extends Component {
   render() {
     return (
       <div className="navhead">
-        <div className="navbar-left-floated-content">
+
+        <Link to="/" className="navbar-left-floated-content">
           <button className="logo">LOGO</button>
-        </div>
+        </Link>
         <div className="navbar-right-floated-content">
           <Searchbar
             extraClass="navbar-search-bar nav-bar-right-child"
@@ -99,6 +101,16 @@ export class Navbar extends Component {
                 text="Register!"
               />
             </>
+          }
+          {
+            this.props.isLoggedIn &&
+            <Link to="/write">
+              <Button
+                extraClass="nav-bar-sign-up-button"
+                handleClick={() => { return; }}
+                text="Write"
+              />
+            </Link>
           }
           <Signin
             sendLogin={ this.sendLogin }
