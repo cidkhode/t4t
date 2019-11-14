@@ -15,6 +15,25 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @PostMapping(path="/api/get-user-session")
+    public Thought4ThoughtResponseObject getUserSession(@RequestBody ObjectNode objectNode,
+                                                        HttpServletRequest request,
+                                                        HttpSession session) {
+        Thought4ThoughtResponseObject thought4ThoughtResponseObject =
+                new Thought4ThoughtResponseObject().createResponse(-1, "Invalid session");
+        String userEmail = (String) session.getAttribute("userEmail");
+        if (userEmail != null) {
+            if (session.getAttribute("userEmail").equals(objectNode.get("userEmail").asText())) {
+                thought4ThoughtResponseObject.setStatus(0);
+                thought4ThoughtResponseObject.setInfo("Session ongoing");
+            } else {
+                thought4ThoughtResponseObject.setStatus(1);
+                thought4ThoughtResponseObject.setInfo("Session does not exist for user with email: " + userEmail);
+            }
+        }
+        return thought4ThoughtResponseObject;
+    }
+
     @PostMapping(path = "/api/login")
     public Thought4ThoughtResponseObject validUser(@RequestBody ObjectNode user, HttpServletRequest request, HttpSession session) {
         String email = user.get("email").asText();

@@ -30,8 +30,6 @@ public class User {
 
     private String aboutMe;
 
-    private String topicNames;
-
     public Integer getId() {
         return id;
     }
@@ -126,11 +124,4 @@ public class User {
         this.aboutMe = aboutMe;
     }
 
-    public String getTopicNames() {
-        return topicNames;
-    }
-
-    public void setTopicNames(String topicNames) {
-        this.topicNames = topicNames;
-    }
 }

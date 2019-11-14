@@ -1,0 +1,76 @@
+@import '../../styles/colors';
+
+.t4t-loading-icon-container {
+  width: 100%;
+  text-align: center;
+  height: 100px;
+  background: @t4t-red;
+
+  .loading-text, .loading-animation {
+    display: inline-block;
+    font-weight: bold;
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100px;
+  }
+
+  .loading-animation {
+    width: 100px;
+    .loading-contents {
+      .dots {
+        color: @t4t-red;
+        position: absolute;
+        top: 27px;
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: @t4t-blue;
+        animation-timing-function: cubic-bezier(0, 1, 1, 0);
+        &:nth-child(1) {
+          left: 22px;
+          animation: loading-contents1 0.6s infinite;
+        }
+        &:nth-child(2) {
+          left: 22px;
+          animation: loading-contents2 0.6s infinite;
+        }
+        &:nth-child(3) {
+          left: 42px;
+          animation: loading-contents2 0.6s infinite;
+        }
+        &:nth-child(4) {
+          left: 62px;
+          animation: loading-contents3 0.6s infinite;
+        }
+      }
+    }
+    @keyframes loading-contents1 {
+      0% {
+        transform: scale(0);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    @keyframes loading-contents3 {
+      0% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(0);
+      }
+    }
+    @keyframes loading-contents2 {
+      0% {
+        transform: translate(0, 0);
+      }
+      100% {
+        transform: translate(20px, 0);
+      }
+    }
+  }
+}

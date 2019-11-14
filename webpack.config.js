@@ -49,6 +49,9 @@ module.exports = {
     ]
   },
   devServer: {
+    historyApiFallback: true,
+    contentBase: './',
+    hot: true,
     port: 3000,
     proxy: {
       '/api': {
