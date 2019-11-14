@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 /* Components */
 import Sidebar from "../../components/Sidebar/Sidebar";
@@ -9,7 +10,19 @@ import DetailedPreview from "../../components/ArticlePreview/DetailedPreview";
 /* Styles */
 import './MainPage.less';
 
-class MainPage extends Component {
+export class MainPage extends Component {
+  static propTypes = {
+    showSidebar: PropTypes.bool,
+    handleLogin: PropTypes.func,
+    isLoggedIn: PropTypes.bool,
+  };
+
+  static defaultProps = {
+    showSidebar: true,
+    handleLogin: () => {},
+    isLoggedIn: false,
+  };
+
   constructor(props) {
     super(props);
     
@@ -51,15 +64,7 @@ class MainPage extends Component {
     ]
   };
 
-  toggleSignin = () => this.setState({ signinOpen: !this.state.signinOpen });
-
-  toggleSignup = () => this.setState({ signupOpen: !this.state.signupOpen });
-
   openSideBar = () => this.setState({ sideBarOpen: !this.state.sideBarOpen });
-
-  signOut = () => {
-    console.log('Trying to sign out');
-  };
 
   selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption }, () => console.log(`Topic selected: `, selectedSideBarOption));
 
@@ -78,16 +83,17 @@ class MainPage extends Component {
   render() {
     return (
       <main id="homepage">
-        <Navbar />
-        <Sidebar
-          topics={ this.fetchTopics() }
-          onTopicSelection={ this.selectTopic }
-          onOpen={ this.openSideBar }
-          name="Cid Khode"
-          isOpen={ this.state.sideBarOpen }
-          onSignOut={ this.signOut }
-          selectedOption={ this.state.selectedSideBarOption }
-        />
+        <Navbar handleLogin={ this.props.handleLogin } isLoggedIn={ this.props.isLoggedIn } />
+        { this.props.showSidebar &&
+          < Sidebar
+            topics={ this.fetchTopics() }
+            onTopicSelection={ this.selectTopic }
+            onOpen={ this.openSideBar }
+            name="Cid Khode"
+            isOpen={ this.state.sideBarOpen }
+            selectedOption={ this.state.selectedSideBarOption }
+            />
+        }
         <div id="content">
           
           <div id="popnet">

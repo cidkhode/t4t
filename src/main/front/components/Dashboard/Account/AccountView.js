@@ -47,7 +47,7 @@ export default class AccountView extends Component {
 					<h3> Saved Articles </h3>
 					<div className="inner">
 						{
-							this.props.savedArticles.map((article, key) => (
+							this.props.savedArticles && this.props.savedArticles.map((article, key) => (
 								<div className="article" key={key}>
 									<div className="dashboard-img article-img">
 										<img src={ article.image } />
@@ -63,7 +63,7 @@ export default class AccountView extends Component {
 					<h3> Following </h3>
 					<div className="inner">
 						{
-							this.props.followingUsers.map((followingUser, key) => (
+							this.props.followingUsers && this.props.followingUsers.map((followingUser, key) => (
 								<div className="following" key={key}>
 									<div className="dashboard-img following-img">
 										<img src={ followingUser.followingUserImage } />

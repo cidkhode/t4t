@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux';
 
-import modalReducer from './reducers/modal.js';
+import popup from './reducers/popup.reducer';
+import user from './reducers/user.reducer';
 
 const reducer = combineReducers({
-	modal_status: modalReducer,
+	popup,
+	user
 });
 
 export default reducer;
