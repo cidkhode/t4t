@@ -82,7 +82,9 @@ public class AwsS3Service {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        uploadUserProfileImage(fileName, file, profileBucketName);
+        s3.putObject(new PutObjectRequest(profileBucketName, fileName, file)
+		        .withCannedAcl(CannedAccessControlList.PublicRead));
+		file.delete();
 
         return fileUrl;
     }
@@ -95,17 +97,20 @@ public class AwsS3Service {
         return convFile;
     }
 
-    private void uploadUserProfileImage(String fileName, File file, String bucketName) {
-        s3.putObject(new PutObjectRequest(bucketName, fileName, file)
-                .withCannedAcl(CannedAccessControlList.PublicRead));
-        file.delete();
-    }
-
     public String deleteFileFromS3Bucket(String fileUrl) {
         String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
         s3.deleteObject(new DeleteObjectRequest(bucketName + "/", fileName));
         return "Successfully deleted";
     }
+
+	public String deleteThumbnailFromS3Bucket(String fileUrl) {
+		return null;
+	}
+
+	public Thought4ThoughtResponseObject uploadArticleThumbnail(MultipartFile file, String extension,
+			String attribute) {
+		return null;
+	}
 
 
 }
