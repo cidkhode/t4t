@@ -56,4 +56,12 @@ public class UserController {
         String userEmail = (String) session.getAttribute("userEmail");
         return this.userService.deleteValueFromProfile(keyToUpdate, valueToDelete, userEmail);
     }
+
+   /* @PostMapping(path= "/api/add-topic-to-user")
+    public void addTopicToUser (@RequestParam int topicId){
+
+    }*/
+
+    //@GetMapping(path= "/api/retrieve-topics-for-user")
+   // public
 }

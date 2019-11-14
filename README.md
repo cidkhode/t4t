@@ -25,7 +25,7 @@ To start this project, you'll need a handful of dev prerequisites including the 
  - JDK8
   
 Follow guided docs online to set these up in your machines. If using Windows OS, you'll have to configure them in your path. Once you have them, pull the project using the repository `.git` link found above. Clone the project, and in the root directory, run the following commands:  
-- `mvn clean install -Djasypt.encryptor.password=PUT_REAL_PASSWORD_HERE` String aboutMeUpdate = userInSession.setAboutMe(newAboutMe); to fetch backend dependencies, compile the project, and build a `.jar` executable in the `/target` directory
+- `mvn clean install -Djasypt.encryptor.password=PUT_REAL_PASSWORD_HERE` to fetch backend dependencies, compile the project, and build a `.jar` executable in the `/target` directory
 	- **Note:** we encrypt our passwords in `application.properties` for obvious reasons... Dev team and new joiners will be given the real password to pass in as a command line argument on stand-ups. Please note it down someplace safe and **don't share it**!
  - `npm install` to fetch all frontend dependencies
  - To build the frontend, use `npm run build` and then `npm run start` to start it at [localhost:3000](http://localhost:3000/).  
