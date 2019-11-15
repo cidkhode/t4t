@@ -9,7 +9,6 @@ public class Topic {
     private int id;
     private String topicName;
     private int numOfHearts;
-    private int numOfBookmarks;
     private String topicPictureURL;
 
 
@@ -37,13 +36,7 @@ public class Topic {
         this.numOfHearts = num_of_hearts;
     }
 
-    public int getNumOfBookmarks() {
-        return numOfBookmarks;
-    }
+    public String getTopicPictureURL(){ return topicPictureURL; }
 
-    public void setNumOfBookmarks(int num_of_bookmarks) {
-        this.numOfBookmarks = num_of_bookmarks;
-    }
-
-
+    public void setTopicPictureURL(String url) { this.topicPictureURL = url; }
 }
