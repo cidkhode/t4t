@@ -6,9 +6,9 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.t4t.thought4thought.utils.Thought4ThoughtResponseObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.springframework.web.servlet.HandlerMapping;
 
 @RestController
 public class UserController {
@@ -75,4 +75,6 @@ public class UserController {
         String userEmail = (String) session.getAttribute("userEmail");
         return this.userService.deleteValueFromProfile(keyToUpdate, valueToDelete, userEmail);
     }
+
+
 }
