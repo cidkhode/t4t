@@ -97,7 +97,7 @@ public class Article {
 
     private String articleText; //entire body of the article
 
-    public String getArticlelText(){
+    public String getArticleText(){
         return articleText;
     }
 

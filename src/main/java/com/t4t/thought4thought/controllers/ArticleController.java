@@ -3,6 +3,7 @@ package com.t4t.thought4thought.controllers;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.t4t.thought4thought.entities.Article;
 import com.t4t.thought4thought.services.ArticleService;
 import com.t4t.thought4thought.services.AwsS3Service;
@@ -30,37 +31,37 @@ public class ArticleController {
     /* get article */
     @GetMapping(path = "/get-article")
     public Article getArticle(@RequestBody Article article) {
-        return articleService.getUserArticleByArticleID(article);
+        return articleService.getUserArticleByArticleID(article.getArticleID());
     }
     
     /* creating article */
     @PostMapping(path = "/store-article")
     public Thought4ThoughtResponseObject uploadArticle(@RequestBody Article article){
+        // create new row with userEmail and articleID
+        // send back new articleID
         return this.articleService.createArticle(article);
     }
 
     /* modifying article */
     @PostMapping(path = "/save-article")
-    public Thought4ThoughtResponseObject saveArticle(@RequestBody Article article){
-        return this.articleService.modifyArticle(article);
+    public Thought4ThoughtResponseObject updateArticle(@RequestBody ObjectNode articleKey, int articleID){
+        
+        // update appropriate column with key
+        // title, description, articleText, thumbnail
+        return this.articleService.saveArticleUpdates(articleKey, articleID);
     }
 
     /* publish article */
     @PostMapping(path = "/publish-article")
     public Thought4ThoughtResponseObject publishArticle(@RequestBody Article article){
-        // boolean function isPublished if its ready for main page
         boolean isPublished = articleService.publishedArticle(article.getArticleID());
-        // receive article ID to publish 
         if(!isPublished){
             // use findBy function to update column ID to edit boolean
+            // set isPublishedBy
+            // ArticleRepository
+            articleService.findByArticleID(article);
         }
         return this.articleService.publishArticleToMain(article);
-    }
-    
-    /* delete article */
-    @DeleteMapping(path = "/delete-article")
-    public Thought4ThoughtResponseObject deleteArticleFromDB(@RequestBody Article article) {
-        return this.articleService.deleteArticle(article);
     }
     
     /* changing title */
@@ -75,30 +76,25 @@ public class ArticleController {
         return this.articleService.modifyArticleDescription(article);
     }
 
-    /* upload thumbnail image in S3 bucket */
-    @PostMapping(path = "/uploadThumbnail")
-    public Thought4ThoughtResponseObject uploadThumbnailFile(@RequestPart(value = "file") MultipartFile file, HttpServletRequest request, HttpSession session) {
+    /* upload thumbnail image in S3 bucket 
+        maybe use uploadFile in s3 bucket controller?
+        receive articleID
+    */
+    @PostMapping(path = "/upload-article-thumbnail")
+    public Thought4ThoughtResponseObject uploadArticleThumbnail(@RequestPart(value = "file") MultipartFile file, HttpServletRequest request, HttpSession session) {
         String extension = FilenameUtils.getExtension(file.getOriginalFilename());
         return this.amazonClient.uploadArticleThumbnail(file, extension, (String) session.getAttribute("userEmail"));
-    }
-
-    /* delete thumbnail image in S3 bucket */
-    @DeleteMapping("/deleteThumbnail")
-    public String deleteThumbnailFile(@RequestPart(value = "url") String fileUrl) {
-        return this.amazonClient.deleteThumbnailFromS3Bucket(fileUrl);
     }
 
     /* numViews count */
     @PostMapping(path = "/count-num-views")
     public Thought4ThoughtResponseObject countNumViews(@RequestBody Article article){
-        // increment counter for article ID being received and save that counter
         return this.articleService.countNumArticleViews(article);
     }
 
     /* numLikes count */
     @PostMapping(path = "/count-num-likes")
     public Thought4ThoughtResponseObject countNumLikes(@RequestBody Article article){
-        // increment counter for article ID being received and save that counter
         return this.articleService.countNumArticleLikes(article);
     }
     

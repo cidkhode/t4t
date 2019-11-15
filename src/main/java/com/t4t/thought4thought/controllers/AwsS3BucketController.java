@@ -29,6 +29,13 @@ public class AwsS3BucketController {
                 (String) session.getAttribute("userEmail"));
     }
 
+    // use ID to set thumbnailurl by article query
+    @PostMapping("/uploadArticleThumbnail")
+    public Thought4ThoughtResponseObject uploadArticleThumbnail(@RequestPart(value = "file") MultipartFile file, HttpServletRequest request, HttpSession session){
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+        return this.amazonClient.saveArticleThumbnailPicture(file, extension, (String) session.getAttribute("userEmail"));
+    }
+
     @DeleteMapping("/deleteFile")
     public String deleteFile(@RequestPart(value = "url") String fileUrl) {
         return this.amazonClient.deleteFileFromS3Bucket(fileUrl);

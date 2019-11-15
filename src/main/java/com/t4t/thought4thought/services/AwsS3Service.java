@@ -103,14 +103,28 @@ public class AwsS3Service {
         return "Successfully deleted";
     }
 
-	public String deleteThumbnailFromS3Bucket(String fileUrl) {
-		return null;
-	}
-
-	public Thought4ThoughtResponseObject uploadArticleThumbnail(MultipartFile file, String extension,
-			String attribute) {
-		return null;
-	}
-
-
+	public Thought4ThoughtResponseObject saveArticleThumbnailPicture(MultipartFile file, String extension, String attribute) {
+        Thought4ThoughtResponseObject thought4ThoughtResponseObject = new Thought4ThoughtResponseObject().createResponse(-1, "Couldn't upload; Something went terribly wrong!");
+        String trueExtension = "";
+        if (fileExtension == null) {
+            trueExtension = "jpg";
+        } else {
+            trueExtension = fileExtension;
+        }
+        if (userEmailInSession != null) {
+            User userInSession = userRepository.findByEmail(userEmailInSession);
+            String fileName = userInSession.getFirstName() + "_" +
+                    userInSession.getLastName() + "_" + userInSession.getId() + "." + trueExtension;
+            String userProfilePictureURL = uploadProfileImage(multipartFile, fileName);
+            if (userProfilePictureURL.length() > 0) {
+                userRepository.setUserProfilePictureURLByEmail(userProfilePictureURL, userEmailInSession);
+                thought4ThoughtResponseObject.setStatus(0);
+                thought4ThoughtResponseObject.setInfo("Uploaded a new picture!");
+            } else {
+                thought4ThoughtResponseObject.setStatus(-1);
+                thought4ThoughtResponseObject.setInfo("Couldn't upload a new picture!");
+            }
+        }
+        return thought4ThoughtResponseObject;
+    }
 }
