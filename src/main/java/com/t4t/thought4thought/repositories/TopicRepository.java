@@ -15,9 +15,4 @@ public interface TopicRepository extends CrudRepository<Topic, Integer> {
     @Transactional
     @Query("update Topic topic set topic.numOfHearts = ?1 where topic.id = ?2")
     void updateHeartsOfTopic(int numOfHearts, int topicId);
-
-    @Modifying
-    @Transactional
-    @Query("update Topic topic set topic.numOfBookmarks = ?1 where topic.id = ?2")
-    void updateBookmarksOfTopic(int numOfBookmarks, int topicId);
 }

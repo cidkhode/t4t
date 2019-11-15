@@ -5,52 +5,55 @@ import com.t4t.thought4thought.entities.Topic;
 import com.t4t.thought4thought.services.TopicService;
 import com.t4t.thought4thought.utils.Thought4ThoughtResponseObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+@RestController
 public class TopicController {
     @Autowired
     private TopicService topicService;
 
     @GetMapping(path="/api/topic-hearts")
-    public int getNumOfHearts(@RequestParam int topicId){ return topicService.getNumOfHearts(topicId); }
-
-    @GetMapping(path="/api/topic-bookmarks")
-    public int getNumOfBookmarks(@RequestParam int topicId){ return topicService.getNumOfBookmarks(topicId); }
+    public int getNumOfHearts(@RequestParam(name="topicId") int topicId){ return topicService.getNumOfHearts(topicId); }
 
     @GetMapping(path="/api/all-topics")
     public Iterable<Topic> getAllTopics() {
         return topicService.getAllTopics();
     }
 
-    @PostMapping(path="/api/increase-hearts-of-topic")
-    //make it response object
-    public void addTopicToUser (@RequestBody ObjectNode objectNode,
+    @PostMapping(path="/api/add-topic-to-user")
+    public Thought4ThoughtResponseObject addTopicToUser (@RequestBody ObjectNode objectNode,
                                                          HttpServletRequest request,
-                                                         HttpSession session,
-                                                         @RequestParam int topicID){
-        topicService.increaseHearts(topicID);
-       // topicService.
+                                                         HttpSession session){
+
+        /*
+        This code is here for me to check if it works through Postman
+        @RequestParam String topicId, String userEmail
+       Thought4ThoughtResponseObject object = topicService.addTopicToUser(topicId, userEmail);
+        return object.getStatus();
+        */
+
+        String topicID = objectNode.get("topicID").asText();
+        String userEmail = objectNode.get("userEmail").asText();
+        return this.topicService.addTopicToUser(topicID, userEmail);
     }
 
-    @PostMapping(path="/api/decrease-hearts-of-topic")
-    public void deleteTopicFromUser (@RequestParam int topicID){
-        topicService.decreaseHearts(topicID);
-    }
+    @PostMapping(path="/api/delete-topic-from-user")
+    public Thought4ThoughtResponseObject deleteTopicFromUser (@RequestBody ObjectNode objectNode,
+                                                              HttpServletRequest request,
+                                                              HttpSession session){
+        /*
+        This code is here for me to check if it works through Postman
+        @RequestParam String topicId, String userEmail
+        Thought4ThoughtResponseObject object = topicService.deleteTopicFromUser(topicId, userEmail);
+        return object.getStatus();
+         */
 
-    @PostMapping(path="/api/add-bookmark")
-    public void addBookmarkToUser (@RequestParam int topicID){
-        topicService.increaseBookmarks(topicID);
-    }
-
-    @PostMapping(path="/api/delete-bookmark")
-    public void deleteBookmarkFromUser (@RequestParam int topicID){
-        topicService.decreaseBookmarks(topicID);
+        String topicID = objectNode.get("topicID").asText();
+        String userEmail = objectNode.get("userEmail").asText();
+        return this.topicService.deleteTopicFromUser(topicID, userEmail);
     }
 
 }

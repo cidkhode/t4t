@@ -2,52 +2,51 @@ package com.t4t.thought4thought.services;
 
 import com.t4t.thought4thought.entities.Topic;
 import com.t4t.thought4thought.repositories.TopicRepository;
+import com.t4t.thought4thought.utils.Thought4ThoughtResponseObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 @Service
 public class TopicService {
     @Autowired
     private TopicRepository topicRepository;
+    @Autowired
+    private UserService userService;
 
     public int getNumOfHearts(int topicId) { return topicRepository.findById(topicId).getNumOfHearts(); }
 
-    public int getNumOfBookmarks(int topicId) { return topicRepository.findById(topicId).getNumOfBookmarks(); }
-
-    public Iterable<Topic> getAllTopics() { return topicRepository.findAll(); };
-
-    public void addTopicToUser(int topicId){
-        Topic topic = topicRepository.findById(topicId);
-        topic.setNumOfHearts(topic.getNumOfHearts() + 1);
-        topicRepository.updateHeartsOfTopic(topic.getNumOfHearts(), topicId);
-        //ArryaList<String> topicNames = new ArrayList<String>(Arrays.asList(userProfileToUpdate.getInterests().split(",")));
+    public Iterable<Topic> getAllTopics() {
+        return topicRepository.findAll();
     }
 
-    public void deleteTopicFromUser(int topicId){
-        Topic topic = topicRepository.findById(topicId);
-        topic.setNumOfHearts(topic.getNumOfHearts() - 1);
-        topicRepository.updateHeartsOfTopic(topic.getNumOfHearts(), topicId);
-    }
-    public void increaseHearts(int topicId){
-        Topic topic = topicRepository.findById(topicId);
-        topic.setNumOfHearts(topic.getNumOfHearts() + 1);
+    public Thought4ThoughtResponseObject addTopicToUser(String topicId, String userEmail){
+        Thought4ThoughtResponseObject responseObject = userService.saveTopic(userEmail, topicId);
+
+        if (responseObject.getStatus() == 0){
+            int topicIdNum = Integer.parseInt(topicId);
+            Topic topic = topicRepository.findById(topicIdNum);
+            topic.setNumOfHearts(topic.getNumOfHearts() + 1);
+            topicRepository.updateHeartsOfTopic(topic.getNumOfHearts(), topicIdNum);
+        }
+
+        return responseObject;
+
     }
 
-    public void decreaseHearts(int topicId){
-        Topic topic = topicRepository.findById(topicId);
-        topic.setNumOfHearts(topic.getNumOfHearts() - 1);
-    }
+    public Thought4ThoughtResponseObject deleteTopicFromUser(String topicId, String userEmail){
+        Thought4ThoughtResponseObject responseObject = userService.deleteTopic(userEmail, topicId);
 
-    public void increaseBookmarks(int topicId){
-        Topic topic = topicRepository.findById(topicId);
-        topic.setNumOfBookmarks(topic.getNumOfBookmarks() + 1);
-    }
+        if (responseObject.getStatus() == 0) {
+            int topicIdNum = Integer.parseInt(topicId);
+            Topic topic = topicRepository.findById(topicIdNum);
 
-    public void decreaseBookmarks(int topicId){
-        Topic topic = topicRepository.findById(topicId);
-        topic.setNumOfBookmarks(topic.getNumOfBookmarks() - 1);
+            if (topic.getNumOfHearts() > 0) {
+                topic.setNumOfHearts(topic.getNumOfHearts() - 1);
+            }
+
+            topicRepository.updateHeartsOfTopic(topic.getNumOfHearts(), topicIdNum);
+        }
+
+        return responseObject;
     }
 }
