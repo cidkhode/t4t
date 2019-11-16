@@ -64,18 +64,31 @@
                 .article-actions {
                     display: flex;
                     flex-flow: column;
+                    justify-content: space-evenly;
+                    align-items: center;
+                    
+                    .like {
+                        background: url('../../assets/like.png');
+                    }
 
-                    img {
-                        margin: 0 0 0 0;
+                    .save {
+                        background: url('../../assets/bookmark.png');
+                        background-position: center;
+                    }
 
+                    .like, .save {
+                        background-repeat: no-repeat;
+                        border: none;
+                        height: 20px;
+                        width: 20px;
+                        transition: 0.3s;
                         cursor: pointer;
-
-                        &:first-of-type {
-                            margin: 0 0 10px 0;
-                        }
-
-                        &.like {}
-                        &.save {}
+                        z-index: 99;
+                    }
+                    .like:hover, .save:hover {
+                        height: 22px;
+                        width: 22px;
+                        transition: 0.3s;
                     }
                 }
             }
@@ -152,16 +165,13 @@
                     .article-actions {
                         position: absolute;
                         right: 0;
-                        bottom: 5px;
+                        bottom: -10px;
                         flex-flow: row;
-                        img {
-                            margin: 0 0 0 0;
-
-                            cursor: pointer;
-
-                            &:first-of-type {
-                                margin: 0 20px 0 0;
-                            }
+                        .like {
+                            margin-right: 2px;
+                        }
+                        .save {
+                            display: none;
                         }
                     }
                 }

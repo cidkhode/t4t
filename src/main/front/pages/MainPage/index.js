@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { bindActionCreators } from 'redux';
+import connect from 'react-redux/es/connect/connect';
+import { getUserAccountDetails } from '../../redux/selectors/user.selector';
 
 /* Components */
 import Sidebar from "../../components/Sidebar/Sidebar";
@@ -68,8 +71,64 @@ export class MainPage extends Component {
 
   selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption }, () => console.log(`Topic selected: `, selectedSideBarOption));
 
-  saveArticle = () => {
+  getTopics = () => {
+    console.log("getting topics");
+    fetch('api/all-topics')
+    .then(resp => resp.json())
+    .then(json => {
+      if(json) {
+        console.log(json);
+        console.log("Got topics");
+        let display = [], hidden = [];
+        for(let i = 0; i < json.length; i++) {
+          if(i < 2) {
+            display.push(json[i]);
+          } else {
+            hidden.push(json[i]);
+          }
+        }
+        this.setState({
+          topicDisplay: display,
+          topics: hidden,
+        });
+      }
+    })
+    .catch(error => console.log(error));
+  }
 
+  addTopic = (e) => {
+    /*if(!this.props.isLoggedIn) {
+      console.log("User not logged in.");
+      return;
+    } */
+    fetch('/api/add-topic-to-user', {
+        method: 'post',
+        headers: { 'Content-Type' : 'application/json' },
+        body: JSON.stringify({
+          topicID: e.target.value,
+          userEmail: this.getUserAccountDetails
+        }).then(resp => resp.json())
+        .then(json => {
+          console.log(json);
+        })
+        .catch(error => console.log(error))
+      }
+    )
+  }
+
+  delTopic = (e) => {
+    fetch('/api/delete-topic-from-user', {
+      method: 'post',
+      headers: { 'Content-Type' : 'application/json' },
+      body: JSON.stringify({
+        topicID: e.target.value,
+        userEmail: this.getUserAccountDetails
+      }).then(resp => resp.json())
+      .then(json => {
+        console.log(json);
+      })
+      .catch(error => console.log(error))
+    })
   }
 
   collapse = () => {
@@ -78,6 +137,10 @@ export class MainPage extends Component {
 
   rightSwitch = () => {
     this.setState({showArticles: !this.state.showArticles});
+  }
+
+  componentWillMount() {
+    this.getTopics();
   }
 
   render() {
@@ -105,10 +168,13 @@ export class MainPage extends Component {
                   {this.state.topicDisplay.map((item, key) => 
                     <ArticlePreview 
                       key={ key }
+                      id={ item.id }
                       type={"topic"}
                       image={'https://picsum.photos/450/250'}
-                      title={item}
+                      title={ item.topic }
                       description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
+                      like={this.addTopic}
+                      numLikes={ item.numOfHearts }
                     />
                   )}
                 </div>
@@ -119,10 +185,12 @@ export class MainPage extends Component {
                     {this.state.topics.map((item, key) =>
                       <ArticlePreview 
                         key={ key }
+                        id={ item.id }
                         type={"topic"}
                         image={'https://picsum.photos/450/250'}
-                        title={item}
+                        title={ item.topic }
                         description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
+                        numLikes={ item.numOfHearts }
                       />
                     )}
                   </div>
