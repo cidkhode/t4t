@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import static com.t4t.thought4thought.utils.Constants.*;
+
 @RestController
 public class UserController {
     @Autowired
@@ -20,14 +22,14 @@ public class UserController {
                                                         HttpServletRequest request,
                                                         HttpSession session) {
         Thought4ThoughtResponseObject thought4ThoughtResponseObject =
-                new Thought4ThoughtResponseObject().createResponse(-1, "Invalid session");
+                new Thought4ThoughtResponseObject().createResponse(T4T_ERROR_CODE, "Invalid session");
         String userEmail = (String) session.getAttribute("userEmail");
         if (userEmail != null) {
             if (session.getAttribute("userEmail").equals(objectNode.get("userEmail").asText())) {
-                thought4ThoughtResponseObject.setStatus(0);
+                thought4ThoughtResponseObject.setStatus(T4T_SUCCESS_CODE);
                 thought4ThoughtResponseObject.setInfo("Session ongoing");
             } else {
-                thought4ThoughtResponseObject.setStatus(1);
+                thought4ThoughtResponseObject.setStatus(T4T_INVALID_CODE);
                 thought4ThoughtResponseObject.setInfo("Session does not exist for user with email: " + userEmail);
             }
         }
@@ -42,7 +44,7 @@ public class UserController {
         HttpSession newSession = request.getSession();
         newSession.setAttribute("userEmail", email);
         boolean exists = userService.validUser(email, password);
-        return new Thought4ThoughtResponseObject().createResponse(exists ? 0 : 1, exists ? "Success!" : "Invalid Credentials!");
+        return new Thought4ThoughtResponseObject().createResponse(exists ? T4T_SUCCESS_CODE : T4T_INVALID_CODE, exists ? "Success!" : "Invalid Credentials!");
     }
 
     @GetMapping(path="/api/user")

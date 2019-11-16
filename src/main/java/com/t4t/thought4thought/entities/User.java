@@ -126,4 +126,11 @@ public class User {
         this.aboutMe = aboutMe;
     }
 
+    public String getTopicIds() {
+        return topicIds;
+    }
+
+    public void setTopicIds(String topicIds) {
+        this.topicIds = topicIds;
+    }
 }
