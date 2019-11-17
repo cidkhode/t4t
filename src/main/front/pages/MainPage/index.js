@@ -11,6 +11,8 @@ import DetailedPreview from "../../components/ArticlePreview/DetailedPreview";
 import './MainPage.less';
 
 import { getUserLoggedIn } from '../../utils/utils';
+import { getUserAccountDetails } from '../../redux/selectors/user.selector'
+import { connect } from 'formik';
 
 export class MainPage extends Component {
   static propTypes = {
@@ -38,8 +40,6 @@ export class MainPage extends Component {
       mostPopularBig: [0,1],
       readingListArticles: [0,1,2,3,4],
       networkArticles: [0,1],
-      userTopics: [],
-      totalTopics: ['Politics','Economics','Regional','Health','Technology','National'],
       topicDisplay: ['Politics','Economics'],
       topics: ["Regional","Health","Technology","National"],
       showArticles: true,
@@ -69,7 +69,9 @@ export class MainPage extends Component {
   };
 
   testFetch = () => {
-    console.log(this.props.sidebarTopics);
+    console.log("Working Method");
+    this.props.getProfile();
+    console.log(this.props.userAccountDetails.topics);
   };
 
   openSideBar = () => this.setState({ sideBarOpen: !this.state.sideBarOpen });
@@ -84,9 +86,8 @@ export class MainPage extends Component {
       if(json) {
         console.log(json);
         console.log("Got topics");
-        let display = [], hidden = [], total = [];
+        let display = [], hidden = [];
         for(let i = 0; i < json.length; i++) {
-          total.push(json[i]);
           if(i < 2) {
             display.push(json[i]);
           } else {
@@ -94,7 +95,6 @@ export class MainPage extends Component {
           }
         }
         this.setState({
-          totalTopics: total,
           topicDisplay: display,
           topics: hidden,
         });
@@ -104,6 +104,10 @@ export class MainPage extends Component {
   }
 
   addTopic = (e) => {
+    if(!getUserLoggedIn()) {
+      console.log("Not logged in.");
+      return;
+    }
     fetch('/api/add-topic-to-user', {
         method: 'post',
         headers: { 'Content-Type' : 'application/json' },
@@ -115,6 +119,8 @@ export class MainPage extends Component {
       .then(resp => resp.json())
       .then(json => {
         console.log(json);
+        this.props.getProfile();
+        this.getTopics();
       })
       .catch(error => console.log(error));
   };
@@ -125,11 +131,13 @@ export class MainPage extends Component {
       headers: { 'Content-Type' : 'application/json' },
       body: JSON.stringify({
         topicID: e.target.id,
-        userEmail: this.getUserAccountDetails
+        userEmail: getUserLoggedIn()
       })
     }).then(resp => resp.json())
     .then(json => {
       console.log(json);
+      this.props.getProfile();
+      this.getTopics();
     })
     .catch(error => console.log(error));
   };
@@ -159,34 +167,58 @@ export class MainPage extends Component {
               <h2>Topics</h2>
               <div className="inner">
                 <div className="list">
-                  {this.state.topicDisplay.map((item, key) => 
-                    <ArticlePreview 
+                  {this.state.topicDisplay.map((item, key) => {
+                    let liked = false;
+                    if(this.props.userAccountDetails.topics) {
+                      for(let i = 0; i < this.props.userAccountDetails.topics.length; i++) {
+                        if(item.id == this.props.userAccountDetails.topics[i].id) {
+                          liked = true;
+                          break;
+                        }
+                      }
+                    }
+                  
+                    return <ArticlePreview 
                       key={ key }
                       id={ item.id }
                       type={"topic"}
                       image={'https://picsum.photos/450/250'}
                       title={ item.topic }
-                      description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
-                      like={this.addTopic}
+                      description={""}
+                      like={ liked ? this.delTopic : this.addTopic}
                       numLikes={ item.numOfHearts }
+                      liked={ liked }
                     />
+                  }
                   )}
                 </div>
               </div>
               <div className={this.state.topicOpen ? 'open' : 'collapsed'}>
                 <div className="inner">
                   <div className="list">
-                    {this.state.topics.map((item, key) =>
-                      <ArticlePreview 
-                        key={ key }
-                        id={ item.id }
-                        type={"topic"}
-                        image={'https://picsum.photos/450/250'}
-                        title={ item.topic }
-                        description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
-                        like={ this.addTopic }
-                        numLikes={ item.numOfHearts }
-                      />
+                    {this.state.topics.map((item, key) => {
+                    let liked = false;
+                    if(this.props.userAccountDetails.topics) {
+                      for(let i = 0; i < this.props.userAccountDetails.topics.length; i++) {
+                        if(item.id == this.props.userAccountDetails.topics[i].id) {
+                          liked = true;
+                          break;
+                        }
+                      }
+                    }
+                  
+                    return <ArticlePreview 
+                      key={ key }
+                      id={ item.id }
+                      type={"topic"}
+                      image={'https://picsum.photos/450/250'}
+                      title={ item.topic }
+                      description={""}
+                      like={ liked ? this.delTopic : this.addTopic}
+                      numLikes={ item.numOfHearts }
+                      liked={ liked }
+                    />
+                  }
                     )}
                   </div>
                 </div>
@@ -275,7 +307,7 @@ export class MainPage extends Component {
         </div>
         { this.props.showSidebar &&
         <Sidebar
-          topics={ this.fetchTopics() }
+          topics={ this.props.userAccountDetails.topics ? this.props.userAccountDetails.topics : this.fetchTopics() }
           onTopicSelection={ this.selectTopic }
           onOpen={ this.openSideBar }
           name="Cid Khode"
@@ -286,6 +318,26 @@ export class MainPage extends Component {
       </main>
     )
   }
+}
+
+MainPage.propTypes = {
+  userAccountDetails: PropTypes.shape({
+    name: PropTypes.string,
+    email: PropTypes.string,
+    profilePictureURL: PropTypes.string,
+    aboutMe: PropTypes.string,
+    viewPoints: PropTypes.arrayOf(PropTypes.shape({
+      title: PropTypes.string.isRequired,
+    })),
+    interests: PropTypes.arrayOf(PropTypes.shape({
+      title: PropTypes.string.isRequired,
+    })),
+    userLikedTopics: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      numOfHearts: PropTypes.number.isRequired,
+      topic: PropTypes.string.isRequired
+    }))    
+  }).isRequired,
 }
 
 export default MainPage;

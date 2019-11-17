@@ -1,5 +1,5 @@
 import React from 'react';
-import { string, func, number } from 'prop-types';
+import { string, func, number, bool } from 'prop-types';
 
 /* Styles */
 import './ArticlePreview.less';
@@ -16,7 +16,7 @@ export const ArticlePreview = props => (
                 <div className="article-misc">
                     <p className="article-description">{props.description}</p>
                     <div className="article-actions">
-                        <input type="button" className="like" onClick={props.like} id={props.id}/>
+                        <input type="button" className={`like ${props.liked ? 'liked' : ''}`} onClick={props.like} id={props.id}/>
                         <button className="save" />
                         {props.type == "topic" && <p className="likes">{props.numLikes}</p>}
                     </div>
@@ -32,7 +32,8 @@ ArticlePreview.propTypes = {
     image: string.isRequired,
     title: string.isRequired,
     description: string.isRequired,
-    like: func.isRequired
+    like: func.isRequired,
+    liked: bool.isRequired,
 };
 
 export default ArticlePreview;
