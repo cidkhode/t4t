@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes, { array } from 'prop-types';
-import { bindActionCreators } from 'redux';
-import connect from 'react-redux/es/connect/connect';
-import { getUserAccountDetails } from '../../redux/selectors/user.selector';
-import { fetchUserAccountDetails } from '../../redux/actions/user.action';
+import PropTypes from 'prop-types';
 
 /* Components */
 import Sidebar from "../../components/Sidebar/Sidebar";
@@ -74,7 +70,7 @@ export class MainPage extends Component {
 
   testFetch = () => {
     console.log(this.props.sidebarTopics);
-  }
+  };
 
   openSideBar = () => this.setState({ sideBarOpen: !this.state.sideBarOpen });
 
@@ -108,13 +104,6 @@ export class MainPage extends Component {
   }
 
   addTopic = (e) => {
-    /*if(!getUserLoggedIn()) {
-      console.log("User not logged in.");
-      return;
-    } */
-    console.log("Click!");
-    console.log(e.target.id);
-    console.log(getUserLoggedIn());
     fetch('/api/add-topic-to-user', {
         method: 'post',
         headers: { 'Content-Type' : 'application/json' },
@@ -128,7 +117,7 @@ export class MainPage extends Component {
         console.log(json);
       })
       .catch(error => console.log(error));
-  }
+  };
 
   delTopic = (e) => {
     fetch('/api/delete-topic-from-user', {
@@ -143,21 +132,19 @@ export class MainPage extends Component {
       console.log(json);
     })
     .catch(error => console.log(error));
-    
-  }
+  };
 
   collapse = () => {
     this.setState({topicOpen: !this.state.topicOpen});
-  }
+  };
 
   rightSwitch = () => {
     this.setState({showArticles: !this.state.showArticles});
-  }
+  };
 
   componentWillMount() {
     this.getTopics();
     if(getUserLoggedIn()) {
-      console.log("logged in");
       this.testFetch();
     }
   }
@@ -166,22 +153,10 @@ export class MainPage extends Component {
     return (
       <main id="homepage">
         <Navbar handleLogin={ this.props.handleLogin } isLoggedIn={ this.props.isLoggedIn } />
-        { this.props.showSidebar &&
-          < Sidebar
-            topics={ this.fetchTopics() }
-            onTopicSelection={ this.selectTopic }
-            onOpen={ this.openSideBar }
-            name="Cid Khode"
-            isOpen={ this.state.sideBarOpen }
-            selectedOption={ this.state.selectedSideBarOption }
-            />
-        }
         <div id="content">
-          
           <div id="popnet">
             <div id="topics">
               <h2>Topics</h2>
-
               <div className="inner">
                 <div className="list">
                   {this.state.topicDisplay.map((item, key) => 
@@ -298,6 +273,16 @@ export class MainPage extends Component {
           </div>
 
         </div>
+        { this.props.showSidebar &&
+        <Sidebar
+          topics={ this.fetchTopics() }
+          onTopicSelection={ this.selectTopic }
+          onOpen={ this.openSideBar }
+          name="Cid Khode"
+          isOpen={ this.state.sideBarOpen }
+          selectedOption={ this.state.selectedSideBarOption }
+        />
+        }
       </main>
     )
   }

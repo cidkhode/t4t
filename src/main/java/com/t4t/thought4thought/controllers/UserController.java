@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @GetMapping(path="/api/user")
-    public User getUser(@RequestParam(name="userEmail") String userEmail) {
+    public ObjectNode getUser(@RequestParam(name="userEmail") String userEmail) {
         return userService.getUserByEmail(userEmail);
     }
 

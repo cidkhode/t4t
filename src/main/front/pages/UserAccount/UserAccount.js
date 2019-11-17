@@ -210,7 +210,7 @@ UserAccount.defaultProps = {
 
 const mapStateToProps = (state) => ({
   userAccountDetails: getUserAccountDetails(state),
-})
+});
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
 

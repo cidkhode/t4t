@@ -1,6 +1,11 @@
 package com.t4t.thought4thought.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.t4t.thought4thought.entities.Topic;
 import com.t4t.thought4thought.entities.User;
+import com.t4t.thought4thought.repositories.TopicRepository;
 import com.t4t.thought4thought.utils.PasswordEncryptor;
 import com.t4t.thought4thought.utils.Thought4ThoughtResponseObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,9 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    TopicRepository topicRepository;
+
     /*@Autowired
     AwsS3Service awsS3Service;*/
 
@@ -28,8 +36,46 @@ public class UserService {
                 .equals(passwordEncryptor.encryptPassword(password, user.getPasswordSalt()));
     }
 
-    public User getUserByEmail(String userEmail) {
-        return userRepository.findByEmail(userEmail);
+    public ObjectNode getUserByEmail(String userEmail) {
+        User user = userRepository.findByEmail(userEmail);
+        return extractUserDetails(user);
+    }
+
+    private ObjectNode extractUserDetails(User user) {
+        ObjectNode userDetails = new ObjectMapper().createObjectNode();
+        String aboutMe = user.getAboutMe();
+        String email = user.getEmail();
+        String fieldsOfStudy = user.getFieldsOfStudy();
+        String firstName = user.getFirstName();
+        String lastName = user.getLastName();
+        String id = user.getId().toString();
+        String interests = user.getInterests();
+        String profilePictureURL = user.getProfilePictureURL();
+        String topicIds = user.getTopicIds();
+        String userType = user.getUserType();
+        String viewPoints = user.getViewPoints();
+        userDetails
+                .put("aboutMe", aboutMe != null ? aboutMe : "")
+                .put("email", email != null ? email :  "")
+                .put("fieldsOfStudy", fieldsOfStudy != null ? fieldsOfStudy : "")
+                .put("firstName", firstName != null ? firstName : "")
+                .put("lastName", lastName != null ? lastName : "")
+                .put("id", id)
+                .put("interests", interests != null ? interests : "")
+                .put("profilePictureURL", profilePictureURL != null ? profilePictureURL : "")
+                .put("topicIds", topicIds != null ? topicIds : "")
+                .put("userType", userType != null ? userType : "")
+                .put("viewPoints", viewPoints != null ? viewPoints : "");
+        if (topicIds != null) {
+            ArrayList<Topic> topics = new ArrayList<>();
+            ArrayList<String> topicIdsList = new ArrayList<>(Arrays.asList(topicIds.split(",")));
+            topicIdsList.forEach(topicId -> {
+                topics.add(topicRepository.findById(Integer.parseInt(topicId)));
+            });
+            ArrayNode topicsArrayNode = new ObjectMapper().valueToTree(topics);
+            userDetails.putArray("userLikedTopics").addAll(topicsArrayNode);
+        }
+        return userDetails;
     }
 
     public Thought4ThoughtResponseObject registerNewUser(User user) {
