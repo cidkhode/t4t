@@ -68,10 +68,10 @@
                     
                     .like {
                         background: url('../../assets/like.png');
-                        background-color: none;
                     }
                     .like.liked {
-                        background-color: red;
+                        background: url('../../assets/liked.png');
+                        background-repeat: no-repeat;
                     }
 
                     .save {
@@ -88,7 +88,8 @@
                         cursor: pointer;
                     }
                     .like:hover, .save:hover {
-                        background-color: red;
+                        background: url('../../assets/liked.png');
+                        background-repeat: no-repeat;
                         transition: 0.3s;
                     }
                 }
