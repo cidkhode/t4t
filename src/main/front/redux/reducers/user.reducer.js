@@ -36,7 +36,7 @@ export const user = (state = initialState, action) => {
     case userActions.SAVE_USER_DETAILS:
       const { userAccountDetails } = action;
       const {
-        firstName, lastName, topics, interests, viewPoints,
+        firstName, lastName, userLikedTopics, interests, viewPoints,
       } = userAccountDetails;
       return {
         ...state,
@@ -45,7 +45,7 @@ export const user = (state = initialState, action) => {
         userAccountDetails: {
           ...userAccountDetails,
           name: `${firstName} ${lastName}`,
-          topics: topics ? topics : [],
+          topics: userLikedTopics ? userLikedTopics : [],
           interests: interests ? interests.split(',').map(interest => ({ title: interest })) : [],
           viewPoints: viewPoints ? viewPoints.split(',').map(viewPoint => ({ title: viewPoint })) : [],
         }

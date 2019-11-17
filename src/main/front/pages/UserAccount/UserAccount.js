@@ -137,7 +137,7 @@ export class UserAccount extends Component {
       <>
         <Navbar isLoggedIn />
         <Sidebar
-          topics={ this.props.userAccountDetails.topics ? this.props.userAccountDetails : this.fetchTopics() }
+          topics={ this.props.userAccountDetails.topics ? this.props.userAccountDetails.topics : this.fetchTopics() }
           onTopicSelection={ this.selectTopic }
           onOpen={ this.openSideBar }
           name={ `${this.props.userAccountDetails.firstName} ${this.props.userAccountDetails.lastName}` }
