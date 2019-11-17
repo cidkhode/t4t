@@ -42,6 +42,7 @@ export const user = (state = initialState, action) => {
         userAccountDetails: {
           ...userAccountDetails,
           name: `${userAccountDetails.firstName} ${userAccountDetails.lastName}`,
+          topics: userAccountDetails.topicIds.length > 0 ? userAccountDetails.topicIds.split(',').map(topicId => ({ title: topicId })) : [],
           interests: userAccountDetails.interests ? userAccountDetails.interests.split(',').map(interest => ({ title: interest })) : [],
           viewPoints: userAccountDetails.viewPoints ? userAccountDetails.viewPoints.split(',').map(viewPoint => ({ title: viewPoint })) : [],
         }

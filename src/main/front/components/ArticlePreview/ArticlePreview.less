@@ -4,7 +4,6 @@
     justify-content: start;
     margin: 0 0 50px 0;
     padding: 0 0 0 0;
-    z-index: -1;
 
     .article-pic {
         height: 150px;
@@ -83,11 +82,9 @@
                         width: 20px;
                         transition: 0.3s;
                         cursor: pointer;
-                        z-index: 99;
                     }
                     .like:hover, .save:hover {
-                        height: 22px;
-                        width: 22px;
+                        background-color: red;
                         transition: 0.3s;
                     }
                 }
@@ -162,10 +159,10 @@
                     display: none;
                 }
                 .article-misc {
+                    position: absolute;
+                    right: 0;
+                    bottom: -10px;
                     .article-actions {
-                        position: absolute;
-                        right: 0;
-                        bottom: -10px;
                         flex-flow: row;
                         .like {
                             margin-right: 2px;

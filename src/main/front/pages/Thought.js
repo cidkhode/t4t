@@ -123,6 +123,7 @@ export class Thought extends Component {
           return resp.json();
         })
         .then(userAccountDetails => {
+          console.log(userAccountDetails);
           this.setState({
             isLoggedIn: true,
             userAccountDetails: {

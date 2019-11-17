@@ -4,10 +4,6 @@ import { string, func, number } from 'prop-types';
 /* Styles */
 import './ArticlePreview.less';
 
-/* Images */
-import Like from '../../assets/like.png';
-import Save from '../../assets/bookmark.png';
-
 export const ArticlePreview = props => (
     <div className={`t4t-article ${props.type}`}>
         <div className="article-pic">
@@ -20,7 +16,7 @@ export const ArticlePreview = props => (
                 <div className="article-misc">
                     <p className="article-description">{props.description}</p>
                     <div className="article-actions">
-                        <button className="like" onClick={props.like} id={props.id}/>
+                        <input type="button" className="like" onClick={props.like} id={props.id}/>
                         <button className="save" />
                         {props.type == "topic" && <p className="likes">{props.numLikes}</p>}
                     </div>

@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import PropTypes, { array } from 'prop-types';
 import { bindActionCreators } from 'redux';
 import connect from 'react-redux/es/connect/connect';
 import { getUserAccountDetails } from '../../redux/selectors/user.selector';
+import { fetchUserAccountDetails } from '../../redux/actions/user.action';
 
 /* Components */
 import Sidebar from "../../components/Sidebar/Sidebar";
@@ -12,6 +13,8 @@ import DetailedPreview from "../../components/ArticlePreview/DetailedPreview";
 
 /* Styles */
 import './MainPage.less';
+
+import { getUserLoggedIn } from '../../utils/utils';
 
 export class MainPage extends Component {
   static propTypes = {
@@ -39,6 +42,8 @@ export class MainPage extends Component {
       mostPopularBig: [0,1],
       readingListArticles: [0,1,2,3,4],
       networkArticles: [0,1],
+      userTopics: [],
+      totalTopics: ['Politics','Economics','Regional','Health','Technology','National'],
       topicDisplay: ['Politics','Economics'],
       topics: ["Regional","Health","Technology","National"],
       showArticles: true,
@@ -67,20 +72,25 @@ export class MainPage extends Component {
     ]
   };
 
+  testFetch = () => {
+    console.log(this.props.sidebarTopics);
+  }
+
   openSideBar = () => this.setState({ sideBarOpen: !this.state.sideBarOpen });
 
   selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption }, () => console.log(`Topic selected: `, selectedSideBarOption));
 
   getTopics = () => {
     console.log("getting topics");
-    fetch('api/all-topics')
+    fetch('/api/all-topics')
     .then(resp => resp.json())
     .then(json => {
       if(json) {
         console.log(json);
         console.log("Got topics");
-        let display = [], hidden = [];
+        let display = [], hidden = [], total = [];
         for(let i = 0; i < json.length; i++) {
+          total.push(json[i]);
           if(i < 2) {
             display.push(json[i]);
           } else {
@@ -88,6 +98,7 @@ export class MainPage extends Component {
           }
         }
         this.setState({
+          totalTopics: total,
           topicDisplay: display,
           topics: hidden,
         });
@@ -97,23 +108,26 @@ export class MainPage extends Component {
   }
 
   addTopic = (e) => {
-    /*if(!this.props.isLoggedIn) {
+    /*if(!getUserLoggedIn()) {
       console.log("User not logged in.");
       return;
     } */
+    console.log("Click!");
+    console.log(e.target.id);
+    console.log(getUserLoggedIn());
     fetch('/api/add-topic-to-user', {
         method: 'post',
         headers: { 'Content-Type' : 'application/json' },
         body: JSON.stringify({
-          topicID: e.target.value,
-          userEmail: this.getUserAccountDetails
-        }).then(resp => resp.json())
-        .then(json => {
-          console.log(json);
+          topicID: e.target.id,
+          userEmail: getUserLoggedIn()
         })
-        .catch(error => console.log(error))
-      }
-    )
+      })
+      .then(resp => resp.json())
+      .then(json => {
+        console.log(json);
+      })
+      .catch(error => console.log(error));
   }
 
   delTopic = (e) => {
@@ -121,14 +135,15 @@ export class MainPage extends Component {
       method: 'post',
       headers: { 'Content-Type' : 'application/json' },
       body: JSON.stringify({
-        topicID: e.target.value,
+        topicID: e.target.id,
         userEmail: this.getUserAccountDetails
-      }).then(resp => resp.json())
-      .then(json => {
-        console.log(json);
       })
-      .catch(error => console.log(error))
+    }).then(resp => resp.json())
+    .then(json => {
+      console.log(json);
     })
+    .catch(error => console.log(error));
+    
   }
 
   collapse = () => {
@@ -141,6 +156,10 @@ export class MainPage extends Component {
 
   componentWillMount() {
     this.getTopics();
+    if(getUserLoggedIn()) {
+      console.log("logged in");
+      this.testFetch();
+    }
   }
 
   render() {
@@ -190,6 +209,7 @@ export class MainPage extends Component {
                         image={'https://picsum.photos/450/250'}
                         title={ item.topic }
                         description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
+                        like={ this.addTopic }
                         numLikes={ item.numOfHearts }
                       />
                     )}
