@@ -63,10 +63,14 @@ export class MainPage extends Component {
 
   selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption }, () => console.log(`Topic selected: `, selectedSideBarOption));
 
+  componentWillMount() {
+    this.props.getProfile();
+  }
+
   render() {
     return (
       <main id="homepage">
-        <Navbar handleLogin={ this.props.handleLogin } isLoggedIn={ this.props.isLoggedIn } />
+        <Navbar handleLogin={ this.props.handleLogin } isLoggedIn={ this.props.isLoggedIn } userAccountDetails={ this.props.userAccountDetails } getProfile={ this.props.getProfile } />
         { this.props.showSidebar &&
           < Sidebar
             topics={ this.fetchTopics() }

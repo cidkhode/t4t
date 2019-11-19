@@ -175,7 +175,11 @@ export class Thought extends Component {
                 isLoggedIn={ this.props.isLoggedIn }
                 isLoading={ this.props.isLoading }
                 waitingToCheck={ this.props.waitingToCheck }
-                componentProps={{ showSidebar: this.props.isLoggedIn }}
+                componentProps={{
+                   showSidebar: this.props.isLoggedIn,
+                   userAccountDetails: this.state.userAccountDetails,
+                   getProfile: this.getProfile
+               }}
               />
             </Route>
           </Switch>

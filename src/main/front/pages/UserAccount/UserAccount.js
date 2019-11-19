@@ -135,7 +135,7 @@ export class UserAccount extends Component {
   render() {
     return (
       <>
-        <Navbar isLoggedIn />
+        <Navbar isLoggedIn userAccountDetails={ this.props.userAccountDetails } getProfile={ this.props.getProfile }/>
         <Sidebar
           topics={ this.fetchTopics() }
           onTopicSelection={ this.selectTopic }
