@@ -7,12 +7,15 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 public interface TopicRepository extends CrudRepository<Topic, Integer> {
-    //int getNumOfHeartsById(int topicId);
-    //int getNumOfBookmarksById(int topicId);
     Topic findById(int topicId);
 
     @Modifying
     @Transactional
     @Query("update Topic topic set topic.numOfHearts = ?1 where topic.id = ?2")
     void updateHeartsOfTopic(int numOfHearts, int topicId);
+
+    @Modifying
+    @Transactional
+    @Query("select topic from Topic as topic order by topic.numOfHearts desc")
+    Iterable<Topic> findAllOrderByNumOfHeartsDesc();
 }

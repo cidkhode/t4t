@@ -25,9 +25,6 @@ public class UserService {
     @Autowired
     TopicRepository topicRepository;
 
-    /*@Autowired
-    AwsS3Service awsS3Service;*/
-
     public boolean validUser(String email, String password) {
         PasswordEncryptor passwordEncryptor = new PasswordEncryptor();
         User user = userRepository.findByEmail(email);

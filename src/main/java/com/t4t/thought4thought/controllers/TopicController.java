@@ -15,26 +15,15 @@ public class TopicController {
     @Autowired
     private TopicService topicService;
 
-    @GetMapping(path="/api/topic-hearts")
-    public int getNumOfHearts(@RequestParam(name="topicId") int topicId){ return topicService.getNumOfHearts(topicId); }
-
     @GetMapping(path="/api/all-topics")
-    public Iterable<Topic> getAllTopics() {
-        return topicService.getAllTopics();
+    public Iterable<Topic> getAllTopicsByNumOfHearts() {
+        return topicService.getAllTopicsByNumOfHearts();
     }
 
     @PostMapping(path="/api/add-topic-to-user")
     public Thought4ThoughtResponseObject addTopicToUser (@RequestBody ObjectNode objectNode,
                                                          HttpServletRequest request,
                                                          HttpSession session){
-
-        /*
-        This code is here for me to check if it works through Postman
-        @RequestParam String topicId, String userEmail
-       Thought4ThoughtResponseObject object = topicService.addTopicToUser(topicId, userEmail);
-        return object.getStatus();
-        */
-
         String topicID = objectNode.get("topicID").asText();
         String userEmail = objectNode.get("userEmail").asText();
         return this.topicService.addTopicToUser(topicID, userEmail);
@@ -44,13 +33,6 @@ public class TopicController {
     public Thought4ThoughtResponseObject deleteTopicFromUser (@RequestBody ObjectNode objectNode,
                                                               HttpServletRequest request,
                                                               HttpSession session){
-        /*
-        This code is here for me to check if it works through Postman
-        @RequestParam String topicId, String userEmail
-        Thought4ThoughtResponseObject object = topicService.deleteTopicFromUser(topicId, userEmail);
-        return object.getStatus();
-         */
-
         String topicID = objectNode.get("topicID").asText();
         String userEmail = objectNode.get("userEmail").asText();
         return this.topicService.deleteTopicFromUser(topicID, userEmail);
