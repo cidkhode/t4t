@@ -1,5 +1,7 @@
 package com.t4t.thought4thought.entities;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.*;
 
 @Entity
@@ -65,33 +67,33 @@ public class Article {
         this.numLikes = numLikes;
     }
 
-    private String dateCreated;
+    private LocalDateTime dateCreated;
 
-    public String getDateCreated(){
+    public LocalDateTime getDateCreated(){
         return dateCreated;
     }
 
-    public void setDateCreated(String dateCreated){
+    public void setDateCreated(LocalDateTime dateCreated){
         this.dateCreated = dateCreated;
     }
 
-    private String datePublished;
+    private LocalDateTime datePublished;
 
-    public String getDatePublished(){
+    public LocalDateTime getDatePublished(){
         return datePublished;
     }
 
-    public void setDatePublished(String datePublished){
+    public void setDatePublished(LocalDateTime datePublished){
         this.datePublished = datePublished;
     }
 
-    private String dateModified;
+    private LocalDateTime dateModified;
 
-    public String getDateModified(){
+    public LocalDateTime getDateModified(){
         return dateModified;
     }
 
-    public void setDateModified(String dateModified){
+    public void setDateModified(LocalDateTime dateModified){
         this.dateModified = dateModified;
     }
 

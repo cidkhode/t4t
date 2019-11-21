@@ -28,7 +28,7 @@ public class ArticleService{
         LocalDateTime now = LocalDateTime.now(); 
         if(!articleRepository.existsByArticleID(article.getArticleID())){
             article.setArticleText(article.getArticleText());
-            article.setDateCreated(dtf.format(now));
+            article.setDateCreated(now);
         }
         return thought4ThoughtResponseObject;
     }
@@ -41,20 +41,20 @@ public class ArticleService{
         LocalDateTime now = LocalDateTime.now(); 
         if(!articleRepository.existsByArticleID(article.getArticleID())){
             article.setArticleText(article.getArticleText());
-            article.setDateModified(dtf.format(now));
+            article.setDateModified(now);
         }
         return thought4ThoughtResponseObject;
     }
     
     /* publish final article to main page */
-    public Thought4ThoughtResponseObject publishArticleToMain(Article article) {
+    public Thought4ThoughtResponseObject publishArticleToMain(ObjectNode objectNode) {
 		Thought4ThoughtResponseObject thought4ThoughtResponseObject =
         new Thought4ThoughtResponseObject().createResponse(T4T_SUCCESS_CODE, "Article published successfully!");
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
         LocalDateTime now = LocalDateTime.now(); 
-        if(!articleRepository.existsByArticleID(article.getArticleID())){
-            //article.setArticleText(article.getArticleText());
-            article.setDatePublished(dtf.format(now));
+        Article article = articleRepository.findByArticleID(objectNode.get("articleID").asInt());
+        if(article != null){
+            article.setDatePublished(now);
         }
         return thought4ThoughtResponseObject;
 	}
@@ -117,8 +117,9 @@ public class ArticleService{
                 new Thought4ThoughtResponseObject().createResponse(-1,
                         "Couldn't update profile; something went wrong.");
         String articleIDInSession = Integer.toString(articleID);
+        String keyToUpdate = articleKey.get("keyToUpdate").asText();
         if(articleIDInSession != null){
-            Article article = ArticleRepository.findByArticleID(articleID);
+            //Article article = articleRepository.findByArticleID(articleID);
             switch(keyToUpdate){
                 case "articleTitle": {
                     articleRepository.setArticleTitleByID();
@@ -138,6 +139,7 @@ public class ArticleService{
                 }
             }
         }
+        return thought4ThoughtResponseObject;
 	}
   
 }

@@ -1,10 +1,13 @@
 package com.t4t.thought4thought.controllers;
 
+import java.time.LocalDateTime;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.t4t.thought4thought.entities.Article;
+import com.t4t.thought4thought.repositories.ArticleRepository;
 import com.t4t.thought4thought.services.ArticleService;
 import com.t4t.thought4thought.services.AwsS3Service;
 import com.t4t.thought4thought.utils.Thought4ThoughtResponseObject;
@@ -27,6 +30,9 @@ public class ArticleController {
     
     @Autowired
     private ArticleService articleService;
+    
+    @Autowired
+    private ArticleRepository articleRepository;
 
     /* get article */
     @GetMapping(path = "/get-article")
@@ -53,14 +59,9 @@ public class ArticleController {
 
     /* publish article */
     @PostMapping(path = "/publish-article")
-    public Thought4ThoughtResponseObject publishArticle(@RequestBody Article article){
-        boolean isPublished = articleService.publishedArticle(article.getArticleID());
-        if(!isPublished){
-            // use findBy function to update column ID to edit boolean
-            // set isPublishedBy
-            // ArticleRepository
-            articleService.findByArticleID(article);
-        }
+    public Thought4ThoughtResponseObject publishArticle(@RequestBody ObjectNode article){
+        LocalDateTime date = LocalDateTime.now();
+        articleRepository.setArticleIsPublishedByArticleID(true, date, article.get("articleID").asInt());
         return this.articleService.publishArticleToMain(article);
     }
     
@@ -74,16 +75,6 @@ public class ArticleController {
     @PostMapping(path = "/change-description")
     public Thought4ThoughtResponseObject changeArticleDescription(@RequestBody Article article){
         return this.articleService.modifyArticleDescription(article);
-    }
-
-    /* upload thumbnail image in S3 bucket 
-        maybe use uploadFile in s3 bucket controller?
-        receive articleID
-    */
-    @PostMapping(path = "/upload-article-thumbnail")
-    public Thought4ThoughtResponseObject uploadArticleThumbnail(@RequestPart(value = "file") MultipartFile file, HttpServletRequest request, HttpSession session) {
-        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-        return this.amazonClient.uploadArticleThumbnail(file, extension, (String) session.getAttribute("userEmail"));
     }
 
     /* numViews count */

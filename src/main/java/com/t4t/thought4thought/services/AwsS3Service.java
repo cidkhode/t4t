@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.t4t.thought4thought.entities.User;
+import com.t4t.thought4thought.repositories.ArticleRepository;
 import com.t4t.thought4thought.repositories.UserRepository;
 import com.t4t.thought4thought.utils.Constants;
 import com.t4t.thought4thought.utils.Thought4ThoughtResponseObject;
@@ -36,6 +37,9 @@ public class AwsS3Service {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    ArticleRepository articleRepository;
 
     @PostConstruct
     private void initializeAmazon() {
@@ -103,7 +107,7 @@ public class AwsS3Service {
         return "Successfully deleted";
     }
 
-	public Thought4ThoughtResponseObject saveArticleThumbnailPicture(MultipartFile file, String extension, String attribute) {
+	public Thought4ThoughtResponseObject saveArticleThumbnailPicture(MultipartFile file, String fileExtension, String userEmailInSession) {
         Thought4ThoughtResponseObject thought4ThoughtResponseObject = new Thought4ThoughtResponseObject().createResponse(-1, "Couldn't upload; Something went terribly wrong!");
         String trueExtension = "";
         if (fileExtension == null) {
@@ -115,9 +119,9 @@ public class AwsS3Service {
             User userInSession = userRepository.findByEmail(userEmailInSession);
             String fileName = userInSession.getFirstName() + "_" +
                     userInSession.getLastName() + "_" + userInSession.getId() + "." + trueExtension;
-            String userProfilePictureURL = uploadProfileImage(multipartFile, fileName);
-            if (userProfilePictureURL.length() > 0) {
-                userRepository.setUserProfilePictureURLByEmail(userProfilePictureURL, userEmailInSession);
+            String articleThumbnailImageURL = uploadProfileImage(file, fileName);
+            if (articleThumbnailImageURL.length() > 0) {
+                articleRepository.setArticleThumbnailImageURLByEmail(articleThumbnailImageURL, userEmailInSession);
                 thought4ThoughtResponseObject.setStatus(0);
                 thought4ThoughtResponseObject.setInfo("Uploaded a new picture!");
             } else {
@@ -127,4 +131,21 @@ public class AwsS3Service {
         }
         return thought4ThoughtResponseObject;
     }
+
+	public String uploadArticleThumbnail(MultipartFile multipartFile, String fileName) {
+                String profileBucketName = this.bucketName + Constants.T4T_ARTICLETHUMBNAIL_BUCKET_PATH;
+                String fileUrl = "";
+                File file = null;
+                try {
+                    file = convertMultiPartToFile(multipartFile);
+                    fileUrl = endpointUrl + "/" + profileBucketName + "/" + fileName;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                s3.putObject(new PutObjectRequest(profileBucketName, fileName, file)
+                        .withCannedAcl(CannedAccessControlList.PublicRead));
+                file.delete();
+        
+                return fileUrl;
+	}
 }
