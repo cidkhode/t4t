@@ -43,17 +43,12 @@ public class ArticleController {
     /* creating article */
     @PostMapping(path = "/store-article")
     public Thought4ThoughtResponseObject uploadArticle(@RequestBody Article article){
-        // create new row with userEmail and articleID
-        // send back new articleID
         return this.articleService.createArticle(article);
     }
 
     /* modifying article */
     @PostMapping(path = "/save-article")
     public Thought4ThoughtResponseObject updateArticle(@RequestBody ObjectNode articleKey, int articleID){
-        
-        // update appropriate column with key
-        // title, description, articleText, thumbnail
         return this.articleService.saveArticleUpdates(articleKey, articleID);
     }
 

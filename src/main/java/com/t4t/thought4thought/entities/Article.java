@@ -87,6 +87,16 @@ public class Article {
         this.datePublished = datePublished;
     }
 
+    private boolean isPublished;
+
+    public boolean getIsPublished(){
+        return isPublished;
+    }
+
+    public void setIsPublished(boolean isPublished){
+        this.isPublished = isPublished;
+    }
+
     private LocalDateTime dateModified;
 
     public LocalDateTime getDateModified(){

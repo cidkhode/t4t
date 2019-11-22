@@ -17,8 +17,8 @@ public interface ArticleRepository extends CrudRepository<Article, Integer> {
 
     @Modifying
     @Transactional
-    @Query("update Article article set article.articlethumbnailImageURL = ?1 where article.userEmail = ?2")
-	void setArticleThumbnailImageURLByEmail(String articleThumbnailImageURL, String userEmailInSession);
+    @Query("update Article article set article.thumbnailImageURL = ?1 where article.userEmail = ?2")
+	void setArticleThumbnailImageURLByEmail(String thumbnailImageURL, String userEmailInSession);
 
     @Modifying
     @Transactional
@@ -30,11 +30,23 @@ public interface ArticleRepository extends CrudRepository<Article, Integer> {
     @Query("update Article article set article.isPublished = ?1 where article.articleID = ?2")
     void setArticleIsPublishedByArticleID(boolean isPublished, LocalDateTime dateModified, int articleID);
 
+    @Modifying
+    @Transactional
+    @Query("update Article article set article.title = ?1 where article.articleID = ?2")
 	void setArticleTitleByID();
 
+    @Modifying
+    @Transactional
+    @Query("update Article article set article.description = ?1 where article.articleID = ?2")
 	void setArticleDescByID();
 
+    @Modifying
+    @Transactional
+    @Query("update Article article set article.articleText = ?1 where article.articleID = ?2")
 	void setArticleTextByID();
 
+    @Modifying
+    @Transactional
+    @Query("update Article article set article.thumbnailImageURL = ?1 where article.articleID = ?2")
 	void setArticleThumbnailByID();
 }

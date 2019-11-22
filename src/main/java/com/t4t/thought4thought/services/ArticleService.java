@@ -3,20 +3,34 @@ package com.t4t.thought4thought.services;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.t4t.thought4thought.entities.Article;
 import com.t4t.thought4thought.repositories.ArticleRepository;
-import com.t4t.thought4thought.repositories.UserRepository;
+import com.t4t.thought4thought.utils.Constants;
 import com.t4t.thought4thought.utils.Thought4ThoughtResponseObject;
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.PutObjectRequest;
+
 import static com.t4t.thought4thought.utils.Constants.*;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ArticleService{
-
+    private AmazonS3 s3;
+    @Value("${amazonProperties.bucketName}")
+    private String bucketName;
+    @Value("${amazonProperties.endpointUrl}")
+    private String endpointUrl;
+    
     @Autowired
     ArticleRepository articleRepository;
 
@@ -106,13 +120,32 @@ public class ArticleService{
 		return thought4ThoughtResponseObject;
     }
     
-    public Thought4ThoughtResponseObject uploadArticleThumbnail(MultipartFile file, String extension,
-			String attribute) {
-        // use uploadThumbnailImageURL method from AwsS3BucketController
-		return null;
+    public String uploadArticleThumbnail(MultipartFile multipartFile, String fileName) {
+        String articleThumbnailBucketName = this.bucketName + Constants.T4T_ARTICLETHUMBNAIL_BUCKET_PATH;
+        String fileUrl = "";
+        File file = null;
+        try {
+            file = convertMultiPartToFile(multipartFile);
+            fileUrl = endpointUrl + "/" + articleThumbnailBucketName + "/" + fileName;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        s3.putObject(new PutObjectRequest(articleThumbnailBucketName, fileName, file)
+		        .withCannedAcl(CannedAccessControlList.PublicRead));
+		file.delete();
+
+        return fileUrl;
 	}
 
-	public Thought4ThoughtResponseObject saveArticleUpdates(ObjectNode articleKey, int articleID) {
+	private File convertMultiPartToFile(MultipartFile file) throws IOException{
+        File convFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
+        FileOutputStream fos = new FileOutputStream(convFile);
+        fos.write(file.getBytes());
+        fos.close();
+        return convFile;
+    }
+
+    public Thought4ThoughtResponseObject saveArticleUpdates(ObjectNode articleKey, int articleID) {
 		Thought4ThoughtResponseObject thought4ThoughtResponseObject =
                 new Thought4ThoughtResponseObject().createResponse(-1,
                         "Couldn't update profile; something went wrong.");
