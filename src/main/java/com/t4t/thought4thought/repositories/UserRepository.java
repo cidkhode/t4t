@@ -31,5 +31,11 @@ public interface UserRepository extends CrudRepository<User, Integer> {
     @Query("update User user set user.viewPoints=?1 where user.email =?2")
     void setUserViewPointsByEmail(String viewpoints, String userEmail);
 
+    @Modifying
+    @Transactional
+    @Query("update User user set user.topicIds=?1 where user.email =?2")
+    void setUserTopicIdsByEmail(String topicIds, String userEmail);
+
+
 
 }
