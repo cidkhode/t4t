@@ -16,26 +16,32 @@ class T4TEditor extends Component {
 
 	postUpdatedArticle = () => {
 		console.log(draftToHtml(convertToRaw(this.props.editorState.getCurrentContent())));
-		/*
-		const post_article_url = '/api/article/' + (this.props.getCurrentArticleId != null ? 'save-article' : 'store-article');
-		
+		console.log(`Id of article is:`, this.props.articleId);
+		const savingArticle = this.props.articleId !== null;
+		const post_article_url = '/api/article/' + (savingArticle ? 'save-article' : 'store-article');
 		fetch(post_article_url, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					email: this.props.user.email,
+					articleId: this.props.articleId,
+					articleKey: 'articleText',
 					content: draftToHtml(convertToRaw(this.props.editorState.getCurrentContent()))
 				})
 			})
-			.then(res => console.dir('Success: ', res))
+			.then(res => res.json())
+			.then(json => {
+				if (!savingArticle) {
+					this.props.updateArticleId(json.info);
+				}
+			})
 			.catch(err => console.error('Error: ', err));
-		*/
-	}
+	};
 
 	onEditorStateChange = editorState => {
 		this.props.updateEditorState(editorState);
 		this.debouncedPostUpdatedArticle();
-	}
+	};
 
 	render() {
 		return (

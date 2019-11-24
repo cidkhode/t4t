@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 /* Components */
 import ArticleSubmission from "../../components/Modal/ArticleSubmission/ArticleSubmission";
 import T4TEditor from "../../components/Editor/T4TEditor";
-import Sidebar from "../../components/Sidebar/Sidebar";
 import Navbar from "../../components/Navbar/Navbar";
 import Opsbar from "./Opsbar.js";
 
@@ -25,6 +24,10 @@ import { POPUP_KEYS } from '../../utils/constants';
 import './Write.less';
 
 class Write extends PureComponent {
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		console.log(`UPDATING: `, this.props.user);
+	}
+
 	render() {
 		return(
 			<>
@@ -47,11 +50,10 @@ class Write extends PureComponent {
 					/>
 					<T4TEditor
 						isSubmitting={ this.props.isSubmitting }
-  						user={ this.props.user }
-  						articleId={ this.props.articleId }
+						user={ this.props.user }
+						articleId={ this.props.articleId }
 						toggleEditorSubmitState={ this.props.toggleEditorSubmitState }
 						updateArticleId={ this.props.updateArticleId }
-
 						editorState={ this.props.editorState }
 						updateEditorState={ this.props.updateEditorState }
 					/>

@@ -42,14 +42,21 @@ public class ArticleController {
     
     /* creating article */
     @PostMapping(path = "/store-article")
-    public Thought4ThoughtResponseObject uploadArticle(@RequestBody Article article){
-        return this.articleService.createArticle(article);
+    public Thought4ThoughtResponseObject uploadArticle(@RequestBody ObjectNode objectNode,
+                                                       HttpServletRequest request,
+                                                       HttpSession session){
+        String articleText = objectNode.get("content").asText();
+        String userEmail = (String) session.getAttribute("userEmail");
+        return this.articleService.createArticle(articleText, userEmail);
     }
 
     /* modifying article */
     @PostMapping(path = "/save-article")
-    public Thought4ThoughtResponseObject updateArticle(@RequestBody ObjectNode articleKey, int articleID){
-        return this.articleService.saveArticleUpdates(articleKey, articleID);
+    public Thought4ThoughtResponseObject updateArticle(@RequestBody ObjectNode objectNode){
+        String articleKey = objectNode.get("articleKey").asText();
+        int articleID = Integer.parseInt(objectNode.get("articleId").asText());
+        String articleText = objectNode.get("content").asText();
+        return this.articleService.saveArticleUpdates(articleKey, articleID, articleText);
     }
 
     /* publish article */

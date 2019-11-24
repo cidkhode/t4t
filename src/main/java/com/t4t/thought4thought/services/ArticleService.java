@@ -35,15 +35,17 @@ public class ArticleService{
     ArticleRepository articleRepository;
 
     /* create initial article */
-    public Thought4ThoughtResponseObject createArticle(Article article){
+    public Thought4ThoughtResponseObject createArticle(String articleText, String userEmail){
         Thought4ThoughtResponseObject thought4ThoughtResponseObject =
         new Thought4ThoughtResponseObject().createResponse(T4T_SUCCESS_CODE, "Article created successfully!");
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-        LocalDateTime now = LocalDateTime.now(); 
-        if(!articleRepository.existsByArticleID(article.getArticleID())){
-            article.setArticleText(article.getArticleText());
-            article.setDateCreated(now);
-        }
+        LocalDateTime now = LocalDateTime.now();
+        Article article = new Article();
+        article.setUserEmail(userEmail);
+        article.setArticleText(articleText);
+        article.setDateCreated(now);
+        article.setIsPublished(false);
+        articleRepository.save(article);
+        thought4ThoughtResponseObject.setInfo(article.getArticleID().toString());
         return thought4ThoughtResponseObject;
     }
 
@@ -74,10 +76,8 @@ public class ArticleService{
 	}
 
     public boolean publishedArticle(int articleID) {
-        if(articleRepository.existsByArticleID(articleID))  //checking for duplicates
-            return true;
-        else
-            return false;
+        //checking for duplicates
+        return articleRepository.existsByArticleID(articleID);
     }
 
 	public Article getUserArticleByArticleID(int articleID) {
@@ -145,31 +145,26 @@ public class ArticleService{
         return convFile;
     }
 
-    public Thought4ThoughtResponseObject saveArticleUpdates(ObjectNode articleKey, int articleID) {
+    public Thought4ThoughtResponseObject saveArticleUpdates(String keyToUpdate, int articleID, String changedColValue) {
 		Thought4ThoughtResponseObject thought4ThoughtResponseObject =
-                new Thought4ThoughtResponseObject().createResponse(-1,
-                        "Couldn't update profile; something went wrong.");
-        String articleIDInSession = Integer.toString(articleID);
-        String keyToUpdate = articleKey.get("keyToUpdate").asText();
-        if(articleIDInSession != null){
-            //Article article = articleRepository.findByArticleID(articleID);
-            switch(keyToUpdate){
-                case "articleTitle": {
-                    articleRepository.setArticleTitleByID();
-                    break;
-                }
-                case "articleDesccription": {
-                    articleRepository.setArticleDescByID();
-                    break;
-                }
-                case "articleText": {
-                    articleRepository.setArticleTextByID();
-                    break;
-                }
-                case "articleThumbnail": {
-                    articleRepository.setArticleThumbnailByID();
-                    break;
-                }
+                new Thought4ThoughtResponseObject().createResponse(T4T_SUCCESS_CODE,
+                        "Successfully saved article with article id: " + articleID);
+        switch(keyToUpdate){
+            case "articleTitle": {
+                articleRepository.setArticleTitleByID(changedColValue, articleID);
+                break;
+            }
+            case "articleDesccription": {
+                articleRepository.setArticleDescByID(changedColValue, articleID);
+                break;
+            }
+            case "articleText": {
+                articleRepository.setArticleTextByID(changedColValue, articleID);
+                break;
+            }
+            case "articleThumbnail": {
+                articleRepository.setArticleThumbnailByID(changedColValue, articleID);
+                break;
             }
         }
         return thought4ThoughtResponseObject;
