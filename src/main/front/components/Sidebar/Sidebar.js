@@ -38,11 +38,11 @@ export const Sidebar = props => (
     {
       props.topics.map((topic, key) => (
         <div
-          onClick={ props.isOpen ? () => props.onTopicSelection(topic.key) : null }
-          className={ `side-bar-option ${props.selectedOption === topic.key ? 'is-selected' : ''}` } key={ key }
-          title={ topic.title }
+          onClick={ props.isOpen ? () => props.onTopicSelection(topic.id) : null }
+          className={ `side-bar-option ${props.selectedOption === topic.id ? 'is-selected' : ''}` } key={ key }
+          title={ topic.topic }
         >
-          { props.isOpen && <p className="side-bar-option-text">{topic.title}</p> }
+          { props.isOpen && <p className="side-bar-option-text">{topic.topic}</p> }
           <span className="side-bar-option-type" />
         </div>
       ))

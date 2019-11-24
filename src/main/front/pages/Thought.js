@@ -129,6 +129,7 @@ export class Thought extends Component {
             userAccountDetails: {
               ...userAccountDetails,
               name: `${userAccountDetails.firstName} ${userAccountDetails.lastName}`,
+              topics: userAccountDetails.userLikedTopics ? userAccountDetails.userLikedTopics : [],
               interests: userAccountDetails.interests ? userAccountDetails.interests.split(',').map(interest => ({ title: interest })) : [],
               viewPoints: userAccountDetails.viewPoints ? userAccountDetails.viewPoints.split(',').map(viewPoint => ({ title: viewPoint })) : [],
             },
@@ -185,7 +186,11 @@ export class Thought extends Component {
                 isLoggedIn={ this.props.isLoggedIn }
                 isLoading={ this.props.isLoading }
                 waitingToCheck={ this.props.waitingToCheck }
-                componentProps={{ showSidebar: this.props.isLoggedIn }}
+                componentProps={{
+                  showSidebar: this.props.isLoggedIn,
+                  userAccountDetails: this.state.userAccountDetails,
+                  getProfile: this.getProfile,
+                }}
               />
             </Route>
           </Switch>

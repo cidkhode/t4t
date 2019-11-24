@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode production",
+    "build": "npm run clean-ui && webpack --mode production",
+    "clean-ui": "rm -rf src/main/resources/static",
     "start": "webpack-dev-server --open"
   },
   "keywords": [],
