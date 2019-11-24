@@ -1,6 +1,7 @@
 import { EditorState } from "draft-js";
 
 import {
+	TOGGLE_ARTICLE_UPDATE_STATE,
 	TOGGLE_EDITOR_SUBMIT_STATE,
 	UPDATE_ARTICLE_TITLE,
 	UPDATE_EDITOR_STATE,
@@ -8,6 +9,7 @@ import {
 } from '../actions/t4teditor.action.js';
 
 export const initialState = {
+	isUpdating: false,
 	isSubmitting: false,
 	id: null,
 	title: "",
@@ -16,10 +18,10 @@ export const initialState = {
 
 export const t4teditor = (state = initialState, action) => {
 	switch (action.type) {
-		case UPDATE_EDITOR_STATE:
+		case TOGGLE_ARTICLE_UPDATE_STATE:
 			return {
 				...state,
-				editorState: action.payload
+				isUpdating: !state.isUpdating
 			};
 
 		case TOGGLE_EDITOR_SUBMIT_STATE:
@@ -28,16 +30,22 @@ export const t4teditor = (state = initialState, action) => {
 				isSubmitting: !state.isSubmitting
 			};
 
-		case UPDATE_ARTICLE_ID:
-			return {
-				...state,
-				id: action.payload
-			};
-
 		case UPDATE_ARTICLE_TITLE:
 			return {
 				...state,
 				title: action.payload
+			};
+
+		case UPDATE_EDITOR_STATE:
+			return {
+				...state,
+				editorState: action.payload
+			};
+
+		case UPDATE_ARTICLE_ID:
+			return {
+				...state,
+				id: action.payload
 			};
 
 		default:

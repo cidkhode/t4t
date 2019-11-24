@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import _ from 'lodash';
 
-import { getIsSubmitting, getCurrentArticleTitle, getCurrentArticleId } from '../../redux/selectors/t4teditor.selector';
-import { toggleEditorSubmitState, updateArticleTitle, updateArticleId } from '../../redux/actions/t4teditor.action';
+import Button from "../../components/Button/Button";
 
 class Opsbar extends Component {
 	constructor(props) {
@@ -27,6 +24,20 @@ class Opsbar extends Component {
 				<form>
 					<input type="text" value={this.props.articleTitle} onChange={this.onTitleChange} name="title" placeholder="untitled article..." />
 				</form>
+
+				<div className="btn-group">
+					<Button
+						extraClass="nav-bar-sign-in-button nav-bar-right-child"
+						handleClick={ () => {} }
+						text="Upload Article Image"
+					/>
+
+					<Button
+						extraClass="nav-bar-sign-in-button nav-bar-right-child"
+						handleClick={ () => this.props.toggleSubmission() }
+						text="Publish Article"
+					/>
+				</div>
 			</div>
 		)
 	}
@@ -36,18 +47,7 @@ Opsbar.propTypes = {
   isSubmitting: PropTypes.bool.isRequired,
   articleTitle: PropTypes.string,
   articleId: PropTypes.number,
+  user: PropTypes.object,
 };
 
-const mapStateToProps = state => ({
-  isSubmitting: getIsSubmitting(state),
-  articleTitle: getCurrentArticleTitle(state),
-  articleId: getCurrentArticleId(state),
-});
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-	toggleEditorSubmitState,
-	updateArticleTitle,
-	updateArticleId,
-}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(Opsbar);
+export default Opsbar;

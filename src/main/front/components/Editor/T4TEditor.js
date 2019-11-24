@@ -1,14 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 import { convertToRaw } from "draft-js";
 import { Editor } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html'; // translate  draft-js compatable format to html
 // import htmlToDraft from 'html-to-draftjs'; // translate server saved html to draft-js compatable format
-
-import { getIsSubmitting, getEditorState, getCurrentArticleId } from '../../redux/selectors/t4teditor.selector';
-import { toggleEditorSubmitState, updateEditorState, updateArticleId } from '../../redux/actions/t4teditor.action';
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
@@ -19,7 +14,23 @@ class T4TEditor extends Component {
 		this.debouncedPostUpdatedArticle = _.debounce(this.postUpdatedArticle, 1500);
 	}
 
-	postUpdatedArticle = () => console.log(draftToHtml(convertToRaw(this.props.editorState.getCurrentContent())));
+	postUpdatedArticle = () => {
+		console.log(draftToHtml(convertToRaw(this.props.editorState.getCurrentContent())));
+		/*
+		const post_article_url = '/api/article/' + (this.props.getCurrentArticleId != null ? 'save-article' : 'store-article');
+		
+		fetch(post_article_url, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					email: this.props.user.email,
+					content: draftToHtml(convertToRaw(this.props.editorState.getCurrentContent()))
+				})
+			})
+			.then(res => console.dir('Success: ', res))
+			.catch(err => console.error('Error: ', err));
+		*/
+	}
 
 	onEditorStateChange = editorState => {
 		this.props.updateEditorState(editorState);
@@ -41,20 +52,9 @@ class T4TEditor extends Component {
 
 T4TEditor.propTypes = {
   isSubmitting: PropTypes.bool.isRequired,
-  editorState: PropTypes.object,
+  editorState: PropTypes.object.isRequired,
   articleId: PropTypes.number,
+  user: PropTypes.object,
 };
 
-const mapStateToProps = state => ({
-  isSubmitting: getIsSubmitting(state),
-  editorState: getEditorState(state),
-  articleId: getCurrentArticleId(state),
-});
-
-const mapDispatchToProps = dispatch => bindActionCreators({
-	toggleEditorSubmitState,
-	updateEditorState,
-	updateArticleId,
-}, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(T4TEditor);
+export default T4TEditor;

@@ -1,3 +1,5 @@
+export const getIsUpdating = state => state.t4teditor.isUpdating;
+
 export const getIsSubmitting = state => state.t4teditor.isSubmitting;
 
 export const getEditorState = state => state.t4teditor.editorState;
