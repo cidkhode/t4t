@@ -39,8 +39,8 @@ class Write extends PureComponent {
 					/>
 					<Opsbar
 						isSubmitting={ this.props.isSubmitting }
-  						user={ this.props.user }
-  						articleId={ this.props.articleId }
+						user={ this.props.user }
+						articleId={ this.props.articleId }
 						toggleEditorSubmitState={ this.props.toggleEditorSubmitState }
 						updateArticleId={ this.props.updateArticleId }
 

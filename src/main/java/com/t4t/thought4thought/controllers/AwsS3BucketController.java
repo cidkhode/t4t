@@ -30,10 +30,11 @@ public class AwsS3BucketController {
     }
 
     // use ID to set thumbnailurl by article query
-    @PostMapping("/uploadArticleThumbnail")
-    public Thought4ThoughtResponseObject uploadArticleThumbnail(@RequestPart(value = "file") MultipartFile file, HttpServletRequest request, HttpSession session){
-        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
-        return this.amazonClient.saveArticleThumbnailPicture(file, extension, (String) session.getAttribute("userEmail"));
+    @PostMapping("/upload-article-thumbnail")
+    public Thought4ThoughtResponseObject uploadArticleThumbnail(@RequestPart(value = "file") MultipartFile file,
+                                                                @RequestPart(value = "articleId") String articleId,
+                                                                HttpServletRequest request, HttpSession session){
+        return this.amazonClient.saveArticleThumbnailPicture(file, articleId);
     }
 
     @DeleteMapping("/deleteFile")

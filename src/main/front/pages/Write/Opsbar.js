@@ -7,7 +7,7 @@ import Button from "../../components/Button/Button";
 class Opsbar extends Component {
 	constructor(props) {
 		super(props);
-
+		this.editArticlePicRef = null;
 		this.debouncedPostUpdatedTitle = _.debounce(this.postUpdatedTitle, 1000);
 	}
 
@@ -16,6 +16,27 @@ class Opsbar extends Component {
 	onTitleChange = event => {
 		this.props.updateArticleTitle(event.target.value);
 		this.debouncedPostUpdatedTitle();
+	};
+
+	editArticlePic = () => {
+		this.editArticlePicRef.click();
+	};
+
+	submitArticlePicture = (e) => {
+		const data = new FormData();
+		data.append('file', e.target.files[0]);
+		data.append("articleId", this.props.articleId.toString());
+		fetch('/api/storage/upload-article-thumbnail', {
+			method: 'post',
+			body: data,
+		})
+		.then(resp => resp.json())
+		.then(json => {
+			if (json.status === 0) {
+				this.props.getProfile();
+				this.setState({editing: false});
+			}
+		});
 	};
 
 	render(){
@@ -28,8 +49,14 @@ class Opsbar extends Component {
 				<div className="btn-group">
 					<Button
 						extraClass="nav-bar-sign-in-button nav-bar-right-child"
-						handleClick={ () => {} }
+						handleClick={ this.editArticlePic }
 						text="Upload Article Image"
+					/>
+					<input
+						type="file"
+						ref={ (ref) => this.editArticlePicRef = ref }
+						style={ { display: 'none' } }
+						onChange={ this.submitArticlePicture }
 					/>
 
 					<Button

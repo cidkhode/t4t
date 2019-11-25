@@ -1,6 +1,5 @@
 package com.t4t.thought4thought.services;
 
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.t4t.thought4thought.entities.Article;
 import com.t4t.thought4thought.repositories.ArticleRepository;
 import com.t4t.thought4thought.utils.Constants;
@@ -114,31 +113,6 @@ public class ArticleService{
         int countLikes = article.getNumLikes();
         article.setNumLikes(++countLikes);
 		return thought4ThoughtResponseObject;
-    }
-    
-    public String uploadArticleThumbnail(MultipartFile multipartFile, String fileName) {
-        String articleThumbnailBucketName = this.bucketName + Constants.T4T_ARTICLETHUMBNAIL_BUCKET_PATH;
-        String fileUrl = "";
-        File file = null;
-        try {
-            file = convertMultiPartToFile(multipartFile);
-            fileUrl = endpointUrl + "/" + articleThumbnailBucketName + "/" + fileName;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        s3.putObject(new PutObjectRequest(articleThumbnailBucketName, fileName, file)
-		        .withCannedAcl(CannedAccessControlList.PublicRead));
-		file.delete();
-
-        return fileUrl;
-	}
-
-	private File convertMultiPartToFile(MultipartFile file) throws IOException{
-        File convFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
-        FileOutputStream fos = new FileOutputStream(convFile);
-        fos.write(file.getBytes());
-        fos.close();
-        return convFile;
     }
 
     public Thought4ThoughtResponseObject saveArticleUpdates(String keyToUpdate, int articleID, String changedColValue) {
