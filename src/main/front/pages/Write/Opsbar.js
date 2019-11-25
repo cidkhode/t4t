@@ -16,7 +16,7 @@ class Opsbar extends Component {
 	onTitleChange = event => {
 		this.props.updateArticleTitle(event.target.value);
 		this.debouncedPostUpdatedTitle();
-	}
+	};
 
 	render(){
 		return (

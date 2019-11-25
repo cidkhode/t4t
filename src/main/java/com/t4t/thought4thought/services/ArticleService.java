@@ -63,15 +63,11 @@ public class ArticleService{
     }
     
     /* publish final article to main page */
-    public Thought4ThoughtResponseObject publishArticleToMain(ObjectNode objectNode) {
+    public Thought4ThoughtResponseObject publishArticleToMain(int articleID) {
 		Thought4ThoughtResponseObject thought4ThoughtResponseObject =
         new Thought4ThoughtResponseObject().createResponse(T4T_SUCCESS_CODE, "Article published successfully!");
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
-        LocalDateTime now = LocalDateTime.now(); 
-        Article article = articleRepository.findByArticleID(objectNode.get("articleID").asInt());
-        if(article != null){
-            article.setDatePublished(now);
-        }
+        LocalDateTime date = LocalDateTime.now();
+        articleRepository.setArticleIsPublishedByArticleID(true, date, articleID);
         return thought4ThoughtResponseObject;
 	}
 

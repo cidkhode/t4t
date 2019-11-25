@@ -61,10 +61,9 @@ public class ArticleController {
 
     /* publish article */
     @PostMapping(path = "/publish-article")
-    public Thought4ThoughtResponseObject publishArticle(@RequestBody ObjectNode article){
-        LocalDateTime date = LocalDateTime.now();
-        articleRepository.setArticleIsPublishedByArticleID(true, date, article.get("articleID").asInt());
-        return this.articleService.publishArticleToMain(article);
+    public Thought4ThoughtResponseObject publishArticle(@RequestBody ObjectNode objectNode){
+        int articleID = Integer.parseInt(objectNode.get("articleId").asText());
+        return this.articleService.publishArticleToMain(articleID);
     }
     
     /* changing title */
