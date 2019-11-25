@@ -18,7 +18,7 @@ class SubmissionForm extends Component {
 				return (<p> Continue </p>);
 
 			case 2:
-				return (<p> Complete </p>);
+				return (<p> Continue </p>);
 		}
 	};
 
@@ -36,20 +36,7 @@ class SubmissionForm extends Component {
 
 	getNextStep = (formAnswers) => {
 		if (this.state.stepCtr < this.state.lastStep) {
-			this.setState({ stepCtr: this.state.stepCtr + 1, maxStep: this.state.stepCtr + 1 }, () =>{
-				if (this.state.stepCtr === this.state.lastStep) {
-					fetch('/api/register', {
-						method: 'POST',
-						headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify({
-							...formAnswers,
-							userType: this.state.userType,
-						})
-					})
-						.then(resp => console.log('Registration Successful', resp))
-						.catch(error => console.error("Something went wrong with registering a new user", error));
-				}
-			});
+			this.setState({ stepCtr: this.state.stepCtr + 1, maxStep: this.state.stepCtr + 1 });
 		}
 	};
 
@@ -61,17 +48,12 @@ class SubmissionForm extends Component {
 			switch (pageNumber) {
 				case 1: {
 					const firstPageValues = {
-						userType: values.userType,
-						firstName: values.firstName,
-						lastName: values.lastName,
-						email: values.email,
-						password: values.password,
-						confirmPass: values.confirmPass,
+						topics: values.topics,
+						ref_link_one: values.ref_link_one,
+						ref_link_two: values.ref_link_two,
+						add_ref: values.add_ref,
 					};
-					if (firstPageValues.confirmPass !== firstPageValues.password) {
-						isInvalid = true;
-						break;
-					}
+
 					for (let key in firstPageValues) {
 						if (firstPageValues.hasOwnProperty(key) && firstPageValues[key] === '') {
 							isInvalid = true;
@@ -107,34 +89,28 @@ class SubmissionForm extends Component {
 		}
 	};
 
+	handleSubmit = values => {
+			fetch('/api/article/publish-article', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ articleId: this.props.articleId })
+			})
+				.then(res => console.dir(res.json()))
+				.catch(err => console.error('Error: ', err));
+	}
+
 	render() {
 		return(
 			<Formik
 				initialValues={{
-					firstName: '',
-					lastName: '',
-					email: '',
-					password: '',
-					confirmPass: '',
+					tags: '',
+					topics: '',
+					ref_link_one: '',
+					ref_link_two: '',
+					add_ref: '',
 					description: '',
 				}}
-				validate={values => {
-					let errors = {};
-					if (!values.email) {
-						errors.email = 'Required';
-					} else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-						errors.email = 'Invalid email address';
-					} else if (values.password !== values.confirmPass) {
-						errors.confirmPass = 'Passwords do not match!'
-					}
-					return errors;
-				}}
-				onSubmit={(values, { setSubmitting }) => {
-					setTimeout(() => {
-						alert(JSON.stringify(values, null, 2));
-						setSubmitting(false);
-					}, 400);
-				}}
+				onSubmit={(values, { setSubmitting }) => this.handleSubmit(values)}
 			>
 				{({ errors, values }) => {
 					const isFormPageInvalid = this.isFormPageInvalid(this.state.stepCtr, values, errors);
@@ -144,30 +120,30 @@ class SubmissionForm extends Component {
 						<Form>
 							<div id="steps" className={`curr-step-${this.state.stepCtr}`}>
 								<div id="step-1" className={`step ${this.state.stepCtr >= 1 ? "active" : ""} ${this.state.stepCtr > 1 ? "active-hide" : ""}`}>
-									<Field type="text" name="firstName" placeholder="First Name" />
-									<ErrorMessage name="name" component="div" />
+									<Field type="text" name="tags" placeholder="Tags" />
+									<ErrorMessage name="tags" component="div" />
 
-									<Field type="text" name="lastName" placeholder="Last Name" />
-									<ErrorMessage name="lastName" component="div" />
+									<Field type="text" name="topics" placeholder="Topics" />
+									<ErrorMessage name="topics" component="div" />
 
-									<Field type="email" name="email" placeholder="Email" />
-									<ErrorMessage name="email" component="div" />
+									<Field type="text" name="ref_link_one" placeholder="Reference Link #1" />
+									<ErrorMessage name="ref_link_one" component="div" />
 
-									<Field type="password" name="password" placeholder="Password" />
-									<ErrorMessage name="password" component="div" />
+									<Field type="text" name="ref_link_two" placeholder="Reference Link #2" />
+									<ErrorMessage name="ref_link_two" component="div" />
 
-									<Field onKeyDown={ this.onKeyDown } type="password" name="confirmPass" placeholder="Confirm Password" />
-									<ErrorMessage name="confirm-pass" component="div" />
+									<Field type="text" name="add_ref" placeholder="Add Reference" />
+									<ErrorMessage name="add_ref" component="div" />
 								</div>
 								<div id="step-2" className={`step ${this.state.stepCtr > 1 ? "active" : ""} ${this.state.stepCtr === 3 ? "active-hide" : ""}`}>
-									<Field type="textarea" name="description" placeholder="description" />
+									<Field type="textarea" name="description" placeholder="Description" />
 									<ErrorMessage name="description" component="div" />									
 								</div>
 								<div id="step-3" className={`step ${this.state.stepCtr === 3 ? "active" : ""}`}>
-									<p> Congratulations! </p>
-									<p> Your article has been published </p>
-									<p> Please confirm your email. </p>
-									<p><a className="button" href="#" onClick={this.resendVerification}> Click to resend </a></p>
+									<p> { this.props.articleTitle || "untitled article" } </p>
+									<p> { values.description } </p>
+									<p> { values.tags } </p>
+									<button type="submit">Publish!</button>
 								</div>
 							</div>
 							<div id="signup-controls" style={{display: this.state.stepCtr === this.state.lastStep ? "none" : "block"}}>
@@ -187,7 +163,7 @@ class SubmissionForm extends Component {
 										<p className={`${isFormPageInvalid ? 'disabled' : ''} ${this.state.stepCtr >= 2 ? "active" : ""}`}> 2 </p>
 										<p className={`${isFormPageInvalid ? 'disabled' : ''} ${this.state.stepCtr === 3 ? "active" : ""}`}> 3 </p>
 									</div>
-									<a href="#" style={{opacity: 0, pointerEvents: 'none'}}> Sign in </a>
+									<a href="#" style={{opacity: 0, pointerEvents: 'none'}}> </a>
 								</div>
 							</div>
 						</Form>

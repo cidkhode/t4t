@@ -73,7 +73,7 @@ class Opsbar extends Component {
 Opsbar.propTypes = {
   isSubmitting: PropTypes.bool.isRequired,
   articleTitle: PropTypes.string,
-  articleId: PropTypes.number,
+  articleId: PropTypes.string,
   user: PropTypes.object,
 };
 

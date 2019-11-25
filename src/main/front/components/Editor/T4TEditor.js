@@ -59,7 +59,7 @@ class T4TEditor extends Component {
 T4TEditor.propTypes = {
   isSubmitting: PropTypes.bool.isRequired,
   editorState: PropTypes.object.isRequired,
-  articleId: PropTypes.number,
+  articleId: PropTypes.string,
   user: PropTypes.object,
 };
 
