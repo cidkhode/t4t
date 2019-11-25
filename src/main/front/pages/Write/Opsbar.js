@@ -11,11 +11,24 @@ class Opsbar extends Component {
 		this.debouncedPostUpdatedTitle = _.debounce(this.postUpdatedTitle, 1000);
 	}
 
-	postUpdatedTitle = () => console.log(this.props.articleTitle);
-
 	onTitleChange = event => {
 		this.props.updateArticleTitle(event.target.value);
 		this.debouncedPostUpdatedTitle();
+	};
+
+	postUpdatedTitle = () => {
+		if (this.props.articleId !== null) {
+			fetch('/api/article/save-article', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					articleId: this.props.articleId,
+					articleKey: 'articleTitle',
+					content: this.props.articleTitle
+				})
+			})
+			.catch(err => console.error('Error: ', err));
+		}
 	};
 
 	editArticlePic = () => {
@@ -71,10 +84,12 @@ class Opsbar extends Component {
 }
 
 Opsbar.propTypes = {
-  isSubmitting: PropTypes.bool.isRequired,
-  articleTitle: PropTypes.string,
-  articleId: PropTypes.string,
-  user: PropTypes.object,
+	isSubmitting: PropTypes.bool.isRequired,
+	articleTitle: PropTypes.string,
+	articleId: PropTypes.string,
+	user: PropTypes.object,
+	updateArticleTitle: PropTypes.func,
+	toggleSubmission: PropTypes.func,
 };
 
 export default Opsbar;
