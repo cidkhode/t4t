@@ -114,7 +114,7 @@ public class ArticleService{
                 articleRepository.setArticleTitleByID(changedColValue, articleID);
                 break;
             }
-            case "articleDesccription": {
+            case "articleDescription": {
                 articleRepository.setArticleDescByID(changedColValue, articleID);
                 break;
             }
