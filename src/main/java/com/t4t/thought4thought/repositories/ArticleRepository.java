@@ -27,8 +27,8 @@ public interface ArticleRepository extends CrudRepository<Article, Integer> {
 
     @Modifying
     @Transactional
-    @Query("update Article article set article.isPublished = ?1 where article.articleID = ?2")
-    void setArticleIsPublishedByArticleID(boolean isPublished, LocalDateTime dateModified, int articleID);
+    @Query("update Article article set article.isPublished = ?1, article.datePublished = ?2, article.dateModified = ?2 where article.articleID = ?3")
+    void setArticleIsPublishedByArticleID(boolean isPublished, LocalDateTime datePublished, int articleID);
 
     @Modifying
     @Transactional

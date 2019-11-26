@@ -2,29 +2,18 @@ package com.t4t.thought4thought.services;
 
 import com.t4t.thought4thought.entities.Article;
 import com.t4t.thought4thought.repositories.ArticleRepository;
-import com.t4t.thought4thought.utils.Constants;
 import com.t4t.thought4thought.utils.Thought4ThoughtResponseObject;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.PutObjectRequest;
 
 import static com.t4t.thought4thought.utils.Constants.*;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ArticleService{
-    private AmazonS3 s3;
     @Value("${amazonProperties.bucketName}")
     private String bucketName;
     @Value("${amazonProperties.endpointUrl}")
@@ -49,6 +38,7 @@ public class ArticleService{
     }
 
     /* modify article */
+    /*
     public Thought4ThoughtResponseObject modifyArticle(Article article) {
 		Thought4ThoughtResponseObject thought4ThoughtResponseObject =
         new Thought4ThoughtResponseObject().createResponse(T4T_SUCCESS_CODE, "Article modified successfully!");
@@ -60,7 +50,8 @@ public class ArticleService{
         }
         return thought4ThoughtResponseObject;
     }
-    
+    */
+
     /* publish final article to main page */
     public Thought4ThoughtResponseObject publishArticleToMain(int articleID) {
 		Thought4ThoughtResponseObject thought4ThoughtResponseObject =
@@ -69,11 +60,10 @@ public class ArticleService{
         articleRepository.setArticleIsPublishedByArticleID(true, date, articleID);
         return thought4ThoughtResponseObject;
 	}
-
+/*
     public boolean publishedArticle(int articleID) {
-        //checking for duplicates
         return articleRepository.existsByArticleID(articleID);
-    }
+    }*/
 
 	public Article getUserArticleByArticleID(int articleID) {
 		return articleRepository.findByArticleID(articleID);
