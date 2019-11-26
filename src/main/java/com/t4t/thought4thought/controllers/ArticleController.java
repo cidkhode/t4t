@@ -1,6 +1,5 @@
 package com.t4t.thought4thought.controllers;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,25 +9,18 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.t4t.thought4thought.entities.Article;
 import com.t4t.thought4thought.repositories.ArticleRepository;
 import com.t4t.thought4thought.services.ArticleService;
-import com.t4t.thought4thought.services.AwsS3Service;
 import com.t4t.thought4thought.utils.Thought4ThoughtResponseObject;
 
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping(path = "/api/article/")
-public class ArticleController {
-    private AwsS3Service amazonClient;
-    
+public class ArticleController {    
     @Autowired
     private ArticleService articleService;
     
