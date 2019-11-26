@@ -6,12 +6,15 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.t4t.thought4thought.entities.Article;
 
 public interface ArticleRepository extends CrudRepository<Article, Integer> {
 
     Article findByArticleID(int articleID);
+
+    List<Article> findAllByEmail(String email);
 
     boolean existsByArticleID(int articleID);
 

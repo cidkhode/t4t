@@ -1,6 +1,7 @@
 package com.t4t.thought4thought.controllers;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -39,7 +40,13 @@ public class ArticleController {
     public Article getArticle(@RequestBody Article article) {
         return articleService.getUserArticleByArticleID(article.getArticleID());
     }
-    
+
+    @GetMapping(path = "/get-user-articles")
+    public List<Article> getArticlesByUser(@RequestBody ObjectNode objectNode) {
+        String userEmail = objectNode.get("userEmail").asText();
+        return articleRepository.findAllByEmail(userEmail);
+    }
+
     /* creating article */
     @PostMapping(path = "/store-article")
     public Thought4ThoughtResponseObject uploadArticle(@RequestBody ObjectNode objectNode,
