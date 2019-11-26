@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 class SubmissionForm extends Component {
@@ -12,41 +13,26 @@ class SubmissionForm extends Component {
 		}
 	}
 
-	getCurrStep = (step) => {
-		switch(step) {
-			case 1:
-				return (<p> Continue </p>);
-
-			case 2:
-				return (<p> Continue </p>);
-		}
-	};
-
-	setStep = (step) => {
-		if (0 < step && step <= this.state.maxStep && !(this.state.stepCtr === this.state.lastStep)) {
-			this.setState({ stepCtr: step });
-		}
-	};
-
 	getPrevStep = () => {
 		if (this.state.stepCtr > 0) {
 			this.setState({ stepCtr: this.state.stepCtr - 1 });
 		}
 	};
 
-	getNextStep = (formAnswers) => {
-		if (this.state.stepCtr < this.state.lastStep) {
+	getNextStep = isInvalid => {
+		if ((this.state.stepCtr < this.state.lastStep) && !isInvalid) {
 			this.setState({ stepCtr: this.state.stepCtr + 1, maxStep: this.state.stepCtr + 1 });
 		}
 	};
 
 	isFormPageInvalid = (pageNumber, values, errors) => {
 		let isInvalid = false;
+
 		if (!(Object.entries(errors).length === 0 && errors.constructor === Object)) {
 			isInvalid = true;
 		} else {
-			switch (pageNumber) {
-				case 1: {
+			switch(pageNumber) {
+				case 1:
 					const firstPageValues = {
 						topics: values.topics,
 						ref_link_one: values.ref_link_one,
@@ -61,9 +47,8 @@ class SubmissionForm extends Component {
 						}
 					}
 					break;
-				}
 
-				case 2: {
+				case 2:
 					const secondPageValues = {
 						description: values.description,
 					};
@@ -74,19 +59,13 @@ class SubmissionForm extends Component {
 						}
 					}
 					break;
-				}
-				default: {
+
+				default:
 					break;
-				}
 			}
 		}
-		return isInvalid;
-	};
 
-	onKeyDown = key => {
-		if (!key.shiftKey && key.keyCode === 9) {
-			key.preventDefault();
-		}
+		return isInvalid;
 	};
 
 	handleSubmit = values => {
@@ -151,19 +130,19 @@ class SubmissionForm extends Component {
 									<div onClick={this.getPrevStep} className="arrow-wrap">
 										<div className={`arrow arrow-left ${this.state.stepCtr === 2 ? "active" : ""}`} />
 									</div>
-									{this.getCurrStep(this.state.stepCtr)}
-									<div onClick={() => this.getNextStep(values)} className={ `arrow-wrap ${isFormPageInvalid ? 'disabled' : ''}` }>
+									<p> Continue </p>
+									<div onClick={() => this.getNextStep(isFormPageInvalid)} className={`arrow-wrap ${isFormPageInvalid ? 'disabled' : ''}` }>
 										<div className={`arrow arrow-right ${this.state.stepCtr < 3 ? "active" : ""}`} />
 									</div>
 								</div>
 								<div className="bot-row">
-									<a href="#"> Cancel </a>
+									<a href="#" onClick={ this.props.closeModal }> Cancel </a>
 									<div className="step-counter">
-										<p className={`${this.state.stepCtr >= 1 ? "active" : ""}`}> 1 </p>
-										<p className={`${isFormPageInvalid ? 'disabled' : ''} ${this.state.stepCtr >= 2 ? "active" : ""}`}> 2 </p>
-										<p className={`${isFormPageInvalid ? 'disabled' : ''} ${this.state.stepCtr === 3 ? "active" : ""}`}> 3 </p>
+										<p className={`${(this.state.stepCtr > 1) ? '' : 'active'}`}> 1 </p>
+										<p className={`${(this.state.stepCtr >= 2) ? 'active' : 'disabled'}`}> 2 </p>
+										<p className="disabled"> 3 </p>
 									</div>
-									<a href="#" style={{opacity: 0, pointerEvents: 'none'}}> </a>
+									<a href="#" style={{opacity: 0, pointerEvents: 'none'}}> Cancel </a>
 								</div>
 							</div>
 						</Form>
@@ -173,5 +152,11 @@ class SubmissionForm extends Component {
 		)
 	}
 }
+
+SubmissionForm.propTypes = {
+	articleTitle: PropTypes.string,
+	articleId: PropTypes.string,
+	closeModal: PropTypes.func,
+};
 
 export default SubmissionForm;

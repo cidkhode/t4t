@@ -31,7 +31,7 @@ class Write extends PureComponent {
 	render() {
 		return(
 			<>
-				<Navbar />
+				<Navbar isLoggedIn />
 				<main id="content" className="new-article">
 					<ArticleSubmission
 						closeModal={ () => this.props.togglePopup(POPUP_KEYS.ARTICLE_SUBMISSION) }

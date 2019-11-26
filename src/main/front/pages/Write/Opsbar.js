@@ -56,11 +56,12 @@ class Opsbar extends Component {
 		return (
 			<div id="t4t-title-wrapper">
 				<form>
-					<input type="text" value={this.props.articleTitle} onChange={this.onTitleChange} name="title" placeholder="untitled article..." />
+					<input type="text" value={this.props.articleTitle} onChange={this.onTitleChange} name="title" placeholder="untitled article..." disabled={this.props.articleId === null} />
 				</form>
 
 				<div className="btn-group">
 					<Button
+						disabled={this.props.articleId === null}
 						extraClass="nav-bar-sign-in-button nav-bar-right-child"
 						handleClick={ this.editArticlePic }
 						text="Upload Article Image"
@@ -73,6 +74,7 @@ class Opsbar extends Component {
 					/>
 
 					<Button
+						disabled={this.props.articleId === null}
 						extraClass="nav-bar-sign-in-button nav-bar-right-child"
 						handleClick={ () => this.props.toggleSubmission() }
 						text="Publish Article"

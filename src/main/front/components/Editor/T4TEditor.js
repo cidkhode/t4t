@@ -57,10 +57,13 @@ class T4TEditor extends Component {
 }
 
 T4TEditor.propTypes = {
-  isSubmitting: PropTypes.bool.isRequired,
-  editorState: PropTypes.object.isRequired,
-  articleId: PropTypes.string,
-  user: PropTypes.object,
+	isSubmitting: PropTypes.bool,
+	user: PropTypes.object,
+	articleId: PropTypes.string,
+	toggleEditorSubmitState: PropTypes.func,
+	updateArticleId: PropTypes.func,
+	editorState: PropTypes.object,
+	updateEditorState: PropTypes.func,
 };
 
 export default T4TEditor;
