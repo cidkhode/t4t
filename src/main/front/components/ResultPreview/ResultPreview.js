@@ -1,6 +1,8 @@
 import React from 'react';
 import { string } from 'prop-types';
-import ProPic from '../../assets/PlaceholderProPic';
+import ProPic from '../../assets/PlaceholderProPic.png';
+
+import './ResultPreview.less';
 
 
 export const ResultPreview = props => (
@@ -20,3 +22,5 @@ ResultPreview.propTypes = {
     title: string.isRequired,
     desc: string.isRequired,
 };
+
+export default ResultPreview;

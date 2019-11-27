@@ -13,8 +13,8 @@ export class SearchResults extends Component {
             signinOpen: false,
             signupOpen: false,
             sideBarOpen: false,
-            filter: "",
-            results: [],
+            filter: "all",
+            results: [0,1,2,3,4,5,6,7],
         }
     }
 
@@ -41,8 +41,15 @@ export class SearchResults extends Component {
       ]
     };
 
-    changeFilter = (value) => {
-      this.setState({filter: value})
+    changeFilter = (e) => {
+      this.setState({
+        filter: e.currentTarget.value
+      })
+    }
+
+    toTop = () => {
+      console.log("Scrolling back up!");
+      window.scrollTo(0,0);
     }
 
     render() {
@@ -52,14 +59,16 @@ export class SearchResults extends Component {
                 <div className="searchContent">
                   <div className="searchInfo">
                     <div className="searchFilters">
-                      Filter:
-                      <input type="radio" onClick={this.changeFilter("all")}/>
-                      <input type="radio" onClick={this.changeFilter("article")}/>
-                      <input type="radio" onClick={this.changeFilter("topic")}/>
-                      <input type="radio" onClick={this.changeFilter("user")}/>
+                      FILTER:
+                      <form className="filterButtons">
+                        <input type="radio" name="filter" value="all" onChange={this.changeFilter} checked={this.state.filter == "all"}/><span>Show All</span>
+                        <input type="radio" name="filter" value="article" onChange={this.changeFilter} checked={this.state.filter == "article"}/><span>Articles</span>
+                        <input type="radio" name="filter" value="topic" onChange={this.changeFilter} checked={this.state.filter == "topic"}/><span>Topics</span>
+                        <input type="radio" name="filter" value="user" onChange={this.changeFilter} checked={this.state.filter == "user"}/><span>Users</span>
+                      </form>
                     </div>
                     <div className="searchQuery">
-                      You searched for: "{this.props.query}"
+                      You searched for: "<span style={{fontWeight: "700"}}>{this.props.query ? this.props.query : "Important Writer Dude"}</span>"
                     </div>
                   </div>
                   <div className="searchResults">
@@ -71,6 +80,7 @@ export class SearchResults extends Component {
                         desc={'Release your grip from that which you\'ve been holding back for a while. Release it swiftly, release it acceptingly. Don\'t look back and rage against its potential to reappear. Don\'t let others dictate your actions. Let your determination show. The cold never bothered me anyway.'}
                       />
                     )}
+                    <div className="endOfResults"><span className="toTop" onClick={this.toTop} title="Return to the Top of Results">Back to Top</span></div>
                   </div>
                 </div>
                 { this.props.showSidebar &&
