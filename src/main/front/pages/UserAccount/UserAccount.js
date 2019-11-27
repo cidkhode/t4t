@@ -137,7 +137,7 @@ export class UserAccount extends Component {
       <>
         <Navbar isLoggedIn userAccountDetails={ this.props.userAccountDetails } getProfile={ this.props.getProfile }/>
         <Sidebar
-          topics={ this.fetchTopics() }
+          topics={ this.props.userAccountDetails.topics ? this.props.userAccountDetails.topics : this.fetchTopics() }
           onTopicSelection={ this.selectTopic }
           onOpen={ this.openSideBar }
           name={ `${this.props.userAccountDetails.firstName} ${this.props.userAccountDetails.lastName}` }
@@ -210,7 +210,7 @@ UserAccount.defaultProps = {
 
 const mapStateToProps = (state) => ({
   userAccountDetails: getUserAccountDetails(state),
-})
+});
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
 

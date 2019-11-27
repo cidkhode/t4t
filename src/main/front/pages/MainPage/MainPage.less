@@ -1,31 +1,125 @@
 @import '../../styles/colors';
 
 main {
-
 }
 
 #homepage {
+	height: 100%;
 	width: 100%;
-	#content {
-		width: calc((100% - 80px) - 40px); // 100% - width of sidebar - left padding;
-		margin: 0 auto 0 0;
-		padding: 0 0 0 40px;
+	display: flex;
+	flex-flow: column;
 
+	.link {
+		background: transparent;
+		border: none;
+		font-family: inherit;
+		font-size: 22.5px;
+		font-weight: 700;
+		padding: 0 0 0 0;
+		margin: 0 0 0 0;
+		cursor: text;
+		transition: 0.3s;
+	}
+	.link:disabled {
+		color: black;
+	}
+	.link:focus {
+		outline: 0;
+	}
+	.link.active {
+		font-weight: 400;
+		text-decoration: underline;
+		opacity: 0.6;
+		transition: 0.3s;
+		cursor: pointer;	
+	}
+
+	.link.active:hover {
+		opacity: 0.9;
+		transition: 0.3s;
+	}
+	
+	.collapsed {
+		max-height: 0;
+		overflow: hidden;
+		transition: max-height 0.5s ease-out;
+	}
+
+	.open {
+		max-height: 2000px;
+		transition: max-height 0.5s ease-out;
+	}
+
+	.underspace {
+		width: 97%;
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	.press {
+		margin: -50px 0 0 0;
+		width: 125px;
+		border: none;
+		font-size: 18px;
+		background-color: transparent;
+		opacity: 0.6;
+		transition: 0.3s;
+		cursor: pointer;
+	}
+
+	.press:focus {
+		outline: 0;
+	}
+
+	.press:hover {
+		opacity: 0.8;
+		transition: 0.3s;
+	}
+
+	.press.more:after {
+		content: " More";
+	}
+
+	.press.less:after {
+		content: " Less";
+	}
+
+
+	#content {
+		width: calc((100% - 80px) - 80px); // 100% - width of sidebar - left padding;
+		margin: 0 auto 0 0;
+		padding: 10px 0 0 40px;
 		display: flex;
 		flex-flow: row wrap;
+		::-webkit-scrollbar {
+			width: 10px;
+		}
+		::-webkit-scrollbar-thumb {
+			background: #DADADA;
+			border-radius: 10px;
+		}
+		::-webkit-scrollbar-thumb:hover {
+			background: #AAAAAA;
+		}
 
 		#popnet, #reading {
+			height: 840px;
+			overflow-y: scroll;
 			.list {
 				display: flex;
 				flex-flow: column;
 
-				margin: 0 15px 0 0;
-				padding: 0 10px 0 0;
+				margin: 0 30px 0 30px;
+				padding: 0 20px 0 20px;
+			}
+			h2 {
+				margin-left: 30px;
+				padding-left: 20px;
 			}
 		}
 
 		#popnet {
-			width: calc(100% - 400px);
+			width: calc(100% - 700px);
 			display: flex;
 			flex-flow: column;
 
@@ -38,8 +132,9 @@ main {
 					flex-flow: row nowrap;
 
 					.list {
+
 						min-width: 400px;
-						width: calc(50% - 25px);
+						width: calc(100% - 50px);
 
 						.t4t-article.vertical {
 							.article-description  {
@@ -50,7 +145,7 @@ main {
 				}
 			}
 
-			#network {
+			#network, #topics {
 				display: flex;
 				flex-flow: column;
 
@@ -60,8 +155,8 @@ main {
 						flex-flow: row wrap;
 
 						.t4t-article {
-							max-width: calc(50% - 12.5px);
-							margin-right: 25px;
+							max-width: calc(50% - 25px);
+							margin-right: 50px;
 
 							&:nth-of-type(2n) {
 								margin-right: 0;
@@ -72,15 +167,20 @@ main {
 			}
 		}
 
+		.topic-title {
+			font-size: 20px;
+			padding-bottom: 10px;
+		}
+
 		#reading {
-			width: 400px;
+			width: 700px;
 			display: flex;
 			flex-flow: column;
 		}
 
 		@media only screen and (max-width: 1400px) {
 			#popnet {
-				width: calc(100% - 400px);
+				width: calc(100% - 700px);
 
 				#popular {
 					.inner {
@@ -101,8 +201,8 @@ main {
 
 		@media only screen and (max-width: 1200px) {
 			flex-flow: column;
-
 			#popnet, #reading {
+				overflow-x: hidden;
 				width: 100%;
 			}
 
@@ -128,6 +228,7 @@ main {
 
 		@media only screen and (max-width: 700px) {
 			#popnet {
+				margin-bottom: 50px;
 				#popular {
 					.inner {
 						flex-flow: column;
@@ -138,7 +239,7 @@ main {
 					}
 				}
 
-				#network {
+				#network, #topics {
 					.inner {
 						.list {
 							.t4t-article {
