@@ -92,14 +92,18 @@ main {
 		display: flex;
 		flex-flow: row wrap;
 		::-webkit-scrollbar {
-			width: 10px;
+			width: 7px;
 		}
 		::-webkit-scrollbar-thumb {
-			background: #DADADA;
-			border-radius: 10px;
+			background: transparent;
+			border-radius: 15px;
 		}
 		::-webkit-scrollbar-thumb:hover {
 			background: #AAAAAA;
+		}
+
+		#popnet:hover::-webkit-scrollbar-thumb, #reading:hover::-webkit-scrollbar-thumb{
+			background: #DADADA;
 		}
 
 		#popnet, #reading {
@@ -166,7 +170,11 @@ main {
 				}
 			}
 		}
-
+		.popnet:hover {
+			::-webkit-scrollbar-thumb {
+				background: #DADADA;
+			}
+		}
 		.topic-title {
 			font-size: 20px;
 			padding-bottom: 10px;
