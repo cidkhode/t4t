@@ -36,7 +36,7 @@ public class ArticleController {
     @GetMapping(path = "/get-user-articles")
     public List<Article> getArticlesByUser(@RequestBody ObjectNode objectNode) {
         String userEmail = objectNode.get("userEmail").asText();
-        return articleRepository.findAllByEmail(userEmail);
+        return articleRepository.findAllByUserEmail(userEmail);
     }
 
     /* creating article */

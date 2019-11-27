@@ -14,7 +14,7 @@ public interface ArticleRepository extends CrudRepository<Article, Integer> {
 
     Article findByArticleID(int articleID);
 
-    List<Article> findAllByEmail(String email);
+    List<Article> findAllByUserEmail(String email);
 
     boolean existsByArticleID(int articleID);
 
