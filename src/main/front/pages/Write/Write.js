@@ -12,10 +12,10 @@ import Opsbar from "./Opsbar.js";
 /* Redux - Selectors */
 import { getUserAccountDetails } from '../../redux/selectors/user.selector';
 import { getPopupActive, getPopupType } from '../../redux/selectors/popup.selector';
-import { getIsSubmitting, getCurrentArticleTitle, getEditorState, getCurrentArticleId } from '../../redux/selectors/t4teditor.selector';
+import { getIsSubmitting, getCurrentArticleTitle, getEditorState, getCurrentArticleId, getCurrentArticleDescription } from '../../redux/selectors/t4teditor.selector';
 /* Redux - Actions */
 import { togglePopup } from '../../redux/actions/popup.action';
-import { toggleEditorSubmitState, updateArticleTitle, updateEditorState, updateArticleId } from '../../redux/actions/t4teditor.action';
+import { toggleEditorSubmitState, updateArticleTitle, updateArticleDescription, updateEditorState, updateArticleId } from '../../redux/actions/t4teditor.action';
 
 /*  */
 import { POPUP_KEYS } from '../../utils/constants';
@@ -46,6 +46,8 @@ class Write extends PureComponent {
 
 						articleTitle={ this.props.articleTitle }
 						updateArticleTitle={ this.props.updateArticleTitle }
+						articleDescription={ this.props.articleDescription }
+						updateArticleDescription={ this.props.updateArticleDescription }
 						toggleSubmission={ () => this.props.togglePopup(POPUP_KEYS.ARTICLE_SUBMISSION) }
 					/>
 					<T4TEditor
@@ -67,6 +69,7 @@ class Write extends PureComponent {
 const mapStateToProps = state => ({
 	isSubmitting: getIsSubmitting(state),
 	articleTitle: getCurrentArticleTitle(state),
+	articleDescription: getCurrentArticleDescription(state),
 	editorState: getEditorState(state),
 	articleId: getCurrentArticleId(state),
 	user: getUserAccountDetails(state),
@@ -77,6 +80,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
 	toggleEditorSubmitState,
 	updateArticleTitle,
+	updateArticleDescription,
 	updateEditorState,
 	updateArticleId,
 	togglePopup,

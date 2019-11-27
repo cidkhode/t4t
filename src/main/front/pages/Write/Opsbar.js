@@ -9,6 +9,7 @@ class Opsbar extends Component {
 		super(props);
 		this.editArticlePicRef = null;
 		this.debouncedPostUpdatedTitle = _.debounce(this.postUpdatedTitle, 1000);
+		this.debouncedPostUpdatedDescription = _.debounce(this.postUpdatedDescription, 1000);
 	}
 
 	onTitleChange = event => {
@@ -25,6 +26,26 @@ class Opsbar extends Component {
 					articleId: this.props.articleId,
 					articleKey: 'articleTitle',
 					content: this.props.articleTitle
+				})
+			})
+			.catch(err => console.error('Error: ', err));
+		}
+	};
+
+	onDescriptionChange = event => {
+		this.props.updateArticleDescription(event.target.value);
+		this.debouncedPostUpdatedDescription();
+	};
+
+	postUpdatedDescription = () => {
+		if (this.props.articleId !== null) {
+			fetch('/api/article/save-article', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					articleId: this.props.articleId,
+					articleKey: 'articleDescription',
+					content: this.props.articleDescription
 				})
 			})
 			.catch(err => console.error('Error: ', err));
@@ -57,6 +78,7 @@ class Opsbar extends Component {
 			<div id="t4t-title-wrapper">
 				<form>
 					<input type="text" value={this.props.articleTitle} onChange={this.onTitleChange} name="title" placeholder="untitled article..." disabled={this.props.articleId === null} />
+					<input type="text" value={this.props.articleDescription} onChange={this.onDescriptionChange} name="description" placeholder="article description..." disabled={this.props.articleId === null} />
 				</form>
 
 				<div className="btn-group">
@@ -88,9 +110,11 @@ class Opsbar extends Component {
 Opsbar.propTypes = {
 	isSubmitting: PropTypes.bool.isRequired,
 	articleTitle: PropTypes.string,
+	articleDescription: PropTypes.string,
 	articleId: PropTypes.string,
 	user: PropTypes.object,
 	updateArticleTitle: PropTypes.func,
+	updateArticleDescription: PropTypes.func,
 	toggleSubmission: PropTypes.func,
 };
 

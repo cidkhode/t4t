@@ -3,6 +3,7 @@ import { EditorState } from "draft-js";
 import {
 	TOGGLE_ARTICLE_UPDATE_STATE,
 	TOGGLE_EDITOR_SUBMIT_STATE,
+	UPDATE_ARTICLE_DESCRIPTION,
 	UPDATE_ARTICLE_TITLE,
 	UPDATE_EDITOR_STATE,
 	UPDATE_ARTICLE_ID,
@@ -13,6 +14,7 @@ export const initialState = {
 	isSubmitting: false,
 	id: null,
 	title: "",
+	description: "",
 	editorState: EditorState.createEmpty(),
 };
 
@@ -28,6 +30,12 @@ export const t4teditor = (state = initialState, action) => {
 			return {
 				...state,
 				isSubmitting: !state.isSubmitting
+			};
+
+		case UPDATE_ARTICLE_DESCRIPTION:
+			return {
+				...state,
+				description: action.payload
 			};
 
 		case UPDATE_ARTICLE_TITLE:
