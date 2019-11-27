@@ -29,7 +29,7 @@ Searchbar.propTypes = {
 
 Searchbar.defaultProps = {
   searchIconPath: '',
-  searchInputPlaceholder: 'Search Thought4Thought',
+  searchInputPlaceholder: 'Search Thought4Thought...',
   extraClass: '',
 };
 
