@@ -11,6 +11,7 @@ import CustomRouter from '../components/CustomRouter/CustomRouter';
 import UserAccount from './UserAccount/UserAccount';
 import UserDashboard from './UserDashboard/UserDashboard';
 import MainPage from './MainPage';
+import SearchResults from './SearchResults/SearchResults';
 
 export class Thought extends Component {
   constructor(props) {
@@ -170,7 +171,20 @@ export class Thought extends Component {
                 }}
               />
             </Route>
-            <Route path="/">
+            <Route path="/search">
+              <CustomRouter 
+                component={ SearchResults }
+                isLoggedIn={ this.props.isLoggedIn }
+                isLoading={ this.props.isLoading }
+                waitingToCheck={ this.props.waitingToCheck }
+                componentProps={{
+                  showSidebar: this.props.isLoggedIn,
+                  userAccountDetails: this.state.userAccountDetails,
+                  getProfile: this.getProfile
+                }}
+              />
+            </Route>
+            <Route exact path="/">
               <CustomRouter
                 component={ MainPage }
                 isLoggedIn={ this.props.isLoggedIn }

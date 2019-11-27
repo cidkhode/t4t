@@ -78,14 +78,16 @@ export class Navbar extends Component {
         <div className="navbar-left-floated-content">
           <button className="logo">LOGO</button>
         </div>
-        <div className="navbar-right-floated-content">
+        <div className="navbar-center-content">
           <Searchbar
-            extraClass="navbar-search-bar nav-bar-right-child"
-            searchInputValue={ this.state.searchText }
-            onSearch={ this.onSearch }
-            onSearchInputChange={ this.onSearchInputChange }
-            searchIconPath={ searchImg }
-          />
+              extraClass="navbar-search-bar nav-bar-right-child"
+              searchInputValue={ this.state.searchText }
+              onSearch={ this.onSearch }
+              onSearchInputChange={ this.onSearchInputChange }
+              searchIconPath={ searchImg }
+            />
+        </div>
+        <div className="navbar-right-floated-content">
           { !this.props.isLoggedIn &&
             <>
               <Button
