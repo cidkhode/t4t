@@ -67,7 +67,7 @@ public class UserService {
             ArrayList<Topic> topics = new ArrayList<>();
             ArrayList<String> topicIdsList = new ArrayList<>(Arrays.asList(topicIds.split(",")));
             topicIdsList.forEach(topicId -> {
-                topics.add(topicRepository.findById(Integer.parseInt(topicId)));
+                if (topicId.length() > 0) topics.add(topicRepository.findById(Integer.parseInt(topicId)));
             });
             ArrayNode topicsArrayNode = new ObjectMapper().valueToTree(topics);
             userDetails.putArray("userLikedTopics").addAll(topicsArrayNode);
