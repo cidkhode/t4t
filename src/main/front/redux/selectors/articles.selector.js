@@ -1,0 +1,1 @@
+export const getUserArticles = state => state.articles.user_owned;

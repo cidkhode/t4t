@@ -1,8 +1,10 @@
-import { EditorState } from "draft-js";
+import { EditorState, ContentState } from "draft-js";
+import htmlToDraft from 'html-to-draftjs';
 
 import {
 	TOGGLE_ARTICLE_UPDATE_STATE,
 	TOGGLE_EDITOR_SUBMIT_STATE,
+	UPDATE_CURRENT_EDITOR_ARTICLE,
 	UPDATE_ARTICLE_DESCRIPTION,
 	UPDATE_ARTICLE_TITLE,
 	UPDATE_EDITOR_STATE,
@@ -30,6 +32,19 @@ export const t4teditor = (state = initialState, action) => {
 			return {
 				...state,
 				isSubmitting: !state.isSubmitting
+			};
+
+		case UPDATE_CURRENT_EDITOR_ARTICLE:
+			const convertedHTML = htmlToDraft(action.payload.article_text);
+			const { contentBlocks, entityMap } = convertedHTML;
+			const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
+
+			return {
+				...state,
+				id: action.payload.articleID,
+				title: action.payload.title,
+				description: action.payload.description,
+				editorState: EditorState.createWithContent(contentState)
 			};
 
 		case UPDATE_ARTICLE_DESCRIPTION:

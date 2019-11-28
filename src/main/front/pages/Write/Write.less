@@ -35,28 +35,57 @@
 		}
 	}
 
-	#t4t-editor-wrapper {
-		.rdw-editor-toolbar {
-			padding: 5px !important;
+	#t4t-edit-wrapper {
+		display: flex;
+		flex-flow: row nowrap;
 
-			> div {
-				margin: 0 0 0 0;
+		#t4t-editor-wrapper {
+			width: calc(100% - 325px);
+
+			.rdw-editor-toolbar {
+				padding: 5px !important;
+
+				> div {
+					margin: 0 0 0 0;
+				}
+			}
+
+			.rdw-editor-main {
+				padding: 0;
+
+				.public-DraftEditorPlaceholder-root {
+					padding: 20px 0 0 36px;
+				}
+
+				.public-DraftEditor-content {
+					padding: 5px 35px;
+					border: 1px solid #F0F0F0;
+					border-top: 0;
+					border-bottom: 0;
+					height: calc(100vh - 179px - 40px); // 100vh - height from top - padding from bottom
+				}
 			}
 		}
 
-		.rdw-editor-main {
-			padding: 0;
+		#t4t-editor-sidebar {
+			width: 300px;
+			margin: 0 0 0 25px;
 
-			.public-DraftEditorPlaceholder-root {
-				padding: 20px 0 0 36px;
+			display: flex;
+			flex-flow: column;
+
+
+			.title {
+				padding: 0 0 10px 0;
+				margin: 0 !important;
+				min-height: 35px;
 			}
 
-			.public-DraftEditor-content {
-				padding: 5px 35px;
-				border: 1px solid #F0F0F0;
-				border-top: 0;
-				border-bottom: 0;
-				height: calc(100vh - 179px - 40px); // 100vh - height from top - padding from bottom
+			.inner {
+				height: calc(100% - 45px);
+				border-top: 1px solid @t4t-gray07;
+				border-left: 1px solid @t4t-gray07;
+				border-top-left-radius: 3px;
 			}
 		}
 	}
