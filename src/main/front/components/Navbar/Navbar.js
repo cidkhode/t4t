@@ -52,6 +52,15 @@ export class Navbar extends Component {
 
   onSearch = () => {
     console.log(`Searching for: `, this.state.searchText);
+    /*fetch('/api/search?filter=all&query=' + this.state.searchText, {
+      method: 'GET'
+    }).then(resp => resp.json())
+    .then(json => {
+      if(json) {
+        console.log(json);
+      }
+    })
+    .catch(error => console.error(error));*/
   };
 
   sendLogin = (values) => {

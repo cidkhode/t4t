@@ -1,17 +1,21 @@
 .result.user {
     border: 0.05rem solid #707070;
     border-radius: 20px;
-    padding: 30px;
+    padding: 25px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-
-    margin: 0 50px 50px 0;
+    position: relative;
+    min-width: 425px;
+    margin: 0 40px 40px 0;
 
     img {
-        height: 130px;
-        width: 130px;
+        flex-grow: 1;
+        min-height: 100px;
+        max-height: 6.25vw;
+        min-width: 100px;
+        max-width: 6.25vw;
         margin: 0 10px 0 0;
     }
 
@@ -21,12 +25,13 @@
         .title {
             font-size: 20px;
             font-weight: 700;
+            margin: 0 80px 0 0;
             display: -webkit-box;
             -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
         }
         .desc {
-            max-width: 450px;
+            width: 325px;
             text-overflow: ellipsis;
             overflow: hidden;
             display: -webkit-box;
@@ -38,8 +43,8 @@
 
     .follow {
         position: absolute;
-        top: 10px;
-        right: 10px;
+        top: 20px;
+        right: 20px;
         font-family: inherit;
         background: none;
         border: 0.05rem solid #707070;
@@ -55,5 +60,27 @@
         color: white;
         border-color: #2d9cdb;
         transition: 0.3s;
+    }
+
+    @media screen and (max-width: 1200px) {
+        .info {
+            .title {
+
+            }
+            .desc {
+                -webkit-line-clamp: 3;
+                line-height: 20px;
+            }
+        }
+    }
+
+    @media screen and (max-width: 700px) {
+        min-width: 325px;
+        .info {
+            .desc {
+                -webkit-line-clamp: 2;
+                line-height: 18px;
+            }
+        }
     }
 }

@@ -10,11 +10,12 @@ export class SearchResults extends Component {
         super(props);
 
         this.state = {
+            scrollInterval: 0,
             signinOpen: false,
             signupOpen: false,
             sideBarOpen: false,
             filter: "all",
-            results: [0,1,2,3,4,5,6,7],
+            results: [0,1,2,3,4,5,6,7,8,9,10,11],
         }
     }
 
@@ -49,7 +50,7 @@ export class SearchResults extends Component {
 
     toTop = () => {
       console.log("Scrolling back up!");
-      window.scrollTo(0,0);
+      this.refs.results.scroll({top: 0, left: 0, behavior: 'smooth'});
     }
 
     render() {
@@ -61,17 +62,17 @@ export class SearchResults extends Component {
                     <div className="searchFilters">
                       FILTER:
                       <form className="filterButtons">
-                        <input type="radio" name="filter" value="all" onChange={this.changeFilter} checked={this.state.filter == "all"}/><span>Show All</span>
-                        <input type="radio" name="filter" value="article" onChange={this.changeFilter} checked={this.state.filter == "article"}/><span>Articles</span>
-                        <input type="radio" name="filter" value="topic" onChange={this.changeFilter} checked={this.state.filter == "topic"}/><span>Topics</span>
-                        <input type="radio" name="filter" value="user" onChange={this.changeFilter} checked={this.state.filter == "user"}/><span>Users</span>
+                        <span><input type="radio" name="filter" value="all" onChange={this.changeFilter} checked={this.state.filter == "all"}/><span>Show All</span></span>
+                        <span><input type="radio" name="filter" value="article" onChange={this.changeFilter} checked={this.state.filter == "article"}/><span>Articles</span></span>
+                        <span><input type="radio" name="filter" value="topic" onChange={this.changeFilter} checked={this.state.filter == "topic"}/><span>Topics</span></span>
+                        <span><input type="radio" name="filter" value="user" onChange={this.changeFilter} checked={this.state.filter == "user"}/><span>Users</span></span>
                       </form>
                     </div>
                     <div className="searchQuery">
                       You searched for: "<span style={{fontWeight: "700"}}>{this.props.query ? this.props.query : "Important Writer Dude"}</span>"
                     </div>
                   </div>
-                  <div className="searchResults">
+                  <div className="searchResults" ref="results">
                     {this.state.results.map((item, key) => 
                       <ResultPreview 
                         type={'user'}
