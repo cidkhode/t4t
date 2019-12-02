@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,8 +35,7 @@ public class ArticleController {
     }
 
     @GetMapping(path = "/get-user-articles")
-    public List<Article> getArticlesByUser(@RequestBody ObjectNode objectNode) {
-        String userEmail = objectNode.get("userEmail").asText();
+    public List<Article> getArticlesByUser(@RequestParam("userEmail")String userEmail) {
         return articleRepository.findAllByUserEmail(userEmail);
     }
 
