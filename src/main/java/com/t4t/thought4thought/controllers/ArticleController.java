@@ -44,9 +44,10 @@ public class ArticleController {
     public Thought4ThoughtResponseObject uploadArticle(@RequestBody ObjectNode objectNode,
                                                        HttpServletRequest request,
                                                        HttpSession session){
-        String articleText = objectNode.get("content").asText();
+        String content = objectNode.get("content").asText();
+        String keyToUpdate = objectNode.get("keyToUpdate").asText();
         String userEmail = (String) session.getAttribute("userEmail");
-        return this.articleService.createArticle(articleText, userEmail);
+        return this.articleService.createArticle(content, userEmail, keyToUpdate);
     }
 
     /* modifying article */

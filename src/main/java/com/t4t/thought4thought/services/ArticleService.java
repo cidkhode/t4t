@@ -23,13 +23,26 @@ public class ArticleService{
     ArticleRepository articleRepository;
 
     /* create initial article */
-    public Thought4ThoughtResponseObject createArticle(String articleText, String userEmail){
+    public Thought4ThoughtResponseObject createArticle(String content, String userEmail, String keyToUpdate){
         Thought4ThoughtResponseObject thought4ThoughtResponseObject =
         new Thought4ThoughtResponseObject().createResponse(T4T_SUCCESS_CODE, "Article created successfully!");
         LocalDateTime now = LocalDateTime.now();
         Article article = new Article();
         article.setUserEmail(userEmail);
-        article.setArticleText(articleText);
+        switch(keyToUpdate) {
+            case "articleText": {
+                article.setArticleText(content);
+                break;
+            }
+            case "articleTitle": {
+                article.setTitle(content);
+                break;
+            }
+            case "articleDescription": {
+                article.setDescription(content);
+                break;
+            }
+        }
         article.setDateCreated(now);
         article.setIsPublished(false);
         articleRepository.save(article);
