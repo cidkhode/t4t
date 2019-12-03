@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { convertToRaw } from "draft-js";
 import { Editor } from 'react-draft-wysiwyg';
-import draftToHtml from 'draftjs-to-html'; // translate  draft-js compatable format to html
+import { stateToHTML } from 'draft-js-export-html';
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
@@ -25,7 +25,7 @@ class T4TEditor extends Component {
 				body: JSON.stringify({
 					articleId: this.props.articleId,
 					keyToUpdate: 'articleText',
-					content: draftToHtml(convertToRaw(currentEditorContent))
+					content: JSON.stringify(convertToRaw(currentEditorContent)),
 				})
 			})
 				.then(res => res.json())
@@ -56,7 +56,7 @@ class T4TEditor extends Component {
 					placeholder="type out your thoughts..."
 					toolbar={{
 						options: ['inline', 'blockType', 'list', 'textAlign', 'colorPicker', 'link',],
-						inline: { options: ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript'] },
+						inline: { options: ['bold', 'italic', 'underline', 'strikethrough',] },
 					}}
 				/>
 			</div>
