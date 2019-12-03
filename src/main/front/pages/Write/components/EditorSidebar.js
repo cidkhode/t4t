@@ -13,21 +13,15 @@ class EditorSidebar extends Component {
 
 	onDisplay = () => {
 		return (
-			this.props.user_owned.map(article => {
-				const reduxArticle = {
-					id: article.articleID,
-					title: article.title,
-					description: article.description,
-					text: article.contentState,
-				};
-
+			this.props.userOwned.map(article => {
+				const { articleID, title, description, contentState, isPublished } = article;
 				return (
-					<div key={reduxArticle.id} className="t4t-editable-article">
-						<div onClick={ () => this.props.deleteFromUserArticlesList(reduxArticle.id) } className="t4t-article-delete">Delete</div>
-						<a onClick={ () => this.props.updateCurrentEditorArticle(reduxArticle) } className="t4t-article-content">
-							<h3>{article.title ? article.title : "untitled article"}</h3>
-							<p>{article.description ? article.description : <i>No description available...</i>}</p>
-							<p>{!article.is_published ? <i>Draft</i> : <strong>Published</strong>}</p>
+					<div key={ articleID } className="t4t-editable-article">
+						<div onClick={ () => this.props.deleteFromUserArticlesList(articleID) } className="t4t-article-delete">Delete</div>
+						<a onClick={ () => this.props.updateCurrentEditorArticle({ id: articleID, title, description, text: contentState }) } className="t4t-article-content">
+							<h3>{title ? title : "untitled article"}</h3>
+							<p>{description ? description : <i>No description available...</i>}</p>
+							<p>{!isPublished ? <i>Draft</i> : <strong>Published</strong>}</p>
 						</a>
 					</div>
 				)
@@ -41,14 +35,14 @@ class EditorSidebar extends Component {
 				<p> No articles found... </p>
 			</div>
 		);
-	}
+	};
 
 	render() {
 		return (
 			<div id="t4t-editor-sidebar">
 				<h3 className="title"> My Latest Articles </h3>
 				<div className="inner">
-					{ this.props.user_owned.length !== 0 ? this.onDisplay() : this.onEmpty() }
+					{ this.props.userOwned.length !== 0 ? this.onDisplay() : this.onEmpty() }
 				</div>
 			</div>
 		)
@@ -56,7 +50,7 @@ class EditorSidebar extends Component {
 }
 
 EditorSidebar.propTypes = {
-	user_owned: PropTypes.array.isRequired,
+	userOwned: PropTypes.array.isRequired,
 	deleteFromUserArticlesList: PropTypes.func.isRequired,
 	updateCurrentEditorArticle: PropTypes.func.isRequired,
 	fetchUserArticles: PropTypes.func.isRequired,

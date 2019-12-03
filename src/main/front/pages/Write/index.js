@@ -48,10 +48,6 @@ import { POPUP_KEYS } from '../../utils/constants';
 import './Write.less';
 
 class Write extends PureComponent {
-	componentDidUpdate(prevProps, prevState, snapshot) {
-		console.log(`UPDATING: `, this.props.user);
-	}
-
 	/* contentState, articleTitle, articleDescription */
 	storeArticle = (key, content) => {
 		fetch('/api/article/store-article', {
@@ -75,7 +71,6 @@ class Write extends PureComponent {
 	};
 
 	fetchUserArticles = () => {
-		console.log(`EXECUTING`);
 		this.props.fetchUserArticles(this.props.user.email);
 	};
 
@@ -121,7 +116,7 @@ class Write extends PureComponent {
 							fetchUserArticles={ this.fetchUserArticles }
 						/>
 						<EditorSidebar
-							user_owned={ this.props.user_owned_articles }
+							userOwned={ this.props.userOwnedArticles }
 							fetchUserArticles={ this.fetchUserArticles }
 							deleteFromUserArticlesList={ this.props.deleteFromUserArticlesList }
 							updateCurrentEditorArticle={ this.props.updateCurrentEditorArticle }
@@ -141,7 +136,7 @@ Write.propTypes = {
 	editorState: PropTypes.object,
 	articleId: PropTypes.number,
 	user: PropTypes.object,
-	user_owned_articles: PropTypes.array,
+	userOwnedArticles: PropTypes.array,
 	isPopupActive: PropTypes.bool,
 	popupType: PropTypes.string,
 };
@@ -154,7 +149,7 @@ const mapStateToProps = state => ({
 	editorState: getEditorState(state),
 	articleId: getCurrentArticleId(state),
 	user: getUserAccountDetails(state),
-	user_owned_articles: getUserArticles(state),
+	userOwnedArticles: getUserArticles(state),
 	isPopupActive: getPopupActive(state),
 	popupType: getPopupType(state),
 });

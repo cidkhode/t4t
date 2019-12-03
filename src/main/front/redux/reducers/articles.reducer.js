@@ -7,7 +7,7 @@ import {
 } from '../actions/articles.action.js';
 
 export const initialState = {
-	user_owned: []
+	userOwned: []
 };
 
 export const articles = (state = initialState, action) => {
@@ -15,19 +15,19 @@ export const articles = (state = initialState, action) => {
 		case UPDATE_USER_ARTICLE_LIST:
 			return {
 				...state,
-				user_owned: action.payload
+				userOwned: action.payload
 			};
 
 		case UPDATE_USER_ARTICLE_LIST_ITEM_TITLE:
 			return {
 				...state,
-				user_owned: state.user_owned.map(obj => obj.articleID !== action.payload.id ? obj : {...obj, title: action.payload.title})
+				userOwned: state.userOwned.map(obj => obj.articleID !== action.payload.id ? obj : {...obj, title: action.payload.title})
 			};
 
 		case UPDATE_USER_ARTICLE_LIST_ITEM_DESCRIPTION:
 			return {
 				...state,
-				user_owned: state.user_owned.map(obj => obj.articleID !== action.payload.id ? obj : {...obj, description: action.payload.description})
+				userOwned: state.userOwned.map(obj => obj.articleID !== action.payload.id ? obj : {...obj, description: action.payload.description})
 			};
 
 		case DELETE_FROM_USER_ARTICLE_LIST:
@@ -35,7 +35,7 @@ export const articles = (state = initialState, action) => {
 
 			return {
 				...state,
-				user_owned: [...state.user_owned].filter(obj => obj.articleID !== action.payload)
+				userOwned: [...state.userOwned].filter(obj => obj.articleID !== action.payload)
 			};
 
 		default:

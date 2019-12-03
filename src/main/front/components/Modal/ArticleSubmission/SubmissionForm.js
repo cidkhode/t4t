@@ -155,7 +155,7 @@ class SubmissionForm extends Component {
 
 SubmissionForm.propTypes = {
 	articleTitle: PropTypes.string,
-	articleId: PropTypes.string,
+	articleId: PropTypes.number,
 	closeModal: PropTypes.func,
 };
 

@@ -1,1 +1,1 @@
-export const getUserArticles = state => state.articles.user_owned;
+export const getUserArticles = state => state.articles.userOwned;

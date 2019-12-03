@@ -22,24 +22,23 @@
 					box-shadow: none;
 					font-size: 24px;
 					min-width: 300px;
-					margin: 0 0 5px 0;
-					padding: 5px 5px 5px 10px;
-					border: 1px solid @t4t-white;
-					border-radius: 2px;
-
-					&:hover, &:active, &:focus {
-						border-color: @t4t-gray07 !important;
-						outline: none;
+					margin: .3rem;
+					padding: 10px;
+					border-radius: 10px;
+					border: 1px solid @t4t-gray07;
+					outline: none;
+					transition: 0.3s;
+					&:hover {
+						border: 1px solid @t4t-blue-light;
+					}
+					&:active, &:focus {
+						border: 2px solid @t4t-blue-light;
 					}
 				}
 			}
 
 			.autosave {
-				// display: none;
-
-				// &.active {
-				// 	display: inline-block;
-				// }A
+				margin-left: .5rem;
 			}
 		}
 

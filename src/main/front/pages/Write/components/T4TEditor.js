@@ -68,7 +68,7 @@ T4TEditor.propTypes = {
 	isAutosaving: PropTypes.bool,
 	isSubmitting: PropTypes.bool,
 	user: PropTypes.object,
-	articleId: PropTypes.string,
+	articleId: PropTypes.number,
 	toggleEditorSubmitState: PropTypes.func,
 	updateArticleId: PropTypes.func,
 	editorState: PropTypes.object,

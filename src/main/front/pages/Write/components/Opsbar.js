@@ -124,11 +124,11 @@ class Opsbar extends Component {
 		return (
 			<div id="t4t-title-wrapper">
 				<div className="autosave-ops">
-					<form>
-						<input type="text" value={this.props.articleTitle} onChange={this.onTitleChange} name="title" placeholder="untitled article..." />
-						<input type="text" value={this.props.articleDescription} onChange={this.onDescriptionChange} name="description" placeholder="article description..." />
+					<form autoComplete="off">
+						<input type="text" value={ this.props.articleTitle } onChange={ this.onTitleChange } name="title" placeholder="Untitled Article..." />
+						<input type="text" value={ this.props.articleDescription } onChange={ this.onDescriptionChange } name="description" placeholder="Edit Description..." />
 					</form>
-					<p className={this.props.isAutosaving ? `active autosave`:`autosave`}>{ this.setAutosaveStatus() }</p>
+					<p className={ this.props.isAutosaving ? 'active autosave' : 'autosave' }>{ this.setAutosaveStatus() }</p>
 				</div>
 
 				<div className="btn-group">

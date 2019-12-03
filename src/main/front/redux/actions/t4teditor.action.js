@@ -12,8 +12,6 @@ export const resetT4TEditor = () => dispatch => dispatch({ type: RESET_EDITOR })
 
 export const toggleArticleAutosavingState = () => dispatch => dispatch({ type: TOGGLE_AUTOSAVING_STATE });
 
-export const toggleArticleUpdateState = id => dispatch => dispatch({ type: TOGGLE_ARTICLE_UPDATE_STATE });
-
 export const toggleEditorSubmitState = () => dispatch => dispatch({ type: TOGGLE_EDITOR_SUBMIT_STATE });
 
 export const updateCurrentEditorArticle = article => dispatch => dispatch({ type: UPDATE_CURRENT_EDITOR_ARTICLE, payload: article });
