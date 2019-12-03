@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import Button from "../../components/Button/Button";
+import Button from "../../../components/Button/Button";
 
 class Opsbar extends Component {
 	constructor(props) {
@@ -18,7 +18,7 @@ class Opsbar extends Component {
 	};
 
 	postUpdatedTitle = () => {
-		if (this.props.articleId !== null) {
+		if (this.props.articleId !== -1) {
 			fetch('/api/article/save-article', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -28,6 +28,7 @@ class Opsbar extends Component {
 					content: this.props.articleTitle
 				})
 			})
+			.then(res => this.props.updateUserArticlesListItemTitle(this.props.articleId, this.props.articleTitle))
 			.catch(err => console.error('Error: ', err));
 		}
 	};
@@ -38,7 +39,7 @@ class Opsbar extends Component {
 	};
 
 	postUpdatedDescription = () => {
-		if (this.props.articleId !== null) {
+		if (this.props.articleId !== -1) {
 			fetch('/api/article/save-article', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -48,6 +49,7 @@ class Opsbar extends Component {
 					content: this.props.articleDescription
 				})
 			})
+			.then(res => this.props.updateUserArticlesListItemDescription(this.props.articleId, this.props.articleDescription))
 			.catch(err => console.error('Error: ', err));
 		}
 	};
@@ -77,13 +79,20 @@ class Opsbar extends Component {
 		return (
 			<div id="t4t-title-wrapper">
 				<form>
-					<input type="text" value={this.props.articleTitle} onChange={this.onTitleChange} name="title" placeholder="untitled article..." disabled={this.props.articleId === null} />
-					<input type="text" value={this.props.articleDescription} onChange={this.onDescriptionChange} name="description" placeholder="article description..." disabled={this.props.articleId === null} />
+					<input type="text" value={this.props.articleTitle} onChange={this.onTitleChange} name="title" placeholder="untitled article..." disabled={this.props.articleId === -1} />
+					<input type="text" value={this.props.articleDescription} onChange={this.onDescriptionChange} name="description" placeholder="article description..." disabled={this.props.articleId === -1} />
 				</form>
 
 				<div className="btn-group">
 					<Button
-						disabled={this.props.articleId === null}
+						disabled={this.props.articleId === -1}
+						extraClass="nav-bar-sign-in-button nav-bar-right-child"
+						handleClick={ () => this.props.resetT4TEditor() }
+						text="New Article"
+					/>
+
+					<Button
+						disabled={this.props.articleId === -1}
 						extraClass="nav-bar-sign-in-button nav-bar-right-child"
 						handleClick={ this.editArticlePic }
 						text="Upload Article Image"
@@ -96,7 +105,7 @@ class Opsbar extends Component {
 					/>
 
 					<Button
-						disabled={this.props.articleId === null}
+						disabled={this.props.articleId === -1}
 						extraClass="nav-bar-sign-in-button nav-bar-right-child"
 						handleClick={ () => this.props.toggleSubmission() }
 						text="Publish Article"
@@ -108,14 +117,15 @@ class Opsbar extends Component {
 }
 
 Opsbar.propTypes = {
-	isSubmitting: PropTypes.bool.isRequired,
+	articleId: PropTypes.number.isRequired,
 	articleTitle: PropTypes.string,
 	articleDescription: PropTypes.string,
-	articleId: PropTypes.string,
-	user: PropTypes.object,
-	updateArticleTitle: PropTypes.func,
-	updateArticleDescription: PropTypes.func,
-	toggleSubmission: PropTypes.func,
+	resetT4TEditor: PropTypes.func.isRequired,
+	updateArticleTitle: PropTypes.func.isRequired,
+	updateArticleDescription: PropTypes.func.isRequired,
+	updateUserArticlesListItemTitle: PropTypes.func.isRequired,
+	updateUserArticlesListItemDescription: PropTypes.func.isRequired,
+	toggleSubmission: PropTypes.func.isRequired,
 };
 
 export default Opsbar;

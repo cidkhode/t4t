@@ -8,7 +8,7 @@ import { checkIfUserLoggedIn, fetchUserAccountDetails } from '../redux/actions/u
 
 import { getUserLoggedIn } from '../utils/utils';
 import CustomRouter from '../components/CustomRouter/CustomRouter';
-import Write from './Write/Write';
+import Write from './Write';
 import UserAccount from './UserAccount/UserAccount';
 import UserDashboard from './UserDashboard/UserDashboard';
 import MainPage from './MainPage';

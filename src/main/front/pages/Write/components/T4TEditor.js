@@ -15,25 +15,26 @@ class T4TEditor extends Component {
 	}
 
 	postUpdatedArticle = () => {
-		console.log(draftToHtml(convertToRaw(this.props.editorState.getCurrentContent())));
-		console.log(`Id of article is:`, this.props.articleId);
-		const savingArticle = this.props.articleId !== null;
-		const post_article_url = '/api/article/' + (savingArticle ? 'save-article' : 'store-article');
-		fetch(post_article_url, {
+		const updateArticle = this.props.articleId !== -1;
+
+		fetch('/api/article/' + (updateArticle ? 'save-article' : 'store-article'), {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
-					email: this.props.user.email,
-					articleId: this.props.articleId,
 					articleKey: 'articleText',
+					articleId: this.props.articleId,
+					userEmail: this.props.user.email,
 					content: draftToHtml(convertToRaw(this.props.editorState.getCurrentContent()))
 				})
 			})
 			.then(res => res.json())
 			.then(json => {
-				if (!savingArticle) {
-					this.props.updateArticleId(json.info);
-				}
+				if (!updateArticle) this.props.updateArticleId(parseInt(json.info, 10));
+				return json;
+			})
+			.then(json => {
+				if (!updateArticle) this.props.fetchUserArticles();
+				return json;
 			})
 			.catch(err => console.error('Error: ', err));
 	};
@@ -64,6 +65,8 @@ T4TEditor.propTypes = {
 	updateArticleId: PropTypes.func,
 	editorState: PropTypes.object,
 	updateEditorState: PropTypes.func,
+	fetchUserArticles: PropTypes.func,
+	addToUserArticlesList: PropTypes.func,
 };
 
 export default T4TEditor;

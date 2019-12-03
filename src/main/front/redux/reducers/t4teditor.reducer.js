@@ -1,7 +1,8 @@
-import { EditorState, ContentState } from "draft-js";
+import { EditorState, ContentState, convertFromHTML } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
 
 import {
+	RESET_EDITOR,
 	TOGGLE_ARTICLE_UPDATE_STATE,
 	TOGGLE_EDITOR_SUBMIT_STATE,
 	UPDATE_CURRENT_EDITOR_ARTICLE,
@@ -14,7 +15,7 @@ import {
 export const initialState = {
 	isUpdating: false,
 	isSubmitting: false,
-	id: null,
+	id: -1,
 	title: "",
 	description: "",
 	editorState: EditorState.createEmpty(),
@@ -22,6 +23,11 @@ export const initialState = {
 
 export const t4teditor = (state = initialState, action) => {
 	switch (action.type) {
+		case RESET_EDITOR:
+			return {
+				...initialState
+			};
+
 		case TOGGLE_ARTICLE_UPDATE_STATE:
 			return {
 				...state,
@@ -35,16 +41,16 @@ export const t4teditor = (state = initialState, action) => {
 			};
 
 		case UPDATE_CURRENT_EDITOR_ARTICLE:
-			const convertedHTML = htmlToDraft(action.payload.article_text);
-			const { contentBlocks, entityMap } = convertedHTML;
-			const contentState = ContentState.createFromBlockArray(contentBlocks, entityMap);
-
+			const articleHtml = action.payload.text !== null ? action.payload.text : '<p></p>';
+			const blocksFromHtml = convertFromHTML(articleHtml);
+			const newContentState = ContentState.createFromBlockArray(blocksFromHtml.contentBlocks, blocksFromHtml.entityMap);
+			
 			return {
 				...state,
-				id: action.payload.articleID,
-				title: action.payload.title,
-				description: action.payload.description,
-				editorState: EditorState.createWithContent(contentState)
+				id: action.payload.id || -1,
+				title: action.payload.title !== null ? action.payload.title : "",
+				description: action.payload.description !== null ? action.payload.description : "",
+				editorState: EditorState.createWithContent(newContentState)
 			};
 
 		case UPDATE_ARTICLE_DESCRIPTION:

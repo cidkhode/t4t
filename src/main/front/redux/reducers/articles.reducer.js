@@ -1,6 +1,7 @@
 import {
 	UPDATE_USER_ARTICLE_LIST,
-	UPDATE_USER_ARTICLE_LIST_ITEM,
+	UPDATE_USER_ARTICLE_LIST_ITEM_TITLE,
+	UPDATE_USER_ARTICLE_LIST_ITEM_DESCRIPTION,
 	ADD_TO_USER_ARTICLE_LIST,
 	DELETE_FROM_USER_ARTICLE_LIST,
 } from '../actions/articles.action.js';
@@ -17,22 +18,24 @@ export const articles = (state = initialState, action) => {
 				user_owned: action.payload
 			};
 
-		case UPDATE_USER_ARTICLE_LIST_ITEM:
+		case UPDATE_USER_ARTICLE_LIST_ITEM_TITLE:
 			return {
 				...state,
-				user_owned: state.user_owned.map(obj => obj.articleID !== action.payload.articleID ? obj : action.payload)
+				user_owned: state.user_owned.map(obj => obj.articleID !== action.payload.id ? obj : {...obj, title: action.payload.title})
 			};
 
-		case ADD_TO_USER_ARTICLE_LIST:
+		case UPDATE_USER_ARTICLE_LIST_ITEM_DESCRIPTION:
 			return {
 				...state,
-				user_owned: [...state.user_owned].unshift(action.payload)
+				user_owned: state.user_owned.map(obj => obj.articleID !== action.payload.id ? obj : {...obj, description: action.payload.description})
 			};
 
 		case DELETE_FROM_USER_ARTICLE_LIST:
+			console.log(action.payload);
+
 			return {
 				...state,
-				user_owned: [...state.user_owned].filter(obj => obj.articleID === action.payload)
+				user_owned: [...state.user_owned].filter(obj => obj.articleID !== action.payload)
 			};
 
 		default:

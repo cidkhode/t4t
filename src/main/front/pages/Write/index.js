@@ -5,10 +5,10 @@ import PropTypes from 'prop-types';
 
 /* Components */
 import ArticleSubmission from "../../components/Modal/ArticleSubmission/ArticleSubmission";
-import T4TEditor from "../../components/Editor/T4TEditor";
 import Navbar from "../../components/Navbar/Navbar";
-import EditorSidebar from "./EditorSidebar.js";
-import Opsbar from "./Opsbar.js";
+import EditorSidebar from "./components/EditorSidebar.js";
+import T4TEditor from "./components/T4TEditor";
+import Opsbar from "./components/Opsbar.js";
 
 /* Redux - Selectors */
 import { getUserArticles } from '../../redux/selectors/articles.selector';
@@ -19,17 +19,24 @@ import {
 	getCurrentArticleTitle,
 	getEditorState,
 	getCurrentArticleId,
-	getCurrentArticleDescription
+	getCurrentArticleDescription,
 } from '../../redux/selectors/t4teditor.selector';
 /* Redux - Actions */
 import { togglePopup } from '../../redux/actions/popup.action';
 import {
+	updateUserArticlesList,
+	updateUserArticlesListItemTitle,
+	updateUserArticlesListItemDescription,
+	deleteFromUserArticlesList,
+} from '../../redux/actions/articles.action';
+import {
+	resetT4TEditor,
 	toggleEditorSubmitState,
 	updateArticleTitle,
 	updateCurrentEditorArticle,
 	updateArticleDescription,
 	updateEditorState,
-	updateArticleId
+	updateArticleId,
 } from '../../redux/actions/t4teditor.action';
 
 /*  */
@@ -43,6 +50,13 @@ class Write extends PureComponent {
 		console.log(`UPDATING: `, this.props.user);
 	}
 
+	fetchUserArticles = () => {
+		fetch(`/api/article/get-user-articles?userEmail=${this.props.user.email}`, { headers: { 'Content-Type': 'application/json' }})
+			.then(res => res.json())
+			.then(json => this.props.updateUserArticlesList(json))
+			.catch(err => console.error('Error: ', err));
+	}
+
 	render() {
 		return(
 			<>
@@ -53,16 +67,15 @@ class Write extends PureComponent {
 						isActive={ (this.props.popupType === POPUP_KEYS.ARTICLE_SUBMISSION) && this.props.isPopupActive }
 					/>
 					<Opsbar
-						isSubmitting={ this.props.isSubmitting }
-						user={ this.props.user }
 						articleId={ this.props.articleId }
-						toggleEditorSubmitState={ this.props.toggleEditorSubmitState }
-						updateArticleId={ this.props.updateArticleId }
-
 						articleTitle={ this.props.articleTitle }
-						updateArticleTitle={ this.props.updateArticleTitle }
 						articleDescription={ this.props.articleDescription }
+
+						resetT4TEditor={ this.props.resetT4TEditor }
+						updateArticleTitle={ this.props.updateArticleTitle }
 						updateArticleDescription={ this.props.updateArticleDescription }
+						updateUserArticlesListItemTitle={ this.props.updateUserArticlesListItemTitle }
+						updateUserArticlesListItemDescription={ this.props.updateUserArticlesListItemDescription }
 						toggleSubmission={ () => this.props.togglePopup(POPUP_KEYS.ARTICLE_SUBMISSION) }
 					/>
 					<div id="t4t-edit-wrapper">
@@ -74,10 +87,14 @@ class Write extends PureComponent {
 							updateArticleId={ this.props.updateArticleId }
 							editorState={ this.props.editorState }
 							updateEditorState={ this.props.updateEditorState }
+							fetchUserArticles={ this.fetchUserArticles }
 						/>
 
 						<EditorSidebar
 							user_owned={ this.props.user_owned_articles }
+
+							fetchUserArticles={ this.fetchUserArticles }
+							deleteFromUserArticlesList={ this.props.deleteFromUserArticlesList }
 							updateCurrentEditorArticle={ this.props.updateCurrentEditorArticle }
 						/>
 					</div>
@@ -101,6 +118,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+	resetT4TEditor,
 	toggleEditorSubmitState,
 	updateCurrentEditorArticle,
 	updateArticleTitle,
@@ -108,6 +126,10 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	updateEditorState,
 	updateArticleId,
 	togglePopup,
+	updateUserArticlesList,
+	updateUserArticlesListItemTitle,
+	updateUserArticlesListItemDescription,
+	deleteFromUserArticlesList,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Write);
