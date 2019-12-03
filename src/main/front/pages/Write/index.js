@@ -25,10 +25,10 @@ import {
 /* Redux - Actions */
 import { togglePopup } from '../../redux/actions/popup.action';
 import {
-	updateUserArticlesList,
 	updateUserArticlesListItemTitle,
 	updateUserArticlesListItemDescription,
 	deleteFromUserArticlesList,
+	fetchUserArticles,
 } from '../../redux/actions/articles.action';
 import {
 	resetT4TEditor,
@@ -61,9 +61,9 @@ class Write extends PureComponent {
 		})
 			.then(res => res.json())
 			.then(json => this.props.updateArticleId(parseInt(json.info, 10)))
-			.then(json => this.fetchUserArticles())
+			.then(json => this.fetchUserArticles(this.props.user.email))
 			.catch(err => console.error('Error: ', err));
-	}
+	};
 
 	updateArticle = (key, content) => {
 		fetch('/api/article/save-article', {
@@ -72,14 +72,12 @@ class Write extends PureComponent {
 				body: JSON.stringify({ keyToUpdate: key, content, articleId: this.props.articleId })
 			})
 			.catch(err => console.error('Error: ', err));
-	}
+	};
 
 	fetchUserArticles = () => {
-		fetch(`/api/article/get-user-articles?userEmail=${this.props.user.email}`, { headers: { 'Content-Type': 'application/json' }})
-			.then(res => res.json())
-			.then(json => this.props.updateUserArticlesList(json))
-			.catch(err => console.error('Error: ', err));
-	}
+		console.log(`EXECUTING`);
+		this.props.fetchUserArticles(this.props.user.email);
+	};
 
 	render() {
 		return(
@@ -95,7 +93,6 @@ class Write extends PureComponent {
 						articleId={ this.props.articleId }
 						articleTitle={ this.props.articleTitle }
 						articleDescription={ this.props.articleDescription }
-						
 						storeArticle={ this.storeArticle }
 						updateArticle={ this.updateArticle }
 						fetchUserArticles={ this.fetchUserArticles }
@@ -114,7 +111,6 @@ class Write extends PureComponent {
 							isSubmitting={ this.props.isSubmitting }
 							user={ this.props.user }
 							articleId={ this.props.articleId }
-
 							storeArticle={ this.storeArticle }
 							updateArticle={ this.updateArticle }
 							toggleEditorSubmitState={ this.props.toggleEditorSubmitState }
@@ -124,10 +120,8 @@ class Write extends PureComponent {
 							updateEditorState={ this.props.updateEditorState }
 							fetchUserArticles={ this.fetchUserArticles }
 						/>
-
 						<EditorSidebar
 							user_owned={ this.props.user_owned_articles }
-
 							fetchUserArticles={ this.fetchUserArticles }
 							deleteFromUserArticlesList={ this.props.deleteFromUserArticlesList }
 							updateCurrentEditorArticle={ this.props.updateCurrentEditorArticle }
@@ -139,6 +133,18 @@ class Write extends PureComponent {
 	}
 }
 
+Write.propTypes = {
+	isSubmitting: PropTypes.bool,
+	isAutosaving: PropTypes.bool,
+	articleTitle: PropTypes.string,
+	articleDescription: PropTypes.string,
+	editorState: PropTypes.object,
+	articleId: PropTypes.number,
+	user: PropTypes.object,
+	user_owned_articles: PropTypes.array,
+	isPopupActive: PropTypes.bool,
+	popupType: PropTypes.string,
+};
 
 const mapStateToProps = state => ({
 	isSubmitting: getIsSubmitting(state),
@@ -163,10 +169,10 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	updateEditorState,
 	updateArticleId,
 	togglePopup,
-	updateUserArticlesList,
 	updateUserArticlesListItemTitle,
 	updateUserArticlesListItemDescription,
 	deleteFromUserArticlesList,
+	fetchUserArticles,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Write);

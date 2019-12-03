@@ -18,6 +18,8 @@ public interface ArticleRepository extends CrudRepository<Article, Integer> {
 
     boolean existsByArticleID(int articleID);
 
+    @Modifying
+    @Transactional
     long deleteByArticleID(int articleID);
 
     @Modifying

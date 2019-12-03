@@ -31,7 +31,7 @@ export const articles = (state = initialState, action) => {
 			};
 
 		case DELETE_FROM_USER_ARTICLE_LIST:
-			console.log(action.payload);
+			console.log(`ACTION PAYLOAD: `, action.payload);
 
 			return {
 				...state,

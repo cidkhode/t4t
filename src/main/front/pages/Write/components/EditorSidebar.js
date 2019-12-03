@@ -11,33 +11,17 @@ class EditorSidebar extends Component {
 		this.props.fetchUserArticles();
 	}
 
-	deleteArticleFromListById = (id) => {
-		return fetch('/api/article/delete-article', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({
-				articleId: id,
-			}).then(resp => resp.json())
-				.then(json => {
-					console.log(`FETCH WORKED`)
-					if (json.code === 0) {
-						this.props.deleteFromUserArticlesList(id);
-					}
-				}).catch(error => console.error(`Couldn't delete article: `, id, `. Error: `, error))
-		});
-	};
-
 	onDisplay = () => {
-		return(
+		return (
 			this.props.user_owned.map(article => {
 				const reduxArticle = {
 					id: article.articleID,
 					title: article.title,
 					description: article.description,
 					text: article.articleText,
-				}
+				};
 
-				return(
+				return (
 					<div key={reduxArticle.id} className="t4t-editable-article">
 						<div onClick={ () => this.props.deleteFromUserArticlesList(reduxArticle.id) } className="t4t-article-delete">Delete</div>
 						<a onClick={ () => this.props.updateCurrentEditorArticle(reduxArticle) } className="t4t-article-content">
@@ -49,7 +33,7 @@ class EditorSidebar extends Component {
 				)
 			}).reverse()
 		)
-	}
+	};
 
 	onEmpty = () => {
 		return (
@@ -64,7 +48,7 @@ class EditorSidebar extends Component {
 			<div id="t4t-editor-sidebar">
 				<h3 className="title"> My Latest Articles </h3>
 				<div className="inner">
-					{ this.props.user_owned.length != 0 ? this.onDisplay() : this.onEmpty() }
+					{ this.props.user_owned.length !== 0 ? this.onDisplay() : this.onEmpty() }
 				</div>
 			</div>
 		)
