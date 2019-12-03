@@ -54,6 +54,10 @@ class T4TEditor extends Component {
 					editorState={this.props.editorState}
 					onEditorStateChange={this.onEditorStateChange}
 					placeholder="type out your thoughts..."
+					toolbar={{
+						options: ['inline', 'blockType', 'list', 'textAlign', 'colorPicker', 'link',],
+						inline: { options: ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript'] },
+					}}
 				/>
 			</div>
 		)
