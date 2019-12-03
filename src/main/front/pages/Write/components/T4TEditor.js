@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { convertToRaw } from "draft-js";
 import { Editor } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html'; // translate  draft-js compatable format to html
-// import htmlToDraft from 'html-to-draftjs'; // translate server saved html to draft-js compatable format
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
@@ -15,27 +14,28 @@ class T4TEditor extends Component {
 	}
 
 	postUpdatedArticle = () => {
-		const updateArticle = this.props.articleId !== -1;
+		const isArticleActive = this.props.articleId !== -1;
 		const currentEditorContent = this.props.editorState.getCurrentContent();
+		this.props.toggleArticleAutosavingState();
 
-		if (updateArticle || currentEditorContent.hasText()) {
-			fetch('/api/article/' + (updateArticle ? 'save-article' : 'store-article'), {
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					body: JSON.stringify({
-						articleKey: 'articleText',
-						articleId: this.props.articleId,
-						userEmail: this.props.user.email,
-						content: draftToHtml(convertToRaw(currentEditorContent))
-					})
+		if (isArticleActive || currentEditorContent.hasText()) {
+			fetch('/api/article/' + (isArticleActive ? 'save-article' : 'store-article'), {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({
+					articleId: this.props.articleId,
+					keyToUpdate: 'articleText',
+					content: draftToHtml(convertToRaw(currentEditorContent))
 				})
+			})
 				.then(res => res.json())
 				.then(json => {
-					if (!updateArticle) this.props.updateArticleId(parseInt(json.info, 10));
+					if (!isArticleActive) this.props.updateArticleId(parseInt(json.info, 10));
+					this.props.toggleArticleAutosavingState();
 					return json;
 				})
 				.then(json => {
-					if (!updateArticle) this.props.fetchUserArticles();
+					if (!isArticleActive) this.props.fetchUserArticles();
 					return json;
 				})
 				.catch(err => console.error('Error: ', err));

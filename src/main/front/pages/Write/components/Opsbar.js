@@ -18,24 +18,34 @@ class Opsbar extends Component {
 	};
 
 	postUpdatedTitle = () => {
-		if (this.props.articleId !== -1) {
-			this.props.toggleArticleAutosavingState();
+		const isArticleActive = this.props.articleId !== -1;
+		this.props.toggleArticleAutosavingState();
 
-			fetch('/api/article/save-article', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					articleId: this.props.articleId,
-					articleKey: 'articleTitle',
-					content: this.props.articleTitle
-				})
+		fetch('/api/article/' + (isArticleActive ? 'save-article' : 'store-article'), {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				articleId: this.props.articleId,
+				keyToUpdate: 'articleTitle',
+				content: this.props.articleTitle
 			})
-			.then(res => {
-				this.props.updateUserArticlesListItemTitle(this.props.articleId, this.props.articleTitle);
+		})
+			.then(res => res.json())
+			.then(json => {
+				if (!isArticleActive) {
+					this.props.updateArticleId(parseInt(json.info, 10));
+				} else {
+					this.props.updateUserArticlesListItemTitle(this.props.articleId, this.props.articleTitle);
+				}
+
 				this.props.toggleArticleAutosavingState();
+				return json;
+			})
+			.then(json => {
+				if (!isArticleActive) this.props.fetchUserArticles();
+				return json;
 			})
 			.catch(err => console.error('Error: ', err));
-		}
 	};
 
 	onDescriptionChange = event => {
@@ -44,24 +54,34 @@ class Opsbar extends Component {
 	};
 
 	postUpdatedDescription = () => {
-		if (this.props.articleId !== -1) {
-			this.props.toggleArticleAutosavingState();
+		const isArticleActive = this.props.articleId !== -1;
+		this.props.toggleArticleAutosavingState();
 
-			fetch('/api/article/save-article', {
-				method: 'POST',
-				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({
-					articleId: this.props.articleId,
-					articleKey: 'articleDescription',
-					content: this.props.articleDescription
-				})
+		fetch('/api/article/' + (isArticleActive ? 'save-article' : 'store-article'), {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				articleId: this.props.articleId,
+				keyToUpdate: 'articleDescription',
+				content: this.props.articleDescription
 			})
-			.then(res =>{
-				this.props.updateUserArticlesListItemDescription(this.props.articleId, this.props.articleDescription);
+		})
+			.then(res => res.json())
+			.then(json => {
+				if (!isArticleActive) {
+					this.props.updateArticleId(parseInt(json.info, 10));
+				} else {
+					this.props.updateUserArticlesListItemDescription(this.props.articleId, this.props.articleDescription);
+				}
+
 				this.props.toggleArticleAutosavingState();
+				return json;
+			})
+			.then(json => {
+				if (!isArticleActive) this.props.fetchUserArticles();
+				return json;
 			})
 			.catch(err => console.error('Error: ', err));
-		}
 	};
 
 	editArticlePic = () => {
@@ -105,8 +125,8 @@ class Opsbar extends Component {
 			<div id="t4t-title-wrapper">
 				<div className="autosave-ops">
 					<form>
-						<input type="text" value={this.props.articleTitle} onChange={this.onTitleChange} name="title" placeholder="untitled article..." disabled={this.props.articleId === -1} />
-						<input type="text" value={this.props.articleDescription} onChange={this.onDescriptionChange} name="description" placeholder="article description..." disabled={this.props.articleId === -1} />
+						<input type="text" value={this.props.articleTitle} onChange={this.onTitleChange} name="title" placeholder="untitled article..." />
+						<input type="text" value={this.props.articleDescription} onChange={this.onDescriptionChange} name="description" placeholder="article description..." />
 					</form>
 					<p className={this.props.isAutosaving ? `active autosave`:`autosave`}>{ this.setAutosaveStatus() }</p>
 				</div>

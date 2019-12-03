@@ -53,10 +53,10 @@ public class ArticleController {
     /* modifying article */
     @PostMapping(path = "/save-article")
     public Thought4ThoughtResponseObject updateArticle(@RequestBody ObjectNode objectNode){
-        String articleKey = objectNode.get("articleKey").asText();
+        String keyToUpdate = objectNode.get("keyToUpdate").asText();
         int articleID = Integer.parseInt(objectNode.get("articleId").asText());
         String articleText = objectNode.get("content").asText();
-        return this.articleService.saveArticleUpdates(articleKey, articleID, articleText);
+        return this.articleService.saveArticleUpdates(keyToUpdate, articleID, articleText);
     }
 
     /* publish article */

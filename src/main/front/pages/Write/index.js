@@ -52,6 +52,28 @@ class Write extends PureComponent {
 		console.log(`UPDATING: `, this.props.user);
 	}
 
+	/* articleText, articleTitle, articleDescription */
+	storeArticle = (key, content) => {
+		fetch('/api/article/store-article', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ keyToUpdate: key, content })
+		})
+			.then(res => res.json())
+			.then(json => this.props.updateArticleId(parseInt(json.info, 10)))
+			.then(json => this.fetchUserArticles())
+			.catch(err => console.error('Error: ', err));
+	}
+
+	updateArticle = (key, content) => {
+		fetch('/api/article/save-article', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ keyToUpdate: key, content, articleId: this.props.articleId })
+			})
+			.catch(err => console.error('Error: ', err));
+	}
+
 	fetchUserArticles = () => {
 		fetch(`/api/article/get-user-articles?userEmail=${this.props.user.email}`, { headers: { 'Content-Type': 'application/json' }})
 			.then(res => res.json())
@@ -73,8 +95,12 @@ class Write extends PureComponent {
 						articleId={ this.props.articleId }
 						articleTitle={ this.props.articleTitle }
 						articleDescription={ this.props.articleDescription }
-
+						
+						storeArticle={ this.storeArticle }
+						updateArticle={ this.updateArticle }
+						fetchUserArticles={ this.fetchUserArticles }
 						resetT4TEditor={ this.props.resetT4TEditor }
+						updateArticleId={ this.props.updateArticleId }
 						updateArticleTitle={ this.props.updateArticleTitle }
 						updateArticleDescription={ this.props.updateArticleDescription }
 						updateUserArticlesListItemTitle={ this.props.updateUserArticlesListItemTitle }
@@ -88,6 +114,9 @@ class Write extends PureComponent {
 							isSubmitting={ this.props.isSubmitting }
 							user={ this.props.user }
 							articleId={ this.props.articleId }
+
+							storeArticle={ this.storeArticle }
+							updateArticle={ this.updateArticle }
 							toggleEditorSubmitState={ this.props.toggleEditorSubmitState }
 							toggleArticleAutosavingState={ this.props.toggleArticleAutosavingState }
 							updateArticleId={ this.props.updateArticleId }
