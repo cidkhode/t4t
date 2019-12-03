@@ -49,8 +49,8 @@ public interface ArticleRepository extends CrudRepository<Article, Integer> {
 
     @Modifying
     @Transactional
-    @Query("update Article article set article.articleText = ?1 where article.articleID = ?2")
-	void setArticleTextByID(String articleText, int articleID);
+    @Query("update Article article set article.contentState = ?1 where article.articleID = ?2")
+	void setArticleContentStateByID(String contentState, int articleID);
 
     @Modifying
     @Transactional

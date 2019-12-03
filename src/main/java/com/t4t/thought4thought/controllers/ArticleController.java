@@ -55,8 +55,8 @@ public class ArticleController {
     public Thought4ThoughtResponseObject updateArticle(@RequestBody ObjectNode objectNode){
         String keyToUpdate = objectNode.get("keyToUpdate").asText();
         int articleID = Integer.parseInt(objectNode.get("articleId").asText());
-        String articleText = objectNode.get("content").asText();
-        return this.articleService.saveArticleUpdates(keyToUpdate, articleID, articleText);
+        String contentState = objectNode.get("content").asText();
+        return this.articleService.saveArticleUpdates(keyToUpdate, articleID, contentState);
     }
 
     /* deleting article */

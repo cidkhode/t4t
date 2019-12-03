@@ -24,7 +24,7 @@ class T4TEditor extends Component {
 				headers: { 'Content-Type': 'application/json' },
 				body: JSON.stringify({
 					articleId: this.props.articleId,
-					keyToUpdate: 'articleText',
+					keyToUpdate: 'contentState',
 					content: JSON.stringify(convertToRaw(currentEditorContent)),
 				})
 			})

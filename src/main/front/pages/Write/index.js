@@ -52,7 +52,7 @@ class Write extends PureComponent {
 		console.log(`UPDATING: `, this.props.user);
 	}
 
-	/* articleText, articleTitle, articleDescription */
+	/* contentState, articleTitle, articleDescription */
 	storeArticle = (key, content) => {
 		fetch('/api/article/store-article', {
 			method: 'POST',
@@ -61,7 +61,7 @@ class Write extends PureComponent {
 		})
 			.then(res => res.json())
 			.then(json => this.props.updateArticleId(parseInt(json.info, 10)))
-			.then(json => this.fetchUserArticles(this.props.user.email))
+			.then(() => this.fetchUserArticles(this.props.user.email))
 			.catch(err => console.error('Error: ', err));
 	};
 

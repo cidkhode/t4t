@@ -30,8 +30,8 @@ public class ArticleService{
         Article article = new Article();
         article.setUserEmail(userEmail);
         switch(keyToUpdate) {
-            case "articleText": {
-                article.setArticleText(content);
+            case "contentState": {
+                article.setContentState(content);
                 break;
             }
             case "articleTitle": {
@@ -58,7 +58,7 @@ public class ArticleService{
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
         LocalDateTime now = LocalDateTime.now(); 
         if(!articleRepository.existsByArticleID(article.getArticleID())){
-            article.setArticleText(article.getArticleText());
+            article.setContentState(article.getContentState());
             article.setDateModified(now);
         }
         return thought4ThoughtResponseObject;
@@ -146,8 +146,8 @@ public class ArticleService{
                 articleRepository.setArticleDescByID(changedColValue, articleID);
                 break;
             }
-            case "articleText": {
-                articleRepository.setArticleTextByID(changedColValue, articleID);
+            case "contentState": {
+                articleRepository.setArticleContentStateByID(changedColValue, articleID);
                 break;
             }
             case "articleThumbnail": {

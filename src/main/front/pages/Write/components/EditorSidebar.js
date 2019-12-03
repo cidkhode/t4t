@@ -18,7 +18,7 @@ class EditorSidebar extends Component {
 					id: article.articleID,
 					title: article.title,
 					description: article.description,
-					text: article.articleText,
+					text: article.contentState,
 				};
 
 				return (

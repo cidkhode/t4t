@@ -107,14 +107,14 @@ public class Article {
         this.dateModified = dateModified;
     }
 
-    private String articleText; //entire body of the article
+    private String contentState; //entire body of the article
 
-    public String getArticleText(){
-        return articleText;
+    public String getContentState(){
+        return contentState;
     }
 
-    public void setArticleText(String articleText){
-        this.articleText = articleText;
+    public void setContentState(String contentState){
+        this.contentState = contentState;
     }
 
     private String thumbnailImageURL;
