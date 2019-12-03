@@ -118,6 +118,21 @@ public class ArticleService{
 		return thought4ThoughtResponseObject;
     }
 
+    public Thought4ThoughtResponseObject deleteArticle(int articleID) {
+        Thought4ThoughtResponseObject thought4ThoughtResponseObject =
+                new Thought4ThoughtResponseObject().createResponse(T4T_ERROR_CODE,
+                        "Couldn't delete article with article id: " + articleID);
+        long countOfDeletedIds = articleRepository.deleteByArticleID(articleID);
+        if (countOfDeletedIds == 1) {
+            thought4ThoughtResponseObject.setInfo("Successfully deleted article with id of: " + articleID);
+            thought4ThoughtResponseObject.setStatus(T4T_SUCCESS_CODE);
+        } else {
+            thought4ThoughtResponseObject.setInfo("Something went wrong deleting the article at this time... ");
+            thought4ThoughtResponseObject.setStatus(T4T_INVALID_CODE);
+        }
+        return thought4ThoughtResponseObject;
+    }
+
     public Thought4ThoughtResponseObject saveArticleUpdates(String keyToUpdate, int articleID, String changedColValue) {
 		Thought4ThoughtResponseObject thought4ThoughtResponseObject =
                 new Thought4ThoughtResponseObject().createResponse(T4T_SUCCESS_CODE,

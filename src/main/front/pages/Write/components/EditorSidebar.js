@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import {DELETE_FROM_USER_ARTICLE_LIST} from "../../../redux/actions/articles.action";
 
 class EditorSidebar extends Component {
 	constructor(props) {
@@ -10,7 +11,21 @@ class EditorSidebar extends Component {
 		this.props.fetchUserArticles();
 	}
 
-	deleteArticleFromListById = (id) => this.props.deleteFromUserArticlesList(id);
+	deleteArticleFromListById = (id) => {
+		return fetch('/api/article/delete-article', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({
+				articleId: id,
+			}).then(resp => resp.json())
+				.then(json => {
+					console.log(`FETCH WORKED`)
+					if (json.code === 0) {
+						this.props.deleteFromUserArticlesList(id);
+					}
+				}).catch(error => console.error(`Couldn't delete article: `, id, `. Error: `, error))
+		});
+	};
 
 	onDisplay = () => {
 		return(
@@ -24,11 +39,11 @@ class EditorSidebar extends Component {
 
 				return(
 					<div key={reduxArticle.id} className="t4t-editable-article">
-						<a onClick={article => this.deleteArticleFromListById(reduxArticle.id)} className="t4t-article-delete"> delete </a>
-						<a onClick={() => this.props.updateCurrentEditorArticle(reduxArticle)} className="t4t-article-content">
-							<h3> {article.title ? article.title : "untitled article"} </h3>
-							<p> {article.description ? article.description : <i>no description available...</i>} </p>
-							<p> {!article.is_published ? <i>Draft</i> : <strong>Published</strong>} </p>
+						<div onClick={ () => this.props.deleteFromUserArticlesList(reduxArticle.id) } className="t4t-article-delete">Delete</div>
+						<a onClick={ () => this.props.updateCurrentEditorArticle(reduxArticle) } className="t4t-article-content">
+							<h3>{article.title ? article.title : "untitled article"}</h3>
+							<p>{article.description ? article.description : <i>No description available...</i>}</p>
+							<p>{!article.is_published ? <i>Draft</i> : <strong>Published</strong>}</p>
 						</a>
 					</div>
 				)

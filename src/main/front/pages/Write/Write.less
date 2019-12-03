@@ -44,7 +44,9 @@
 		}
 
 		.btn-group {
-
+			.t4t-button {
+				margin: .3rem;
+			}
 		}
 	}
 
@@ -119,25 +121,22 @@
 						transition: transform 0.15s, box-shadow 0.15s;
 					}
 
-					a.t4t-article-delete {
+					.t4t-article-delete {
 						display: flex;
 						justify-content: center;
 						align-items: center;
-
+						user-select: none;
 						position: absolute;
 						top: 0;
 						right: 0;
 						border-top-right-radius: 5px;
 						border-bottom-left-radius: 5px;
-
 						background-color: @t4t-red-light;
 						width: 52px;
 						height: 20px;
 						font-size: 0.85em;
 						line-height: 11px;
-
 						transition: background-color 0.25s linear;
-
 						&:hover {
 							background-color: @t4t-red;
 							transition: background-color 0.25s linear;

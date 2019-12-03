@@ -18,6 +18,8 @@ public interface ArticleRepository extends CrudRepository<Article, Integer> {
 
     boolean existsByArticleID(int articleID);
 
+    long deleteByArticleID(int articleID);
+
     @Modifying
     @Transactional
     @Query("update Article article set article.thumbnailImageURL = ?1 where article.userEmail = ?2")

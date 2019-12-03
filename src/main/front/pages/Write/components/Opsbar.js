@@ -113,12 +113,12 @@ class Opsbar extends Component {
 			return `Autosaving...`;
 
 		} else if (this.props.articleId !== -1) {
-			return `Article was saved.`;
+			return `Article was saved`;
 
 		} else {
-			return "New article opened."
+			return "New article opened"
 		}
-	}
+	};
 
 	render(){
 		return (

@@ -10,4 +10,19 @@ export const updateUserArticlesListItemTitle = (id, title) => dispatch => dispat
 
 export const updateUserArticlesListItemDescription = (id, description) => dispatch => dispatch({ type: UPDATE_USER_ARTICLE_LIST_ITEM_DESCRIPTION, payload: { id, description } });
 
-export const deleteFromUserArticlesList = id => dispatch => dispatch({ type: DELETE_FROM_USER_ARTICLE_LIST, payload: id });
+export const deleteFromUserArticlesList = id => dispatch => {
+  console.log(`idsJfiadjfikadmfikadmfoadm`);
+  return fetch('/api/article/delete-article', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      articleId: id,
+    }).then(resp => resp.json())
+      .then(json => {
+        console.log(`FETCH WORKED`)
+        if (json.code === 0) {
+          dispatch({ type: DELETE_FROM_USER_ARTICLE_LIST, payload: id });
+        }
+      }).catch(error => console.error(`Couldn't delete article: `, id, `. Error: `, error))
+  });
+};

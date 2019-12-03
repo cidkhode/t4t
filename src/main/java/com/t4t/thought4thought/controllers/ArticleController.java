@@ -59,6 +59,13 @@ public class ArticleController {
         return this.articleService.saveArticleUpdates(keyToUpdate, articleID, articleText);
     }
 
+    /* deleting article */
+    @PostMapping(path = "/delete-article")
+    public Thought4ThoughtResponseObject deleteArticle(@RequestBody ObjectNode objectNode){
+        int articleID = Integer.parseInt(objectNode.get("articleId").asText());
+        return this.articleService.deleteArticle(articleID);
+    }
+
     /* publish article */
     @PostMapping(path = "/publish-article")
     public Thought4ThoughtResponseObject publishArticle(@RequestBody ObjectNode objectNode){
