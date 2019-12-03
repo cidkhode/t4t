@@ -19,6 +19,8 @@ class Opsbar extends Component {
 
 	postUpdatedTitle = () => {
 		if (this.props.articleId !== -1) {
+			this.props.toggleArticleAutosavingState();
+
 			fetch('/api/article/save-article', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -28,7 +30,10 @@ class Opsbar extends Component {
 					content: this.props.articleTitle
 				})
 			})
-			.then(res => this.props.updateUserArticlesListItemTitle(this.props.articleId, this.props.articleTitle))
+			.then(res => {
+				this.props.updateUserArticlesListItemTitle(this.props.articleId, this.props.articleTitle);
+				this.props.toggleArticleAutosavingState();
+			})
 			.catch(err => console.error('Error: ', err));
 		}
 	};
@@ -40,6 +45,8 @@ class Opsbar extends Component {
 
 	postUpdatedDescription = () => {
 		if (this.props.articleId !== -1) {
+			this.props.toggleArticleAutosavingState();
+
 			fetch('/api/article/save-article', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
@@ -49,7 +56,10 @@ class Opsbar extends Component {
 					content: this.props.articleDescription
 				})
 			})
-			.then(res => this.props.updateUserArticlesListItemDescription(this.props.articleId, this.props.articleDescription))
+			.then(res =>{
+				this.props.updateUserArticlesListItemDescription(this.props.articleId, this.props.articleDescription);
+				this.props.toggleArticleAutosavingState();
+			})
 			.catch(err => console.error('Error: ', err));
 		}
 	};
@@ -75,24 +85,42 @@ class Opsbar extends Component {
 		});
 	};
 
+	setAutosaveStatus = () => {
+		if (this.props.isAutosaving && this.props.articleId === -1) {
+			return `Creating article...`;
+
+		} else if (this.props.isAutosaving) {
+			return `Autosaving...`;
+
+		} else if (this.props.articleId !== -1) {
+			return `Article was saved.`;
+
+		} else {
+			return "New article opened."
+		}
+	}
+
 	render(){
 		return (
 			<div id="t4t-title-wrapper">
-				<form>
-					<input type="text" value={this.props.articleTitle} onChange={this.onTitleChange} name="title" placeholder="untitled article..." disabled={this.props.articleId === -1} />
-					<input type="text" value={this.props.articleDescription} onChange={this.onDescriptionChange} name="description" placeholder="article description..." disabled={this.props.articleId === -1} />
-				</form>
+				<div className="autosave-ops">
+					<form>
+						<input type="text" value={this.props.articleTitle} onChange={this.onTitleChange} name="title" placeholder="untitled article..." disabled={this.props.articleId === -1} />
+						<input type="text" value={this.props.articleDescription} onChange={this.onDescriptionChange} name="description" placeholder="article description..." disabled={this.props.articleId === -1} />
+					</form>
+					<p className={this.props.isAutosaving ? `active autosave`:`autosave`}>{ this.setAutosaveStatus() }</p>
+				</div>
 
 				<div className="btn-group">
 					<Button
-						disabled={this.props.articleId === -1}
+						disabled={this.props.articleId === -1 || this.props.isAutosaving}
 						extraClass="nav-bar-sign-in-button nav-bar-right-child"
 						handleClick={ () => this.props.resetT4TEditor() }
 						text="New Article"
 					/>
 
 					<Button
-						disabled={this.props.articleId === -1}
+						disabled={this.props.articleId === -1 || this.props.isAutosaving}
 						extraClass="nav-bar-sign-in-button nav-bar-right-child"
 						handleClick={ this.editArticlePic }
 						text="Upload Article Image"
@@ -105,7 +133,7 @@ class Opsbar extends Component {
 					/>
 
 					<Button
-						disabled={this.props.articleId === -1}
+						disabled={this.props.articleId === -1 || this.props.isAutosaving}
 						extraClass="nav-bar-sign-in-button nav-bar-right-child"
 						handleClick={ () => this.props.toggleSubmission() }
 						text="Publish Article"
@@ -125,6 +153,7 @@ Opsbar.propTypes = {
 	updateArticleDescription: PropTypes.func.isRequired,
 	updateUserArticlesListItemTitle: PropTypes.func.isRequired,
 	updateUserArticlesListItemDescription: PropTypes.func.isRequired,
+	toggleArticleAutosavingState: PropTypes.func.isRequired,
 	toggleSubmission: PropTypes.func.isRequired,
 };
 

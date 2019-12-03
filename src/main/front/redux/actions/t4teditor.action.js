@@ -1,4 +1,5 @@
 export const RESET_EDITOR = 'RESET_EDITOR';
+export const TOGGLE_AUTOSAVING_STATE = 'TOGGLE_AUTOSAVING_STATE';
 export const TOGGLE_ARTICLE_UPDATE_STATE = 'TOGGLE_ARTICLE_UPDATE_STATE';
 export const TOGGLE_EDITOR_SUBMIT_STATE = 'TOGGLE_EDITOR_SUBMIT_STATE';
 export const UPDATE_CURRENT_EDITOR_ARTICLE = 'UPDATE_CURRENT_EDITOR_ARTICLE';
@@ -8,6 +9,8 @@ export const UPDATE_EDITOR_STATE = 'UPDATE_EDITOR_STATE';
 export const UPDATE_ARTICLE_ID = 'UPDATE_ARTICLE_ID';
 
 export const resetT4TEditor = () => dispatch => dispatch({ type: RESET_EDITOR });
+
+export const toggleArticleAutosavingState = () => dispatch => dispatch({ type: TOGGLE_AUTOSAVING_STATE });
 
 export const toggleArticleUpdateState = id => dispatch => dispatch({ type: TOGGLE_ARTICLE_UPDATE_STATE });
 

@@ -16,6 +16,7 @@ import { getUserAccountDetails } from '../../redux/selectors/user.selector';
 import { getPopupActive, getPopupType } from '../../redux/selectors/popup.selector';
 import {
 	getIsSubmitting,
+	getIsAutosaving,
 	getCurrentArticleTitle,
 	getEditorState,
 	getCurrentArticleId,
@@ -32,6 +33,7 @@ import {
 import {
 	resetT4TEditor,
 	toggleEditorSubmitState,
+	toggleArticleAutosavingState,
 	updateArticleTitle,
 	updateCurrentEditorArticle,
 	updateArticleDescription,
@@ -67,6 +69,7 @@ class Write extends PureComponent {
 						isActive={ (this.props.popupType === POPUP_KEYS.ARTICLE_SUBMISSION) && this.props.isPopupActive }
 					/>
 					<Opsbar
+						isAutosaving={ this.props.isAutosaving }
 						articleId={ this.props.articleId }
 						articleTitle={ this.props.articleTitle }
 						articleDescription={ this.props.articleDescription }
@@ -76,14 +79,17 @@ class Write extends PureComponent {
 						updateArticleDescription={ this.props.updateArticleDescription }
 						updateUserArticlesListItemTitle={ this.props.updateUserArticlesListItemTitle }
 						updateUserArticlesListItemDescription={ this.props.updateUserArticlesListItemDescription }
+						toggleArticleAutosavingState={ this.props.toggleArticleAutosavingState }
 						toggleSubmission={ () => this.props.togglePopup(POPUP_KEYS.ARTICLE_SUBMISSION) }
 					/>
 					<div id="t4t-edit-wrapper">
 						<T4TEditor
+							isAutosaving={ this.props.isAutosaving }
 							isSubmitting={ this.props.isSubmitting }
 							user={ this.props.user }
 							articleId={ this.props.articleId }
 							toggleEditorSubmitState={ this.props.toggleEditorSubmitState }
+							toggleArticleAutosavingState={ this.props.toggleArticleAutosavingState }
 							updateArticleId={ this.props.updateArticleId }
 							editorState={ this.props.editorState }
 							updateEditorState={ this.props.updateEditorState }
@@ -107,6 +113,7 @@ class Write extends PureComponent {
 
 const mapStateToProps = state => ({
 	isSubmitting: getIsSubmitting(state),
+	isAutosaving: getIsAutosaving(state),
 	articleTitle: getCurrentArticleTitle(state),
 	articleDescription: getCurrentArticleDescription(state),
 	editorState: getEditorState(state),
@@ -120,6 +127,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
 	resetT4TEditor,
 	toggleEditorSubmitState,
+	toggleArticleAutosavingState,
 	updateCurrentEditorArticle,
 	updateArticleTitle,
 	updateArticleDescription,

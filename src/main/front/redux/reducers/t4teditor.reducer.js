@@ -3,6 +3,7 @@ import htmlToDraft from 'html-to-draftjs';
 
 import {
 	RESET_EDITOR,
+	TOGGLE_AUTOSAVING_STATE,
 	TOGGLE_ARTICLE_UPDATE_STATE,
 	TOGGLE_EDITOR_SUBMIT_STATE,
 	UPDATE_CURRENT_EDITOR_ARTICLE,
@@ -15,6 +16,7 @@ import {
 export const initialState = {
 	isUpdating: false,
 	isSubmitting: false,
+	isAutosaving: false,
 	id: -1,
 	title: "",
 	description: "",
@@ -26,6 +28,12 @@ export const t4teditor = (state = initialState, action) => {
 		case RESET_EDITOR:
 			return {
 				...initialState
+			};
+
+		case TOGGLE_AUTOSAVING_STATE:
+			return {
+				...state,
+				isAutosaving: !state.isAutosaving
 			};
 
 		case TOGGLE_ARTICLE_UPDATE_STATE:

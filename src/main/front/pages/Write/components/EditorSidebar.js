@@ -24,9 +24,7 @@ class EditorSidebar extends Component {
 
 				return(
 					<div key={reduxArticle.id} className="t4t-editable-article">
-						<a onClick={article => this.deleteArticleFromListById(reduxArticle.id)} className="t4t-article-delete">
-							x
-						</a>
+						<a onClick={article => this.deleteArticleFromListById(reduxArticle.id)} className="t4t-article-delete"> delete </a>
 						<a onClick={() => this.props.updateCurrentEditorArticle(reduxArticle)} className="t4t-article-content">
 							<h3> {article.title ? article.title : "untitled article"} </h3>
 							<p> {article.description ? article.description : <i>no description available...</i>} </p>
