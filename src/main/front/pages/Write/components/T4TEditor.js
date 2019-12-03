@@ -35,7 +35,7 @@ class T4TEditor extends Component {
 					return json;
 				})
 				.then(json => {
-					if (!isArticleActive) this.props.fetchUserArticles();
+					this.props.fetchUserArticles();
 					return json;
 				})
 				.catch(err => console.error('Error: ', err));

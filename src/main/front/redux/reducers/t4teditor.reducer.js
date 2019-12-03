@@ -1,5 +1,5 @@
-import { EditorState, ContentState, convertFromHTML } from 'draft-js';
-import htmlToDraft from 'html-to-draftjs';
+import { EditorState } from 'draft-js';
+import { stateFromHTML } from 'draft-js-import-html';
 
 import {
 	RESET_EDITOR,
@@ -50,15 +50,12 @@ export const t4teditor = (state = initialState, action) => {
 
 		case UPDATE_CURRENT_EDITOR_ARTICLE:
 			const articleHtml = action.payload.text !== null ? action.payload.text : '<p></p>';
-			const blocksFromHtml = convertFromHTML(articleHtml);
-			const newContentState = ContentState.createFromBlockArray(blocksFromHtml.contentBlocks, blocksFromHtml.entityMap);
-			
 			return {
 				...state,
 				id: action.payload.id || -1,
 				title: action.payload.title !== null ? action.payload.title : "",
 				description: action.payload.description !== null ? action.payload.description : "",
-				editorState: EditorState.createWithContent(newContentState)
+				editorState: EditorState.createWithContent(stateFromHTML(articleHtml))
 			};
 
 		case UPDATE_ARTICLE_DESCRIPTION:
