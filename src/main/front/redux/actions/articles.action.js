@@ -1,4 +1,3 @@
-import { getUserArticles } from '../selectors/articles.selector';
 import { RESET_EDITOR } from './t4teditor.action';
 
 export const UPDATE_USER_ARTICLE_LIST = 'UPDATE_USER_ARTICLE_LIST';
@@ -18,11 +17,7 @@ export const fetchUserArticles = (userEmail) => dispatch => {
     .catch(err => console.error('Error: ', err));
 };
 
-export const deleteFromUserArticlesList = id => (dispatch, getState) => {
-  // find where in articles array the current id exists:
-  const currentListOfUserArticles = getUserArticles(getState());
-  const currentIndex = currentListOfUserArticles.findIndex(article => article.articleID === id);
-  console.log(`Current index: `, currentIndex);
+export const deleteFromUserArticlesList = id => (dispatch) => {
   return fetch(`/api/article/delete-article`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -33,7 +28,7 @@ export const deleteFromUserArticlesList = id => (dispatch, getState) => {
     .then(json => {
       console.log(`FETCH WORKED`);
       if (json.status === 0) {
-        dispatch({ type: DELETE_FROM_USER_ARTICLE_LIST, payload: id, currentIndex });
+        dispatch({ type: DELETE_FROM_USER_ARTICLE_LIST, payload: id });
         dispatch({ type: RESET_EDITOR });
       }
     }).catch(error => console.error(`Couldn't delete article: `, id, `. Error: `, error));
