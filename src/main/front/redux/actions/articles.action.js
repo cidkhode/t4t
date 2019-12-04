@@ -26,7 +26,6 @@ export const deleteFromUserArticlesList = id => (dispatch) => {
     })
   }).then(resp => resp.json())
     .then(json => {
-      console.log(`FETCH WORKED`);
       if (json.status === 0) {
         dispatch({ type: DELETE_FROM_USER_ARTICLE_LIST, payload: id });
         dispatch({ type: RESET_EDITOR });

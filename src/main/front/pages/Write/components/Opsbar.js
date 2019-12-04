@@ -108,15 +108,10 @@ class Opsbar extends Component {
 	setAutosaveStatus = () => {
 		if (this.props.isAutosaving && this.props.articleId === -1) {
 			return `Creating article...`;
-
 		} else if (this.props.isAutosaving) {
 			return `Autosaving...`;
-
 		} else if (this.props.articleId !== -1) {
 			return `Article was saved`;
-
-		} else {
-			return "New article opened"
 		}
 	};
 
@@ -130,7 +125,6 @@ class Opsbar extends Component {
 					</form>
 					<p className={ this.props.isAutosaving ? 'active autosave' : 'autosave' }>{ this.setAutosaveStatus() }</p>
 				</div>
-
 				<div className="btn-group">
 					<Button
 						disabled={this.props.articleId === -1 || this.props.isAutosaving}
@@ -138,7 +132,6 @@ class Opsbar extends Component {
 						handleClick={ () => this.props.resetT4TEditor() }
 						text="New Article"
 					/>
-
 					<Button
 						disabled={this.props.articleId === -1 || this.props.isAutosaving}
 						extraClass="nav-bar-sign-in-button nav-bar-right-child"
@@ -151,7 +144,6 @@ class Opsbar extends Component {
 						style={ { display: 'none' } }
 						onChange={ this.submitArticlePicture }
 					/>
-
 					<Button
 						disabled={this.props.articleId === -1 || this.props.isAutosaving}
 						extraClass="nav-bar-sign-in-button nav-bar-right-child"
