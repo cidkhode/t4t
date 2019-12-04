@@ -171,7 +171,7 @@ export class MainPage extends Component {
                     let liked = false;
                     if(this.props.userAccountDetails.topics) {
                       for(let i = 0; i < this.props.userAccountDetails.topics.length; i++) {
-                        if(item.id == this.props.userAccountDetails.topics[i].id) {
+                        if(item.id === this.props.userAccountDetails.topics[i].id) {
                           liked = true;
                           break;
                         }
@@ -200,7 +200,7 @@ export class MainPage extends Component {
                     let liked = false;
                     if(this.props.userAccountDetails.topics) {
                       for(let i = 0; i < this.props.userAccountDetails.topics.length; i++) {
-                        if(item.id == this.props.userAccountDetails.topics[i].id) {
+                        if(item.id === this.props.userAccountDetails.topics[i].id) {
                           liked = true;
                           break;
                         }
