@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -65,6 +66,7 @@ export class Navbar extends Component {
       .then(json => {
         if (json.status === 0) {
           this.props.togglePopup(POPUP_KEYS.LOGIN_POPUP);
+          this.props.getProfile();
           localStorage.setItem(LOCAL_STORAGE_KEYS.LOGGED_IN_USER_EMAIL, email);
           this.props.fetchUserAccountDetails(email);
         }
@@ -98,6 +100,17 @@ export class Navbar extends Component {
                 handleClick={() => this.props.togglePopup(POPUP_KEYS.SIGNUP_POPUP)}
                 text="Register!"
               />
+            </>
+          }
+          { this.props.isLoggedIn &&
+            <>
+              <button className={`saved`}></button>
+              <button className={`notifications`}></button>
+              <NavLink exact to="/account">
+                <div className={`navProfile`}>
+                  <img src={`${this.props.userAccountDetails.profilePictureURL}?${new Date().getTime()}`}/>
+                </div>
+              </NavLink>
             </>
           }
           <Signin

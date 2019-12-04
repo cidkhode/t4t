@@ -160,7 +160,17 @@ export class MainPage extends Component {
   render() {
     return (
       <main id="homepage">
-        <Navbar handleLogin={ this.props.handleLogin } isLoggedIn={ this.props.isLoggedIn } />
+        <Navbar handleLogin={ this.props.handleLogin } isLoggedIn={ this.props.isLoggedIn } userAccountDetails={ this.props.userAccountDetails } getProfile={ this.props.getProfile } />
+        { this.props.showSidebar &&
+          < Sidebar
+            topics={ this.fetchTopics() }
+            onTopicSelection={ this.selectTopic }
+            onOpen={ this.openSideBar }
+            name="Cid Khode"
+            isOpen={ this.state.sideBarOpen }
+            selectedOption={ this.state.selectedSideBarOption }
+            />
+        }
         <div id="content">
           <div id="popnet">
             <div id="topics">
