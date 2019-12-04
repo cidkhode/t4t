@@ -113,10 +113,10 @@ class Opsbar extends Component {
 			return `Autosaving...`;
 
 		} else if (this.props.articleId !== -1) {
-			return `Article was saved`;
+			return `Article updated.`;
 
 		} else {
-			return "New article opened"
+			return ""
 		}
 	};
 
@@ -132,19 +132,20 @@ class Opsbar extends Component {
 				</div>
 
 				<div className="btn-group">
-					<Button
+					{ this.props.articleId !== -1 ? <Button
 						disabled={this.props.articleId === -1 || this.props.isAutosaving}
 						extraClass="nav-bar-sign-in-button nav-bar-right-child"
 						handleClick={ () => this.props.resetT4TEditor() }
 						text="New Article"
-					/>
+					/> : null }
 
-					<Button
+
+					{ this.props.articleId !== -1 ? <Button
 						disabled={this.props.articleId === -1 || this.props.isAutosaving}
 						extraClass="nav-bar-sign-in-button nav-bar-right-child"
 						handleClick={ this.editArticlePic }
 						text="Upload Article Image"
-					/>
+					/> : null }
 					<input
 						type="file"
 						ref={ (ref) => this.editArticlePicRef = ref }
@@ -152,12 +153,12 @@ class Opsbar extends Component {
 						onChange={ this.submitArticlePicture }
 					/>
 
-					<Button
+					{ this.props.articleId !== -1 ? <Button
 						disabled={this.props.articleId === -1 || this.props.isAutosaving}
 						extraClass="nav-bar-sign-in-button nav-bar-right-child"
 						handleClick={ () => this.props.toggleSubmission() }
 						text="Publish Article"
-					/>
+					/> : null }
 				</div>
 			</div>
 		)

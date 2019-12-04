@@ -116,6 +116,7 @@ class Write extends PureComponent {
 							fetchUserArticles={ this.fetchUserArticles }
 						/>
 						<EditorSidebar
+							articleId={ this.props.articleId }
 							userOwned={ this.props.userOwnedArticles }
 							fetchUserArticles={ this.fetchUserArticles }
 							deleteFromUserArticlesList={ this.props.deleteFromUserArticlesList }
