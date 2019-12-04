@@ -166,10 +166,13 @@ class Opsbar extends Component {
 }
 
 Opsbar.propTypes = {
+	isAutosaving: PropTypes.bool,
 	articleId: PropTypes.number.isRequired,
 	articleTitle: PropTypes.string,
 	articleDescription: PropTypes.string,
 	resetT4TEditor: PropTypes.func.isRequired,
+	fetchUserArticles: PropTypes.func.isRequired,
+	updateArticleId: PropTypes.func.isRequired,
 	updateArticleTitle: PropTypes.func.isRequired,
 	updateArticleDescription: PropTypes.func.isRequired,
 	updateUserArticlesListItemTitle: PropTypes.func.isRequired,

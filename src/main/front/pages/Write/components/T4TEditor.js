@@ -66,15 +66,12 @@ class T4TEditor extends Component {
 
 T4TEditor.propTypes = {
 	isAutosaving: PropTypes.bool,
-	isSubmitting: PropTypes.bool,
-	user: PropTypes.object,
 	articleId: PropTypes.number,
-	toggleEditorSubmitState: PropTypes.func,
-	updateArticleId: PropTypes.func,
 	editorState: PropTypes.object,
-	updateEditorState: PropTypes.func,
 	fetchUserArticles: PropTypes.func,
-	addToUserArticlesList: PropTypes.func,
+	toggleArticleAutosavingState: PropTypes.func,
+	updateArticleId: PropTypes.func,
+	updateEditorState: PropTypes.func,
 };
 
 export default T4TEditor;

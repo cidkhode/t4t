@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {DELETE_FROM_USER_ARTICLE_LIST} from "../../../redux/actions/articles.action";
 
 class EditorSidebar extends Component {
 	constructor(props) {
@@ -50,10 +49,11 @@ class EditorSidebar extends Component {
 }
 
 EditorSidebar.propTypes = {
+	articleId: PropTypes.number.isRequired,
 	userOwned: PropTypes.array.isRequired,
-	deleteFromUserArticlesList: PropTypes.func.isRequired,
-	updateCurrentEditorArticle: PropTypes.func.isRequired,
 	fetchUserArticles: PropTypes.func.isRequired,
+	updateCurrentEditorArticle: PropTypes.func.isRequired,
+	deleteFromUserArticlesList: PropTypes.func.isRequired,
 };
 
 export default EditorSidebar;
