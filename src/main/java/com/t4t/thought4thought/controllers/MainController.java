@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class MainController {
-    @GetMapping(value={"", "/", "/account", "/dashboard"})
+    @GetMapping(value={"", "/", "/account", "/dashboard", "/write"})
     public String mainPage() {
         return "index.html";
     }

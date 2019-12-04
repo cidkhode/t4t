@@ -18,7 +18,7 @@ export const ArticlePreview = props => (
                     <div className="article-actions">
                         <input type="button" className={`like ${props.liked ? 'liked' : ''}`} onClick={props.like} id={props.id}/>
                         <button className="save" />
-                        {props.type == "topic" && <p className="likes">{props.numLikes}</p>}
+                        {props.type === "topic" && <p className="likes">{props.numLikes}</p>}
                     </div>
                 </div>
             </div>
@@ -33,7 +33,8 @@ ArticlePreview.propTypes = {
     title: string.isRequired,
     description: string.isRequired,
     like: func.isRequired,
-    liked: bool.isRequired,
+    liked: bool,
+    numLikes: number,
 };
 
 export default ArticlePreview;

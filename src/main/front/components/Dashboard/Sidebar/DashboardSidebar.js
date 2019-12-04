@@ -61,8 +61,9 @@ export class DashboardSidebar extends Component {
 						<div className="edit-profile-hover-over">Edit</div>
 						<input
 							type="file"
+							accept=".png,.jpg,.jpeg"
 							ref={ (ref) => this.editProfilePicRef = ref }
-						 	style={{display: 'none'}}
+						 	style={ { display: 'none' } }
 							onChange={ this.props.submitProfilePic }
 						/>
 					</div>

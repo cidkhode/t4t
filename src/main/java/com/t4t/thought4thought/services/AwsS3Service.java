@@ -8,6 +8,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.t4t.thought4thought.entities.User;
+import com.t4t.thought4thought.repositories.ArticleRepository;
 import com.t4t.thought4thought.repositories.UserRepository;
 import com.t4t.thought4thought.utils.Constants;
 import com.t4t.thought4thought.utils.Thought4ThoughtResponseObject;
@@ -37,6 +38,9 @@ public class AwsS3Service {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    ArticleRepository articleRepository;
+
     @PostConstruct
     private void initializeAmazon() {
         AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
@@ -59,7 +63,7 @@ public class AwsS3Service {
             User userInSession = userRepository.findByEmail(userEmailInSession);
             String fileName = userInSession.getFirstName() + "_" +
                     userInSession.getLastName() + "_" + userInSession.getId() + "." + trueExtension;
-            String userProfilePictureURL = uploadProfileImage(multipartFile, fileName);
+            String userProfilePictureURL = uploadImageToS3(multipartFile, fileName, Constants.T4T_PROFILE_BUCKET_PATH);
             if (userProfilePictureURL.length() > 0) {
                 userRepository.setUserProfilePictureURLByEmail(userProfilePictureURL, userEmailInSession);
                 thought4ThoughtResponseObject.setStatus(0);
@@ -72,8 +76,8 @@ public class AwsS3Service {
         return thought4ThoughtResponseObject;
     }
 
-    private String uploadProfileImage(MultipartFile multipartFile, String fileName) {
-        String profileBucketName = this.bucketName + Constants.T4T_PROFILE_BUCKET_PATH;
+    private String uploadImageToS3(MultipartFile multipartFile, String fileName, String bucketPath) {
+        String profileBucketName = this.bucketName + bucketPath;
         String fileUrl = "";
         File file = null;
         try {
@@ -82,7 +86,9 @@ public class AwsS3Service {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        uploadUserProfileImage(fileName, file, profileBucketName);
+        s3.putObject(new PutObjectRequest(profileBucketName, fileName, file)
+		        .withCannedAcl(CannedAccessControlList.PublicRead));
+		file.delete();
 
         return fileUrl;
     }
@@ -95,17 +101,27 @@ public class AwsS3Service {
         return convFile;
     }
 
-    private void uploadUserProfileImage(String fileName, File file, String bucketName) {
-        s3.putObject(new PutObjectRequest(bucketName, fileName, file)
-                .withCannedAcl(CannedAccessControlList.PublicRead));
-        file.delete();
-    }
-
     public String deleteFileFromS3Bucket(String fileUrl) {
         String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
         s3.deleteObject(new DeleteObjectRequest(bucketName + "/", fileName));
         return "Successfully deleted";
     }
 
-
+	public Thought4ThoughtResponseObject saveArticleThumbnailPicture(MultipartFile file, String articleId) {
+        Thought4ThoughtResponseObject thought4ThoughtResponseObject =
+                new Thought4ThoughtResponseObject()
+                        .createResponse(Constants.T4T_ERROR_CODE, "Couldn't upload; Something went terribly wrong!");
+        if (articleId != null) {
+            String articleThumbnailImageURL = uploadImageToS3(file, file.getOriginalFilename(), Constants.T4T_ARTICLE_PICTURE_PATH);
+            if (articleThumbnailImageURL.length() > 0) {
+                articleRepository.setArticleThumbnailByID(articleThumbnailImageURL, Integer.parseInt(articleId));
+                thought4ThoughtResponseObject.setStatus(0);
+                thought4ThoughtResponseObject.setInfo("Uploaded a new picture!");
+            } else {
+                thought4ThoughtResponseObject.setStatus(-1);
+                thought4ThoughtResponseObject.setInfo("Couldn't upload a new picture!");
+            }
+        }
+        return thought4ThoughtResponseObject;
+    }
 }
