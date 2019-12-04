@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { convertToRaw } from "draft-js";
 import { Editor } from 'react-draft-wysiwyg';
-import { stateToHTML } from 'draft-js-export-html';
 
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
