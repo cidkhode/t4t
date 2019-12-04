@@ -10,14 +10,15 @@ export const updateUserArticlesListItemTitle = (id, title) => dispatch => dispat
 
 export const updateUserArticlesListItemDescription = (id, description) => dispatch => dispatch({ type: UPDATE_USER_ARTICLE_LIST_ITEM_DESCRIPTION, payload: { id, description } });
 
-export const fetchUserArticles = (userEmail) => dispatch => {
+export const fetchUserArticles = userEmail => dispatch => {
   return fetch(`/api/article/get-user-articles?userEmail=${userEmail}`, { headers: { 'Content-Type': 'application/json' }})
     .then(res => res.json())
     .then(list => dispatch({ type: UPDATE_USER_ARTICLE_LIST, payload: list }))
     .catch(err => console.error('Error: ', err));
 };
 
-export const deleteFromUserArticlesList = id => (dispatch) => {
+export const deleteFromUserArticlesList = (id, currentArticleID) => dispatch => {
+  if (id === currentArticleID) dispatch({ type: RESET_EDITOR });
   return fetch(`/api/article/delete-article`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -28,7 +29,6 @@ export const deleteFromUserArticlesList = id => (dispatch) => {
     .then(json => {
       if (json.status === 0) {
         dispatch({ type: DELETE_FROM_USER_ARTICLE_LIST, payload: id });
-        dispatch({ type: RESET_EDITOR });
       }
     }).catch(error => console.error(`Couldn't delete article: `, id, `. Error: `, error));
 };

@@ -111,7 +111,7 @@ class Opsbar extends Component {
 		} else if (this.props.isAutosaving) {
 			return `Autosaving...`;
 		} else if (this.props.articleId !== -1) {
-			return `Article was saved`;
+			return `Article updated.`;
 		}
 	};
 
@@ -126,30 +126,30 @@ class Opsbar extends Component {
 					<p className={ this.props.isAutosaving ? 'active autosave' : 'autosave' }>{ this.setAutosaveStatus() }</p>
 				</div>
 				<div className="btn-group">
-					<Button
+					{ this.props.articleId !== -1 ? <Button
 						disabled={this.props.articleId === -1 || this.props.isAutosaving}
 						extraClass="nav-bar-sign-in-button nav-bar-right-child"
 						handleClick={ () => this.props.resetT4TEditor() }
 						text="New Article"
-					/>
-					<Button
+					/> : null }
+					{ this.props.articleId !== -1 ? <Button
 						disabled={this.props.articleId === -1 || this.props.isAutosaving}
 						extraClass="nav-bar-sign-in-button nav-bar-right-child"
 						handleClick={ this.editArticlePic }
 						text="Upload Article Image"
-					/>
+					/> : null }
 					<input
 						type="file"
 						ref={ (ref) => this.editArticlePicRef = ref }
 						style={ { display: 'none' } }
 						onChange={ this.submitArticlePicture }
 					/>
-					<Button
+					{ this.props.articleId !== -1 ? <Button
 						disabled={this.props.articleId === -1 || this.props.isAutosaving}
 						extraClass="nav-bar-sign-in-button nav-bar-right-child"
 						handleClick={ () => this.props.toggleSubmission() }
 						text="Publish Article"
-					/>
+					/> : null }
 				</div>
 			</div>
 		)
@@ -157,10 +157,13 @@ class Opsbar extends Component {
 }
 
 Opsbar.propTypes = {
+	isAutosaving: PropTypes.bool,
 	articleId: PropTypes.number.isRequired,
 	articleTitle: PropTypes.string,
 	articleDescription: PropTypes.string,
 	resetT4TEditor: PropTypes.func.isRequired,
+	fetchUserArticles: PropTypes.func.isRequired,
+	updateArticleId: PropTypes.func.isRequired,
 	updateArticleTitle: PropTypes.func.isRequired,
 	updateArticleDescription: PropTypes.func.isRequired,
 	updateUserArticlesListItemTitle: PropTypes.func.isRequired,

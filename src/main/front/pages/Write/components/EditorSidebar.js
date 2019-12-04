@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import {DELETE_FROM_USER_ARTICLE_LIST} from "../../../redux/actions/articles.action";
 
 class EditorSidebar extends Component {
 	constructor(props) {
@@ -17,8 +16,8 @@ class EditorSidebar extends Component {
 				const { articleID, title, description, contentState, isPublished } = article;
 				return (
 					<div key={ articleID } className="t4t-editable-article">
-						<div onClick={ () => this.props.deleteFromUserArticlesList(articleID) } className="t4t-article-delete">Delete</div>
-						<a onClick={ () => this.props.updateCurrentEditorArticle({ id: articleID, title, description, text: contentState }) } className="t4t-article-content">
+						<div onClick={ () => this.props.deleteFromUserArticlesList(articleID, this.props.articleId) } className="t4t-article-delete">Delete</div>
+						<a onClick={ () => this.props.updateCurrentEditorArticle({ id: articleID, title, description, contentState }) } className="t4t-article-content">
 							<h3>{title ? title : "untitled article"}</h3>
 							<p>{description ? description : <i>No description available...</i>}</p>
 							<p>{!isPublished ? <i>Draft</i> : <strong>Published</strong>}</p>
@@ -50,10 +49,11 @@ class EditorSidebar extends Component {
 }
 
 EditorSidebar.propTypes = {
+	articleId: PropTypes.number.isRequired,
 	userOwned: PropTypes.array.isRequired,
-	deleteFromUserArticlesList: PropTypes.func.isRequired,
-	updateCurrentEditorArticle: PropTypes.func.isRequired,
 	fetchUserArticles: PropTypes.func.isRequired,
+	updateCurrentEditorArticle: PropTypes.func.isRequired,
+	deleteFromUserArticlesList: PropTypes.func.isRequired,
 };
 
 export default EditorSidebar;

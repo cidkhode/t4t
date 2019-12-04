@@ -53,7 +53,7 @@ export const t4teditor = (state = initialState, action) => {
 				id: action.payload.id || -1,
 				title: action.payload.title !== null ? action.payload.title : "",
 				description: action.payload.description !== null ? action.payload.description : "",
-				editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(action.payload.text))),
+				editorState: action.payload.contentState === null ? EditorState.createEmpty() : EditorState.createWithContent(convertFromRaw(JSON.parse(action.payload.contentState))),
 			};
 
 		case UPDATE_ARTICLE_DESCRIPTION:
