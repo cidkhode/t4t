@@ -7,7 +7,7 @@ import './ResultPreview.less';
 
 export const ResultPreview = props => (
     <div className={`result ${props.type}`} onClick={props.redirect}>
-        <img src={ProPic}/>
+        <div className={`image`}><img src={ProPic}/></div>
         <div className={`info`}>
             <div className={`title`}>{props.title}</div>
             <div className={`desc`}>{props.desc}</div>

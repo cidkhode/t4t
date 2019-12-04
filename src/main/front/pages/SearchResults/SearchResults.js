@@ -14,7 +14,7 @@ export class SearchResults extends Component {
             signinOpen: false,
             signupOpen: false,
             sideBarOpen: false,
-            filter: "all",
+            filter: "article",
             results: [0,1,2,3,4,5,6,7,8,9,10,11],
         }
     }
@@ -62,10 +62,10 @@ export class SearchResults extends Component {
                     <div className="searchFilters">
                       FILTER:
                       <form className="filterButtons">
-                        <span><input type="radio" name="filter" value="all" onChange={this.changeFilter} checked={this.state.filter == "all"}/><span>Show All</span></span>
+                        <span><input type="radio" name="filter" value="all" disabled={true} onChange={this.changeFilter} checked={this.state.filter == "all"}/><span>Show All</span></span>
                         <span><input type="radio" name="filter" value="article" onChange={this.changeFilter} checked={this.state.filter == "article"}/><span>Articles</span></span>
-                        <span><input type="radio" name="filter" value="topic" onChange={this.changeFilter} checked={this.state.filter == "topic"}/><span>Topics</span></span>
-                        <span><input type="radio" name="filter" value="user" onChange={this.changeFilter} checked={this.state.filter == "user"}/><span>Users</span></span>
+                        <span><input type="radio" name="filter" value="topic" disabled={true} onChange={this.changeFilter} checked={this.state.filter == "topic"}/><span>Topics</span></span>
+                        <span><input type="radio" name="filter" value="user" disabled={true} onChange={this.changeFilter} checked={this.state.filter == "user"}/><span>Users</span></span>
                       </form>
                     </div>
                     <div className="searchQuery">
