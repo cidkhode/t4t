@@ -96,5 +96,12 @@ public class ArticleController {
     public Thought4ThoughtResponseObject countNumLikes(@RequestBody Article article){
         return this.articleService.countNumArticleLikes(article);
     }
-    
+
+    /*search articles*/
+    @GetMapping(path= "/search")
+    public List<Article> searchArticles (@RequestParam("filter") String filter, @RequestParam("query") String query) {
+        System.out.println("-----\n-----" + query);
+        return articleService.searchArticles(query);
+    }
+
 }

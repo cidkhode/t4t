@@ -53,7 +53,7 @@ export class Navbar extends Component {
 
   onSearch = () => {
     console.log(`Searching for: `, this.state.searchText);
-    /*fetch('/api/search?filter=all&query=' + this.state.searchText, {
+    fetch('/api/article/search?filter=all&query=' + this.state.searchText, {
       method: 'GET'
     }).then(resp => resp.json())
     .then(json => {
@@ -61,7 +61,7 @@ export class Navbar extends Component {
         console.log(json);
       }
     })
-    .catch(error => console.error(error));*/
+    .catch(error => console.error(error));
   };
 
   sendLogin = (values) => {
@@ -117,7 +117,7 @@ export class Navbar extends Component {
             <Link to="/write">
               <Button
                 extraClass="nav-bar-sign-up-button"
-                handleClick={() => { return; }}
+                handleClick={() => { }}
                 text="Write"
               />
             </Link>
