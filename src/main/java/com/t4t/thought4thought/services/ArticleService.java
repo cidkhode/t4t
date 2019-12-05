@@ -7,6 +7,7 @@ import com.t4t.thought4thought.utils.Thought4ThoughtResponseObject;
 import static com.t4t.thought4thought.utils.Constants.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -157,5 +158,9 @@ public class ArticleService{
         }
         return thought4ThoughtResponseObject;
 	}
+
+	public List<Article> searchArticles(String searchingString){
+         return articleRepository.searchArticlesByTitle(searchingString);
+    }
   
 }
