@@ -160,7 +160,7 @@ public class ArticleService{
 	}
 
 	public List<Article> searchArticles(String searchingString){
-         return articleRepository.searchArticlesByTitle(searchingString);
+         return articleRepository.findByTitleContaining(searchingString);
     }
   
 }

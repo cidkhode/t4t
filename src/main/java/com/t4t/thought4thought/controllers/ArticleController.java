@@ -98,8 +98,9 @@ public class ArticleController {
     }
 
     /*search articles*/
-    @PostMapping(path= "/search")
+    @GetMapping(path= "/search")
     public List<Article> searchArticles (@RequestParam("filter") String filter, @RequestParam("query") String query) {
+        System.out.println("-----\n-----" + query);
         return articleService.searchArticles(query);
     }
 
