@@ -85,7 +85,6 @@ export class Navbar extends Component {
   render() {
     return (
       <div className="navhead">
-
         <Link to="/" className="navbar-left-floated-content">
           <button className="logo">LOGO</button>
         </Link>
