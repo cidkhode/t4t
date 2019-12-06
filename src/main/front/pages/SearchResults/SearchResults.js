@@ -79,7 +79,7 @@ export class SearchResults extends Component {
                     {this.props.searchResults.length > 0 && this.props.searchResults.map((item, key) => 
                       <Link to={`/article/${item.articleID}`}>
                         <ResultPreview 
-                          type={'user'}
+                          type={'article'}
                           picture={'https://picsum.photos/150'}
                           title={ item.title }  
                           desc={ item.description }
