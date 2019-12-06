@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Navbar from '../../components/Navbar/Navbar';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import ResultPreview from '../../components/ResultPreview/ResultPreview';
+import { getSearchResults } from '../../redux/selectors/navbar.selector';
+import { Link } from 'react-router-dom';
 
 import './SearchResults.less';
 
 export class SearchResults extends Component {
     constructor(props) {
         super(props);
+        console.dir(props);
 
         this.state = {
             scrollInterval: 0,
@@ -15,7 +19,6 @@ export class SearchResults extends Component {
             signupOpen: false,
             sideBarOpen: false,
             filter: "article",
-            results: [0,1,2,3,4,5,6,7,8,9,10,11],
         }
     }
 
@@ -56,7 +59,7 @@ export class SearchResults extends Component {
     render() {
         return (
             <div>
-                <Navbar handleLogin={ this.props.handleLogin } isLoggedIn={ this.props.isLoggedIn } />
+                <Navbar handleLogin={ this.props.handleLogin } isLoggedIn={ this.props.isLoggedIn }/>
                 <div className="searchContent">
                   <div className="searchInfo">
                     <div className="searchFilters">
@@ -73,14 +76,18 @@ export class SearchResults extends Component {
                     </div>
                   </div>
                   <div className="searchResults" ref="results">
-                    {this.state.results.map((item, key) => 
-                      <ResultPreview 
-                        type={'user'}
-                        picture={'https://picsum.photos/150'}
-                        title={'Important Writer Dude'}
-                        desc={'Release your grip from that which you\'ve been holding back for a while. Release it swiftly, release it acceptingly. Don\'t look back and rage against its potential to reappear. Don\'t let others dictate your actions. Let your determination show. The cold never bothered me anyway.'}
-                      />
+                    {this.props.searchResults.length > 0 && this.props.searchResults.map((item, key) => 
+                      <Link to={`/article/${item.articleID}`}>
+                        <ResultPreview 
+                          type={'user'}
+                          picture={'https://picsum.photos/150'}
+                          title={ item.title }  
+                          desc={ item.description }
+                          key={ key }
+                        />
+                      </Link>
                     )}
+                    {this.props.searchResults.length == 0 && <div>No results found.</div>}
                     <div className="endOfResults"><span className="toTop" onClick={this.toTop} title="Return to the Top of Results">Back to Top</span></div>
                   </div>
                 </div>
@@ -99,4 +106,8 @@ export class SearchResults extends Component {
     }
 }
 
-export default SearchResults;
+const mapStateToProps = state => ({
+	searchResults: getSearchResults(state),
+});
+
+export default connect(mapStateToProps)(SearchResults);

@@ -14,6 +14,7 @@ import Searchbar from '../Searchbar/Searchbar';
 import { togglePopup } from '../../redux/actions/popup.action';
 import { fetchUserAccountDetails } from '../../redux/actions/user.action';
 import { getPopupActive, getPopupType } from '../../redux/selectors/popup.selector';
+import { updateSearchResults } from '../../redux/actions/navbar.action';
 
 /* Images */
 import searchImg from '../../assets/search.png'
@@ -43,6 +44,7 @@ export class Navbar extends Component {
     super(props);
     this.state = {
       searchText: '',
+      results: []
     }
   }
 
@@ -53,12 +55,12 @@ export class Navbar extends Component {
 
   onSearch = () => {
     console.log(`Searching for: `, this.state.searchText);
-    fetch('/api/article/search?filter=all&query=' + this.state.searchText, {
-      method: 'GET'
-    }).then(resp => resp.json())
+    fetch('/api/article/search?filter=article&query=' + this.state.searchText)
+    .then(resp => resp.json())
     .then(json => {
       if(json) {
         console.log(json);
+        this.props.updateSearchResults(json);
       }
     })
     .catch(error => console.error(error));
@@ -95,6 +97,7 @@ export class Navbar extends Component {
               onSearch={ this.onSearch }
               onSearchInputChange={ this.onSearchInputChange }
               searchIconPath={ searchImg }
+              results={this.state.results}
             />
         </div>
         <div className="navbar-right-floated-content">
@@ -145,6 +148,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   togglePopup,
   fetchUserAccountDetails,
+  updateSearchResults,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
