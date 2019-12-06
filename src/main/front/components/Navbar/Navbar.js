@@ -14,7 +14,7 @@ import Searchbar from '../Searchbar/Searchbar';
 import { togglePopup } from '../../redux/actions/popup.action';
 import { fetchUserAccountDetails } from '../../redux/actions/user.action';
 import { getPopupActive, getPopupType } from '../../redux/selectors/popup.selector';
-import { updateSearchResults } from '../../redux/actions/navbar.action';
+import { updateSearchResults, updateSearchQuery } from '../../redux/actions/navbar.action';
 
 /* Images */
 import searchImg from '../../assets/search.png'
@@ -55,6 +55,7 @@ export class Navbar extends Component {
 
   onSearch = () => {
     console.log(`Searching for: `, this.state.searchText);
+    this.props.updateSearchQuery(this.state.searchText);
     fetch('/api/article/search?filter=article&query=' + this.state.searchText)
     .then(resp => resp.json())
     .then(json => {
@@ -149,6 +150,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   togglePopup,
   fetchUserAccountDetails,
   updateSearchResults,
+  updateSearchQuery,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
