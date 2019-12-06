@@ -1,4 +1,5 @@
 import {
+	UPDATE_CURRENT_READ_ARTICLE,
 	UPDATE_USER_ARTICLE_LIST,
 	UPDATE_USER_ARTICLE_LIST_ITEM_TITLE,
 	UPDATE_USER_ARTICLE_LIST_ITEM_DESCRIPTION,
@@ -7,11 +8,18 @@ import {
 } from '../actions/articles.action.js';
 
 export const initialState = {
+	reading: {},
 	userOwned: []
 };
 
 export const articles = (state = initialState, action) => {
 	switch (action.type) {
+		case UPDATE_CURRENT_READ_ARTICLE:
+		return {
+			...state,
+			reading: action.payload
+		};
+
 		case UPDATE_USER_ARTICLE_LIST:
 			return {
 				...state,
