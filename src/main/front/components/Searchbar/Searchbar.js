@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 export const Searchbar = props => (
   <div className={ `t4t-search-bar-container ${props.extraClass}` }>
     <NavLink to={`/search`} className="t4t-search-bar-button">
-      { props.searchIconPath && <img alt="search-icon" src={ props.searchIconPath } onClick={props.onSearch}/> }
+      { props.searchIconPath && <img alt="search-icon" src={ `/${props.searchIconPath}` } onClick={props.onSearch}/> }
     </NavLink>
     <input
       className="t4t-search-bar"
