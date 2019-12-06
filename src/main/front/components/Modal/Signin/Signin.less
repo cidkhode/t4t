@@ -19,6 +19,7 @@
 			margin: 0 0 25px 0;
 
 			input[type="email"], input[type="password"] {
+				font-family: inherit;
 				border: none;
 				caret-color: white;
 				padding: 0 0 12px 0;
@@ -49,6 +50,9 @@
 				border: none;
 				padding: 0;
 				cursor: pointer;
+				position: relative;
+				left: 0px;
+				transition: 0.3s;
 				span {
 					margin-right: 10px;
 				}
@@ -84,6 +88,10 @@
 						right: -3px;
 					}
 				}
+			}
+			.formik-sign-in-button:hover {
+				left: 5px;
+				transition: 0.3s;
 			}
 		}
 
