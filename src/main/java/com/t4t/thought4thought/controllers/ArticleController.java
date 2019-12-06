@@ -30,8 +30,8 @@ public class ArticleController {
 
     /* get article */
     @GetMapping(path = "/get-article")
-    public Article getArticle(@RequestBody Article article) {
-        return articleService.getUserArticleByArticleID(article.getArticleID());
+    public Article getArticle(@RequestParam("articleId")String articleID) {
+        return articleService.getUserArticleByArticleID(Integer.parseInt(articleID));
     }
 
     @GetMapping(path = "/get-user-articles")

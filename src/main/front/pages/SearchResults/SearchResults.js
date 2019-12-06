@@ -57,6 +57,7 @@ export class SearchResults extends Component {
     }
 
     render() {
+        console.log(this.props.searchResults);
         return (
             <div>
                 <Navbar handleLogin={ this.props.handleLogin } isLoggedIn={ this.props.isLoggedIn }/>
@@ -76,14 +77,13 @@ export class SearchResults extends Component {
                     </div>
                   </div>
                   <div className="searchResults" ref="results">
-                    {this.props.searchResults.length > 0 && this.props.searchResults.map((item, key) => 
-                      <Link to={`/article/${item.articleID}`}>
+                    {this.props.searchResults.length > 0 && this.props.searchResults.map(item => 
+                      <Link to={`/article/${item.articleID}`} key={item.articleID}>
                         <ResultPreview 
                           type={'article'}
                           picture={'https://picsum.photos/150'}
                           title={ item.title }  
                           desc={ item.description }
-                          key={ key }
                         />
                       </Link>
                     )}

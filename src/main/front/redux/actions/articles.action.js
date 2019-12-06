@@ -1,5 +1,6 @@
 import { RESET_EDITOR } from './t4teditor.action';
 
+export const UPDATE_CURRENT_READ_ARTICLE = 'UPDATE_CURRENT_READ_ARTICLE';
 export const UPDATE_USER_ARTICLE_LIST = 'UPDATE_USER_ARTICLE_LIST';
 export const UPDATE_USER_ARTICLE_LIST_ITEM_TITLE = 'UPDATE_USER_ARTICLE_LIST_ITEM_TITLE';
 export const UPDATE_USER_ARTICLE_LIST_ITEM_DESCRIPTION = 'UPDATE_USER_ARTICLE_LIST_ITEM_DESCRIPTION';
@@ -15,6 +16,13 @@ export const fetchUserArticles = userEmail => dispatch => {
     .then(res => res.json())
     .then(list => dispatch({ type: UPDATE_USER_ARTICLE_LIST, payload: list }))
     .catch(err => console.error('Error: ', err));
+};
+
+export const fetchArticleByID = id => dispatch => {
+  return fetch(`/api/article/get-article?articleId=${id}`, { headers: { 'Content-Type': 'application/json' }})
+    .then(res => res.json())
+    .then(json => dispatch({ type: UPDATE_CURRENT_READ_ARTICLE, payload: json }))
+    .catch(err => console.error(`Error fetching article id-${id}: `, err));
 };
 
 export const deleteFromUserArticlesList = (id, currentArticleID) => dispatch => {
