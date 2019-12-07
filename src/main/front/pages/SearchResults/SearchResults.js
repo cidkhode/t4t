@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Navbar from '../../components/Navbar/Navbar';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import ResultPreview from '../../components/ResultPreview/ResultPreview';
-import { getSearchResults } from '../../redux/selectors/navbar.selector';
+import { getSearchResults,getSearchQuery } from '../../redux/selectors/navbar.selector';
 import { Link } from 'react-router-dom';
 
 import './SearchResults.less';
@@ -11,8 +11,6 @@ import './SearchResults.less';
 export class SearchResults extends Component {
     constructor(props) {
         super(props);
-        console.dir(props);
-
         this.state = {
             scrollInterval: 0,
             signinOpen: false,
@@ -23,6 +21,8 @@ export class SearchResults extends Component {
     }
 
     openSideBar = () => this.setState({ sideBarOpen: !this.state.sideBarOpen });
+
+    selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption });
 
     fetchTopics = () => {
       return [
@@ -57,7 +57,7 @@ export class SearchResults extends Component {
     }
 
     render() {
-        console.log(this.props.searchResults);
+        console.log(`PROPS`, this.props);
         return (
             <div>
                 <Navbar handleLogin={ this.props.handleLogin } isLoggedIn={ this.props.isLoggedIn }/>
@@ -66,28 +66,28 @@ export class SearchResults extends Component {
                     <div className="searchFilters">
                       FILTER:
                       <form className="filterButtons">
-                        <span><input type="radio" name="filter" value="all" disabled={true} onChange={this.changeFilter} checked={this.state.filter == "all"}/><span>Show All</span></span>
-                        <span><input type="radio" name="filter" value="article" onChange={this.changeFilter} checked={this.state.filter == "article"}/><span>Articles</span></span>
-                        <span><input type="radio" name="filter" value="topic" disabled={true} onChange={this.changeFilter} checked={this.state.filter == "topic"}/><span>Topics</span></span>
-                        <span><input type="radio" name="filter" value="user" disabled={true} onChange={this.changeFilter} checked={this.state.filter == "user"}/><span>Users</span></span>
+                        <span><input type="radio" name="filter" value="all" disabled={true} onChange={this.changeFilter} checked={this.state.filter === "all"}/><span>Show All</span></span>
+                        <span><input type="radio" name="filter" value="article" onChange={this.changeFilter} checked={this.state.filter === "article"}/><span>Articles</span></span>
+                        <span><input type="radio" name="filter" value="topic" disabled={true} onChange={this.changeFilter} checked={this.state.filter === "topic"}/><span>Topics</span></span>
+                        <span><input type="radio" name="filter" value="user" disabled={true} onChange={this.changeFilter} checked={this.state.filter === "user"}/><span>Users</span></span>
                       </form>
                     </div>
-                    <div className="searchQuery">
-                      You searched for: "<span style={{fontWeight: "700"}}>{this.props.query ? this.props.query : "Important Writer Dude"}</span>"
-                    </div>
+                    {this.props.searchQuery ? <div className="searchQuery">
+                      You searched for: "<span style={{fontWeight: "700"}}>{this.props.searchQuery}</span>"
+                    </div> : <div className="searchQuery"><span style={{fontWeight: "700"}}>Showing results without a query.</span></div>}
                   </div>
                   <div className="searchResults" ref="results">
-                    {this.props.searchResults.length > 0 && this.props.searchResults.map(item => 
+                    {this.props.searchResults.length > 0 && this.props.searchResults.map((item, key) => 
                       <Link to={`/article/${item.articleID}`} key={item.articleID}>
                         <ResultPreview 
                           type={'article'}
-                          picture={'https://picsum.photos/150'}
+                          picture={'https://picsum.photos/' + (150 + key)}
                           title={ item.title }  
                           desc={ item.description }
                         />
                       </Link>
                     )}
-                    {this.props.searchResults.length == 0 && <div>No results found.</div>}
+                    {this.props.searchResults.length === 0 && <div>No results found.</div>}
                     <div className="endOfResults"><span className="toTop" onClick={this.toTop} title="Return to the Top of Results">Back to Top</span></div>
                   </div>
                 </div>
@@ -96,7 +96,7 @@ export class SearchResults extends Component {
                         topics={ this.props.userAccountDetails.topics ? this.props.userAccountDetails.topics : this.fetchTopics() }
                         onTopicSelection={ this.selectTopic }
                         onOpen={ this.openSideBar }
-                        name="Cid Khode"
+                        name={ this.props.userAccountDetails.name }
                         isOpen={ this.state.sideBarOpen }
                         selectedOption={ this.state.selectedSideBarOption }
                     />
@@ -107,7 +107,8 @@ export class SearchResults extends Component {
 }
 
 const mapStateToProps = state => ({
-	searchResults: getSearchResults(state),
+  searchResults: getSearchResults(state),
+  searchQuery: getSearchQuery(state),
 });
 
 export default connect(mapStateToProps)(SearchResults);

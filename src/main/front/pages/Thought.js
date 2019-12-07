@@ -145,14 +145,10 @@ export class Thought extends Component {
       <Router>
         <>
           <Switch>
-            <Route path="/article/:id">
-              <Route
-                component={ Article }
-                isLoggedIn={ this.props.isLoggedIn }
-                isLoading={ this.props.isLoading }
-                waitingToCheck={ this.props.waitingToCheck }
-              />
-            </Route>
+            <Route
+              path="/article/:id"
+              render={(props) => <Article {...props} isLoggedIn={ this.props.isLoggedIn } isLoading={ this.props.isLoading } waitingToCheck={ this.props.waitingToCheck } userAccountDetails={ this.state.userAccountDetails } />}
+            />
 
             <Route path="/write">
               <CustomRouter
@@ -173,6 +169,7 @@ export class Thought extends Component {
                   getProfile: this.getProfile,
                   savedArticles: this.getSavedArticles(),
                   followingUsers: this.getFollowingUsers(),
+                  userAccountDetails: this.state.userAccountDetails,
                 } }
               />
             </Route>
@@ -192,7 +189,7 @@ export class Thought extends Component {
               />
             </Route>
             <Route path="/search">
-              <CustomRouter 
+              <CustomRouter
                 component={ SearchResults }
                 isLoggedIn={ this.props.isLoggedIn }
                 isLoading={ this.props.isLoading }

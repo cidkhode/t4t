@@ -235,7 +235,7 @@ export class MainPage extends Component {
                 <div className="list">
                     <DetailedPreview
                       image={'https://picsum.photos/800/300'}
-                      title={"NJIT Student attempts to code a website unsuccessfully"}
+                      title={"NJIT Student codes a single page application"}
                       description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
                     />
                 </div>
@@ -252,7 +252,7 @@ export class MainPage extends Component {
                       key={ key }
                       type={"vertical"}
                       image={'https://picsum.photos/450/250'}
-                      title={"NJIT Student attempts to code a website unsuccessfully"}
+                      title={"NJIT Student codes a single page application"}
                       description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
                     />
                   )}
@@ -281,7 +281,7 @@ export class MainPage extends Component {
                     key={ key }
                     type={"horizontal"}
                     image={'https://picsum.photos/200'}
-                    title={"NJIT Student attempts to code a website unsuccessfully"}
+                    title={"NJIT Student codes a single page application"}
                     description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
                   />
                 )}
@@ -296,7 +296,7 @@ export class MainPage extends Component {
                     key={ key }
                     type={"horizontal"}
                     image={'https://picsum.photos/201'}
-                    title={"NJIT Student attempts to code a website unsuccessfully"}
+                    title={"NJIT Student codes a single page application"}
                     description={"A lot of filler text that I actually spent time to write, but simply to test the design and overall look of this article preview, and it seems like it's going to work, but who knows"}
                   />
                 )}
@@ -305,15 +305,15 @@ export class MainPage extends Component {
           </div>
 
         </div>
-        { this.props.showSidebar &&
-        <Sidebar
-          topics={ this.props.userAccountDetails.topics ? this.props.userAccountDetails.topics : this.fetchTopics() }
-          onTopicSelection={ this.selectTopic }
-          onOpen={ this.openSideBar }
-          name="Cid Khode"
-          isOpen={ this.state.sideBarOpen }
-          selectedOption={ this.state.selectedSideBarOption }
-        />
+        { this.props.isLoggedIn ?
+          <Sidebar
+            topics={ this.props.userAccountDetails.topics ? this.props.userAccountDetails.topics : this.fetchTopics() }
+            onTopicSelection={ this.selectTopic }
+            onOpen={ this.openSideBar }
+            name={ this.props.userAccountDetails.name }
+            isOpen={ this.state.sideBarOpen }
+            selectedOption={ this.state.selectedSideBarOption }
+          /> : <></>
         }
       </main>
     )
