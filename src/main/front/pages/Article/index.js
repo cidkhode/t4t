@@ -25,7 +25,7 @@ class Article extends PureComponent {
 	render() {
 		return(
 			<>
-				<Navbar isLoggedIn />
+				<Navbar handleLogin={ this.props.handleLogin } isLoggedIn={ this.props.isLoggedIn } />
 				<main id="content" className="article">
 					{ !Object.keys(this.props.currentlyReading).length ? <ArticleLoad /> : <ArticleView article={ this.props.currentlyReading } /> }
 				</main>
