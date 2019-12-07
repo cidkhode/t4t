@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Searchbar.less';
+import { NavLink } from 'react-router-dom';
 
 export const Searchbar = props => (
   <div className={ `t4t-search-bar-container ${props.extraClass}` }>
-    <button onClick={ props.onSearch } className="t4t-search-bar-button">
-      { props.searchIconPath && <img alt="search-icon" src={ props.searchIconPath }/> }
-    </button>
+    <NavLink to={`/search`} className="t4t-search-bar-button">
+      { props.searchIconPath && <img alt="search-icon" src={ `/${props.searchIconPath}` } onClick={props.onSearch}/> }
+    </NavLink>
     <input
       className="t4t-search-bar"
       type="text"
@@ -28,7 +29,7 @@ Searchbar.propTypes = {
 
 Searchbar.defaultProps = {
   searchIconPath: '',
-  searchInputPlaceholder: 'Search Thought4Thought',
+  searchInputPlaceholder: 'Search Thought4Thought...',
   extraClass: '',
 };
 

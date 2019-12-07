@@ -56,4 +56,8 @@ public interface ArticleRepository extends CrudRepository<Article, Integer> {
     @Transactional
     @Query("update Article article set article.thumbnailImageURL = ?1 where article.articleID = ?2")
 	void setArticleThumbnailByID(String thumbnailImageURL, int articleID);
+
+    @Transactional
+    @Query("select article from Article article where article.title like %?1% and article.isPublished = true")
+    List<Article> findByTitleContaining(String searchString);
 }

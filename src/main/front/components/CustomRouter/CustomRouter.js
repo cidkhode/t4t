@@ -10,7 +10,7 @@ export class CustomRouter extends Component {
 
     if (isLoading) {
       return <LoadingIcon />
-   	} else if (waitingToCheck || isLoggedIn || window.location.pathname === '/') {
+   	} else if (waitingToCheck || isLoggedIn || window.location.pathname === '/' || window.location.pathname === '/search') {
       return <Component { ...componentProps } isLoggedIn={ isLoggedIn } />;
    	} else {
       return <Redirect to='/' from={`${window.location.pathname}`} />;

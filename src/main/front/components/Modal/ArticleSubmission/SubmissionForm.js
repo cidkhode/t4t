@@ -9,7 +9,7 @@ class SubmissionForm extends Component {
 		this.state = {
 			stepCtr: 1,
 			maxStep: 1,
-			lastStep: 3,
+			lastStep: 2,
 		}
 	}
 
@@ -114,11 +114,7 @@ class SubmissionForm extends Component {
 									<Field type="text" name="add_ref" placeholder="Add Reference" />
 									<ErrorMessage name="add_ref" component="div" />
 								</div>
-								<div id="step-2" className={`step ${this.state.stepCtr > 1 ? "active" : ""} ${this.state.stepCtr === 3 ? "active-hide" : ""}`}>
-									<Field type="textarea" name="description" placeholder="Description" />
-									<ErrorMessage name="description" component="div" />									
-								</div>
-								<div id="step-3" className={`step ${this.state.stepCtr === 3 ? "active" : ""}`}>
+								<div id="step-2" className={`step ${this.state.stepCtr === 2 ? "active" : ""}`}>
 									<p> { this.props.articleTitle || "untitled article" } </p>
 									<p> { values.description } </p>
 									<p> { values.tags } </p>
@@ -131,7 +127,7 @@ class SubmissionForm extends Component {
 										<div className={`arrow arrow-left ${this.state.stepCtr === 2 ? "active" : ""}`} />
 									</div>
 									<p> Continue </p>
-									<div onClick={() => this.getNextStep(isFormPageInvalid)} className={`arrow-wrap ${isFormPageInvalid ? 'disabled' : ''}` }>
+									<div onClick={() => this.getNextStep(false)} className={`arrow-wrap ${false ? 'disabled' : ''}` }>
 										<div className={`arrow arrow-right ${this.state.stepCtr < 3 ? "active" : ""}`} />
 									</div>
 								</div>
@@ -139,8 +135,7 @@ class SubmissionForm extends Component {
 									<a href="#" onClick={ this.props.closeModal }> Cancel </a>
 									<div className="step-counter">
 										<p className={`${(this.state.stepCtr > 1) ? '' : 'active'}`}> 1 </p>
-										<p className={`${(this.state.stepCtr >= 2) ? 'active' : 'disabled'}`}> 2 </p>
-										<p className="disabled"> 3 </p>
+										<p className="disabled"> 2 </p>
 									</div>
 									<a href="#" style={{opacity: 0, pointerEvents: 'none'}}> Cancel </a>
 								</div>

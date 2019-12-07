@@ -1,0 +1,121 @@
+.result {
+    border: 0.05rem solid #707070;
+    border-radius: 20px;
+    padding: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    flex: 1 1 0.3333333333333333333333333%;
+    margin: 0 40px 40px 0;
+
+    .image {
+        min-height: 100px;
+        max-height: 120px;
+        min-width: 100px;
+        max-width: 120px;
+        padding: 0 0 0 0;
+        margin: 0 10px 0 0;
+    }
+
+    img { 
+        max-width: 100%;
+        max-height: 100%;
+        display: inline-block;
+        margin: 0 auto;
+        vertical-align: middle;
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column;
+        .title {
+            font-size: 20px;
+            overflow: hidden;
+            font-weight: 700;
+            margin: 0 80px 0 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+        }
+        .desc {
+            min-width: 250px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            line-height: 22px;
+        }
+    }
+
+    .follow {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        font-family: inherit;
+        background: none;
+        border: 0.05rem solid #707070;
+        border-radius: 5px;
+        font-weight: 300;
+        font-size: 14px;
+        padding: 2px 10px 3px 10px;
+        transition: 0.3s;
+    }
+    
+    .follow:hover {
+        background: #2d9cdb;
+        color: white;
+        border-color: #2d9cdb;
+        transition: 0.3s;
+    }
+
+    @media screen and (max-width: 1200px) {
+        display: flex;
+        flex: 1 1 0.5%;
+        .image {
+            min-width: 80px;
+            min-height: 80px;
+        }
+        .info {
+            .title {
+
+            }
+            .desc {
+                -webkit-line-clamp: 3;
+                line-height: 20px;
+            }
+        }
+    }
+
+    @media screen and (max-width: 750px) {
+        display: flex;
+        flex: 1 1 1%;
+        margin: 0 30px 30px 15px;
+        min-width: 275px;
+        .image {
+            min-width: 60px;
+            max-width: 80px;
+            min-height: 60px;
+            max-height: 80px;
+            margin: 0 5px 0 0;
+        }
+        .info {
+            .title {
+                margin: 0 70px 0 0;
+            }
+            .desc {
+                min-width: 225px;
+                -webkit-line-clamp: 2;
+                line-height: 18px;
+            }
+        }
+    }
+}
+
+.result.user {
+    .image {
+        border-radius: 250px;
+    }
+}

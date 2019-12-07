@@ -14,6 +14,7 @@ import Searchbar from '../Searchbar/Searchbar';
 import { togglePopup } from '../../redux/actions/popup.action';
 import { fetchUserAccountDetails } from '../../redux/actions/user.action';
 import { getPopupActive, getPopupType } from '../../redux/selectors/popup.selector';
+import { updateSearchResults, updateSearchQuery } from '../../redux/actions/navbar.action';
 
 /* Images */
 import searchImg from '../../assets/search.png'
@@ -43,6 +44,7 @@ export class Navbar extends Component {
     super(props);
     this.state = {
       searchText: '',
+      results: []
     }
   }
 
@@ -53,6 +55,16 @@ export class Navbar extends Component {
 
   onSearch = () => {
     console.log(`Searching for: `, this.state.searchText);
+    this.props.updateSearchQuery(this.state.searchText);
+    fetch('/api/article/search?filter=article&query=' + this.state.searchText)
+    .then(resp => resp.json())
+    .then(json => {
+      if(json) {
+        console.log(json);
+        this.props.updateSearchResults(json);
+      }
+    })
+    .catch(error => console.error(error));
   };
 
   sendLogin = (values) => {
@@ -76,18 +88,20 @@ export class Navbar extends Component {
   render() {
     return (
       <div className="navhead">
-
         <Link to="/" className="navbar-left-floated-content">
-          <button className="logo">LOGO</button>
+          <button className="logo">Home</button>
         </Link>
-        <div className="navbar-right-floated-content">
+        <div className="navbar-center-content">
           <Searchbar
-            extraClass="navbar-search-bar nav-bar-right-child"
-            searchInputValue={ this.state.searchText }
-            onSearch={ this.onSearch }
-            onSearchInputChange={ this.onSearchInputChange }
-            searchIconPath={ searchImg }
-          />
+              extraClass="navbar-search-bar nav-bar-right-child"
+              searchInputValue={ this.state.searchText }
+              onSearch={ this.onSearch }
+              onSearchInputChange={ this.onSearchInputChange }
+              searchIconPath={ searchImg }
+              results={this.state.results}
+            />
+        </div>
+        <div className="navbar-right-floated-content">
           { !this.props.isLoggedIn &&
             <>
               <Button
@@ -107,7 +121,7 @@ export class Navbar extends Component {
             <Link to="/write">
               <Button
                 extraClass="nav-bar-sign-up-button"
-                handleClick={() => { return; }}
+                handleClick={() => { }}
                 text="Write"
               />
             </Link>
@@ -135,6 +149,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   togglePopup,
   fetchUserAccountDetails,
+  updateSearchResults,
+  updateSearchQuery,
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

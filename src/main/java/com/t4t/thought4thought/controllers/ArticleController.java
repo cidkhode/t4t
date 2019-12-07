@@ -30,8 +30,8 @@ public class ArticleController {
 
     /* get article */
     @GetMapping(path = "/get-article")
-    public Article getArticle(@RequestBody Article article) {
-        return articleService.getUserArticleByArticleID(article.getArticleID());
+    public Article getArticle(@RequestParam("articleId")String articleID) {
+        return articleService.getUserArticleByArticleID(Integer.parseInt(articleID));
     }
 
     @GetMapping(path = "/get-user-articles")
@@ -96,5 +96,12 @@ public class ArticleController {
     public Thought4ThoughtResponseObject countNumLikes(@RequestBody Article article){
         return this.articleService.countNumArticleLikes(article);
     }
-    
+
+    /*search articles*/
+    @GetMapping(path= "/search")
+    public List<Article> searchArticles (@RequestParam("filter") String filter, @RequestParam("query") String query) {
+        System.out.println("-----\n-----" + query);
+        return articleService.searchArticles(query);
+    }
+
 }
