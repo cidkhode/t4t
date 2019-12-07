@@ -11,8 +11,6 @@ import './SearchResults.less';
 export class SearchResults extends Component {
     constructor(props) {
         super(props);
-        console.dir(props);
-
         this.state = {
             scrollInterval: 0,
             signinOpen: false,
@@ -23,6 +21,8 @@ export class SearchResults extends Component {
     }
 
     openSideBar = () => this.setState({ sideBarOpen: !this.state.sideBarOpen });
+
+    selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption });
 
     fetchTopics = () => {
       return [
@@ -57,7 +57,7 @@ export class SearchResults extends Component {
     }
 
     render() {
-        console.log(this.props.searchResults);
+        console.log(`PROPS`, this.props);
         return (
             <div>
                 <Navbar handleLogin={ this.props.handleLogin } isLoggedIn={ this.props.isLoggedIn }/>
@@ -66,10 +66,10 @@ export class SearchResults extends Component {
                     <div className="searchFilters">
                       FILTER:
                       <form className="filterButtons">
-                        <span><input type="radio" name="filter" value="all" disabled={true} onChange={this.changeFilter} checked={this.state.filter == "all"}/><span>Show All</span></span>
-                        <span><input type="radio" name="filter" value="article" onChange={this.changeFilter} checked={this.state.filter == "article"}/><span>Articles</span></span>
-                        <span><input type="radio" name="filter" value="topic" disabled={true} onChange={this.changeFilter} checked={this.state.filter == "topic"}/><span>Topics</span></span>
-                        <span><input type="radio" name="filter" value="user" disabled={true} onChange={this.changeFilter} checked={this.state.filter == "user"}/><span>Users</span></span>
+                        <span><input type="radio" name="filter" value="all" disabled={true} onChange={this.changeFilter} checked={this.state.filter === "all"}/><span>Show All</span></span>
+                        <span><input type="radio" name="filter" value="article" onChange={this.changeFilter} checked={this.state.filter === "article"}/><span>Articles</span></span>
+                        <span><input type="radio" name="filter" value="topic" disabled={true} onChange={this.changeFilter} checked={this.state.filter === "topic"}/><span>Topics</span></span>
+                        <span><input type="radio" name="filter" value="user" disabled={true} onChange={this.changeFilter} checked={this.state.filter === "user"}/><span>Users</span></span>
                       </form>
                     </div>
                     {this.props.searchQuery ? <div className="searchQuery">
@@ -87,7 +87,7 @@ export class SearchResults extends Component {
                         />
                       </Link>
                     )}
-                    {this.props.searchResults.length == 0 && <div>No results found.</div>}
+                    {this.props.searchResults.length === 0 && <div>No results found.</div>}
                     <div className="endOfResults"><span className="toTop" onClick={this.toTop} title="Return to the Top of Results">Back to Top</span></div>
                   </div>
                 </div>
@@ -96,7 +96,7 @@ export class SearchResults extends Component {
                         topics={ this.props.userAccountDetails.topics ? this.props.userAccountDetails.topics : this.fetchTopics() }
                         onTopicSelection={ this.selectTopic }
                         onOpen={ this.openSideBar }
-                        name="Cid Khode"
+                        name={ this.props.userAccountDetails.name }
                         isOpen={ this.state.sideBarOpen }
                         selectedOption={ this.state.selectedSideBarOption }
                     />

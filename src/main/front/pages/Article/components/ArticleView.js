@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { convertFromRaw } from 'draft-js';
 import { stateToHTML } from 'draft-js-export-html';
 import DOMPurify from 'dompurify';
+import Sidebar from "../../../components/Sidebar/Sidebar";
 
 class ArticleView extends Component {
 	render() {
@@ -23,7 +24,7 @@ class ArticleView extends Component {
 }
 
 ArticleView.propTypes = {
-	article: PropTypes.object
-}
+	article: PropTypes.object,
+};
 
 export default ArticleView;

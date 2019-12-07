@@ -16,19 +16,40 @@ import ArticleView from "./components/ArticleView.js";
 
 /* Styles */
 import './Article.less';
+import LoadingIcon from "../../components/LoadingIcon/LoadingIcon";
 
 class Article extends PureComponent {
+	constructor(props) {
+		super(props);
+		this.state = {
+			sideBarOpen: false,
+		}
+	}
 	componentDidMount() {
+		console.log(`PROPS`, this.props);
 		this.props.fetchArticleByID(this.props.match.params.id);
 	}
+
+	openSideBar = () => this.setState({ sideBarOpen: !this.state.sideBarOpen });
+
+	selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption });
 
 	render() {
 		return(
 			<>
 				<Navbar handleLogin={ this.props.handleLogin } isLoggedIn={ this.props.isLoggedIn } />
 				<main id="content" className="article">
-					{ !Object.keys(this.props.currentlyReading).length ? <ArticleLoad /> : <ArticleView article={ this.props.currentlyReading } /> }
+					{ !Object.keys(this.props.currentlyReading).length ? <LoadingIcon /> : <ArticleView article={ this.props.currentlyReading } /> }
 				</main>
+				{ this.props.showSidebar &&
+				<Sidebar
+					topics={ this.props.userAccountDetails.topics ? this.props.userAccountDetails.topics : this.fetchTopics() }
+					onTopicSelection={ this.selectTopic }
+					onOpen={ this.openSideBar }
+					name={ this.props.userAccountDetails.name }
+					isOpen={ this.state.sideBarOpen }
+					selectedOption={ this.state.selectedSideBarOption }
+				/> }
 			</>
 		)
 	}
@@ -37,6 +58,7 @@ class Article extends PureComponent {
 Article.propTypes = {
 	currentlyReading: PropTypes.object.isRequired,
 	fetchArticleByID: PropTypes.func.isRequired,
+	showSidebar: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({ currentlyReading: getCurrentlyReading(state) });

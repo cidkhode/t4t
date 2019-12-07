@@ -89,7 +89,7 @@ export class Navbar extends Component {
     return (
       <div className="navhead">
         <Link to="/" className="navbar-left-floated-content">
-          <button className="logo">LOGO</button>
+          <button className="logo">Home</button>
         </Link>
         <div className="navbar-center-content">
           <Searchbar

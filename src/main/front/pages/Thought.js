@@ -8,7 +8,7 @@ import { checkIfUserLoggedIn, fetchUserAccountDetails } from '../redux/actions/u
 
 import { getUserLoggedIn } from '../utils/utils';
 import CustomRouter from '../components/CustomRouter/CustomRouter';
-import Article from './Article';
+import Article from './Article/index';
 import Write from './Write';
 import UserAccount from './UserAccount/UserAccount';
 import UserDashboard from './UserDashboard/UserDashboard';
@@ -145,15 +145,23 @@ export class Thought extends Component {
       <Router>
         <>
           <Switch>
-            <Route path="/article/:id">
-              <Route
-                component={ Article }
-                isLoggedIn={ this.props.isLoggedIn }
-                isLoading={ this.props.isLoading }
-                waitingToCheck={ this.props.waitingToCheck }
-              />
-            </Route>
-
+            <Route
+              path="/article/:id"
+              render={ props =>
+                <CustomRouter
+                  component={ Article }
+                  componentProps={{
+                    ...props,
+                    showSidebar: this.props.isLoggedIn,
+                    userAccountDetails: this.state.userAccountDetails,
+                    getProfile: this.getProfile
+                  }}
+                  isLoggedIn={ true }
+                  isLoading={ this.props.isLoading }
+                  waitingToCheck={ this.props.waitingToCheck }
+                />
+              }
+            />
             <Route path="/write">
               <CustomRouter
                 component={ Write }
