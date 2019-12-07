@@ -145,14 +145,10 @@ export class Thought extends Component {
       <Router>
         <>
           <Switch>
-            <Route path="/article/:id">
-              <Route
-                component={ Article }
-                isLoggedIn={ this.props.isLoggedIn }
-                isLoading={ this.props.isLoading }
-                waitingToCheck={ this.props.waitingToCheck }
-              />
-            </Route>
+            <Route
+              path="/article/:id"
+              render={(props) => <Article {...props} isLoggedIn={ this.props.isLoggedIn } isLoading={ this.props.isLoading } waitingToCheck={ this.props.waitingToCheck } />}
+            />
 
             <Route path="/write">
               <CustomRouter
