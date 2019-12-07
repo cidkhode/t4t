@@ -1,22 +1,23 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-/* Redux - Selectors */
-import { getCurrentlyReading } from '../../redux/selectors/articles.selector';
 /* Redux - Actions */
 import { fetchArticleByID } from '../../redux/actions/articles.action';
+/* Redux - Selectors */
+import { getCurrentlyReading } from '../../redux/selectors/articles.selector';
 
 /* Components */
 import Navbar from "../../components/Navbar/Navbar";
+import Sidebar from "../../components/Sidebar/Sidebar";
 import ArticleLoad from "./components/ArticleLoad.js";
 import ArticleView from "./components/ArticleView.js";
 
 /* Styles */
 import './Article.less';
 
-class Article extends Component {
+class Article extends PureComponent {
 	componentDidMount() {
 		this.props.fetchArticleByID(this.props.match.params.id);
 	}
@@ -34,7 +35,7 @@ class Article extends Component {
 }
 
 Article.propTypes = {
-	currentlyReading: PropTypes.object,
+	currentlyReading: PropTypes.object.isRequired,
 	fetchArticleByID: PropTypes.func.isRequired,
 };
 

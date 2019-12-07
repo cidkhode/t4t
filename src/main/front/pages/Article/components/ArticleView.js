@@ -1,15 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { convertFromRaw } from 'draft-js';
+import { stateToHTML } from 'draft-js-export-html';
+import DOMPurify from 'dompurify';
 
 class ArticleView extends Component {
 	render() {
+		const { userEmail, title, contentState, thumbnailImageURL } = this.props.article;
 		return(
 			<div id="article-view">
-				<p> { this.props.article.articleID } </p>
-				<p> { this.props.article.userEmail } </p>
-				<p> { this.props.article.title } </p>
-				<p> { this.props.article.description } </p>
-				<p> { this.props.article.dateCreated } </p>
+				<div className="inner">
+					<div className="header">
+						{ thumbnailImageURL !== null ? <img src={ thumbnailImageURL } /> : <></> }
+						<h1> { title } </h1>
+						<p> By { userEmail } </p>
+					</div>
+					<div className="article-content" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(stateToHTML(convertFromRaw(JSON.parse(contentState))))}} />
+				</div>
 			</div>
 		)
 	}
