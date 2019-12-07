@@ -223,7 +223,7 @@ class SignupForm extends Component {
 										<p className={`${isFormPageInvalid ? 'disabled' : ''} ${this.state.stepCtr >= 2 ? "active" : ""}`}> 2 </p>
 										<p className={`${isFormPageInvalid ? 'disabled' : ''} ${this.state.stepCtr === 3 ? "active" : ""}`}> 3 </p>
 									</div>
-									<a href="#" style={{opacity: 0, pointerEvents: 'none'}}> Sign in </a>
+									<a href="#" style={{opacity: '0', pointerEvents: 'none'}}> Sign in </a>
 								</div>
 							</div>
 						</Form>

@@ -1,6 +1,7 @@
 @import '../../styles/colors';
 
 .modal-container {
+	font-family: inherit;
 	display: none;
 	z-index: 100;
 	position: fixed;
@@ -8,7 +9,7 @@
 	left: 0;
 	right: 0;
 	bottom: 0;
-	background-color: rgba(238, 238, 238, 0);
+	background-color: rgba(65, 65, 65, 0.9);
 
 	flex-flow: row wrap;
 	justify-content: center;
@@ -22,13 +23,13 @@
 		position: relative;
 		width: 400px;
 		min-height: 400px;
-		background: @t4t-gray06;
+		background: @t4t-cyan-light;
 
 		box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-		border-radius: 5px;
+		border-radius: 15px;
 
 		.modal-content {
-			background: @t4t-gray06;
+			background: @t4t-cyan-light;
 		}
 
 		.closeModal {
@@ -38,7 +39,7 @@
 			width: 44px;
 			height: 44px;
 			border-radius: 30px;
-			background-color: @t4t-gray07;
+			background-color: @t4t-white;
 
 			cursor: pointer;
 
@@ -63,6 +64,11 @@
 				transform: rotate(-44deg);
 			}
 		}
-
+		.closeModal:hover {
+			background-color: @t4t-red-light;
+			&:before, &:after {
+				background-color: @t4t-white;
+			}
+		}
 	}
 }
