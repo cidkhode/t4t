@@ -1,158 +1,60 @@
 @import '../../styles/colors';
 
 #content.article {
+	display: flex;
+	flex-flow: row wrap;
+
 	padding: 0 40px;
+	margin-top: 0 !important;
 
-	#t4t-title-wrapper {
-		display: flex;
-		flex-flow: row wrap;
-		justify-content: space-between;
-		margin: 0 0 15px -5px;
+	#article-view {
+		width: 100%;
 
-		.autosave-ops {
-			display: flex;
-			flex-flow: row wrap;
+		.inner {
+			.article-user-content {
+				width: calc(100% - 425px);
 
-			form {
-				input {
-					box-shadow: none;
-					font-size: 24px;
-					min-width: 300px;
-					margin: .3rem;
-					padding: 10px;
-					border-radius: 10px;
-					border: 1px solid @t4t-gray07;
-					outline: none;
-					transition: 0.3s;
-					&:hover {
-						border: 1px solid @t4t-blue-light;
+				.header {
+					.img-container {
+						max-width: 100%;
+						max-height: 35vh;
+
+						width: 100%;
+						overflow: hidden;
+
+						img {
+							width: 100%;
+							height: 100%;
+							object-fit: cover;
+							object-position: center;
+						}
 					}
-					&:active, &:focus {
-						border: 2px solid @t4t-blue-light;
+
+					h1 {
+						font-size: 36px;
+					}
+
+					p.user-ident {
+
 					}
 				}
 			}
 
-			.autosave {
-				margin-left: .5rem;
-			}
-		}
+			.article-sidebar {
+				width: 400px;
+				margin: 0 0 0 25px;
 
-		.btn-group {
-			.t4t-button {
-				margin: .3rem;
 			}
 		}
 	}
 
-	#t4t-edit-wrapper {
+	#article-load {
 		display: flex;
 		flex-flow: row nowrap;
+		justify-content: center;
+		align-items: center;
 
-		#t4t-editor-wrapper {
-			width: calc(100% - 325px);
-
-			.rdw-editor-toolbar {
-				padding: 5px !important;
-
-				> div {
-					margin: 0 0 0 0;
-				}
-			}
-
-			.rdw-editor-main {
-				padding: 0;
-
-				.public-DraftEditorPlaceholder-root {
-					padding: 20px 0 0 36px;
-				}
-
-				.public-DraftEditor-content {
-					padding: 5px 35px;
-					border: 1px solid #F0F0F0;
-					border-top: 0;
-					border-bottom: 0;
-					height: calc(100vh - 179px - 40px); // 100vh - height from top - padding from bottom
-				}
-			}
-		}
-
-		#t4t-editor-sidebar {
-			width: 300px;
-			margin: 0 0 0 25px;
-
-			display: flex;
-			flex-flow: column;
-
-
-			.title {
-				padding: 0 0 0 0;
-				margin: 0 0 10px 0;
-				min-height: 20px;
-			}
-
-			.inner {
-				height: calc(100% - 45px);
-				border-top-left-radius: 3px;
-
-				.t4t-editable-article {
-					position: relative;
-					margin: 0 0 10px 0;
-					padding: 0;
-					background-color: @t4t-white;
-					border: 1px solid @t4t-gray07;
-					border-radius: 5px;
-
-					box-shadow: 0 0.5em 2em rgba(27, 41, 42, 0.0625);
-					cursor: pointer;
-					// overflow: hidden;
-
-					transition: transform 0.15s, box-shadow 0.15s;
-
-					&:hover {
-						transform: translateY(-5px);
-						box-shadow: 0 0.75em 2em rgba(27, 41, 42, 0.1);
-
-						transition: transform 0.15s, box-shadow 0.15s;
-					}
-
-					.t4t-article-delete {
-						display: flex;
-						justify-content: center;
-						align-items: center;
-						user-select: none;
-						position: absolute;
-						top: 0;
-						right: 0;
-						border-top-right-radius: 5px;
-						border-bottom-left-radius: 5px;
-						background-color: @t4t-red-light;
-						width: 52px;
-						height: 20px;
-						font-size: 0.85em;
-						line-height: 11px;
-						transition: background-color 0.25s linear;
-						&:hover {
-							background-color: @t4t-red;
-							transition: background-color 0.25s linear;
-						}
-					}
-
-					a.t4t-article-content {
-						display: block;
-						padding: 20px 25px 20px 25px;
-
-						h3 {
-							margin: 0 0 5px 0;
-						}
-
-						p {
-							margin: 5px 0 0 0;
-							font-size: 0.8em;
-						}
-					}
-				}
-			}
-		}
+		min-height: 75vh;
+		width: 100%;
 	}
 }

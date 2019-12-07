@@ -9,10 +9,9 @@ import { fetchArticleByID } from '../../redux/actions/articles.action';
 import { getCurrentlyReading } from '../../redux/selectors/articles.selector';
 
 /* Components */
-import Navbar from "../../components/Navbar/Navbar";
-import Sidebar from "../../components/Sidebar/Sidebar";
-import ArticleLoad from "./components/ArticleLoad.js";
-import ArticleView from "./components/ArticleView.js";
+import Navbar from '../../components/Navbar/Navbar';
+import ArticleLoad from './components/ArticleLoad.js';
+import ArticleView from './components/ArticleView.js';
 
 /* Styles */
 import './Article.less';
