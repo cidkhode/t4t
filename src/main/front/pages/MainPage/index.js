@@ -305,15 +305,15 @@ export class MainPage extends Component {
           </div>
 
         </div>
-        { this.props.showSidebar &&
-        <Sidebar
-          topics={ this.props.userAccountDetails.topics ? this.props.userAccountDetails.topics : this.fetchTopics() }
-          onTopicSelection={ this.selectTopic }
-          onOpen={ this.openSideBar }
-          name="Cid Khode"
-          isOpen={ this.state.sideBarOpen }
-          selectedOption={ this.state.selectedSideBarOption }
-        />
+        { this.props.isLoggedIn ?
+          <Sidebar
+            topics={ this.props.userAccountDetails.topics ? this.props.userAccountDetails.topics : this.fetchTopics() }
+            onTopicSelection={ this.selectTopic }
+            onOpen={ this.openSideBar }
+            name={ this.props.userAccountDetails.name }
+            isOpen={ this.state.sideBarOpen }
+            selectedOption={ this.state.selectedSideBarOption }
+          /> : <></>
         }
       </main>
     )

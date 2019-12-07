@@ -147,7 +147,7 @@ export class Thought extends Component {
           <Switch>
             <Route
               path="/article/:id"
-              render={(props) => <Article {...props} isLoggedIn={ this.props.isLoggedIn } isLoading={ this.props.isLoading } waitingToCheck={ this.props.waitingToCheck } />}
+              render={(props) => <Article {...props} isLoggedIn={ this.props.isLoggedIn } isLoading={ this.props.isLoading } waitingToCheck={ this.props.waitingToCheck } userAccountDetails={ this.state.userAccountDetails } />}
             />
 
             <Route path="/write">
@@ -169,6 +169,7 @@ export class Thought extends Component {
                   getProfile: this.getProfile,
                   savedArticles: this.getSavedArticles(),
                   followingUsers: this.getFollowingUsers(),
+                  userAccountDetails: this.state.userAccountDetails,
                 } }
               />
             </Route>

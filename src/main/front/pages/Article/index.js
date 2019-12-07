@@ -23,6 +23,7 @@ class Article extends PureComponent {
 		super(props);
 		this.state = {
 			sideBarOpen: false,
+			selectedSideBarOption: '',
 		}
 	}
 	componentDidMount() {
@@ -32,24 +33,25 @@ class Article extends PureComponent {
 
 	openSideBar = () => this.setState({ sideBarOpen: !this.state.sideBarOpen });
 
-	selectTopic = (selectedSideBarOption) => this.setState({ sideBarOpen: false, selectedSideBarOption });
+	selectTopic = selectedSideBarOption => this.setState({ sideBarOpen: false, selectedSideBarOption });
 
 	render() {
 		return(
 			<>
 				<Navbar handleLogin={ this.props.handleLogin } isLoggedIn={ this.props.isLoggedIn } />
+				{ this.props.isLoggedIn ?
+					<Sidebar
+						topics={ this.props.userAccountDetails.topics }
+						onTopicSelection={ this.selectTopic }
+						onOpen={ this.openSideBar }
+						name={ this.props.userAccountDetails.name }
+						isOpen={ this.state.sideBarOpen }
+						selectedOption={ this.state.selectedSideBarOption }
+					/> : <></>
+				}
 				<main id="content" className="article">
 					{ !Object.keys(this.props.currentlyReading).length ? <LoadingIcon /> : <ArticleView article={ this.props.currentlyReading } /> }
 				</main>
-				{ this.props.showSidebar &&
-				<Sidebar
-					topics={ this.props.userAccountDetails.topics ? this.props.userAccountDetails.topics : this.fetchTopics() }
-					onTopicSelection={ this.selectTopic }
-					onOpen={ this.openSideBar }
-					name={ this.props.userAccountDetails.name }
-					isOpen={ this.state.sideBarOpen }
-					selectedOption={ this.state.selectedSideBarOption }
-				/> }
 			</>
 		)
 	}
@@ -58,7 +60,6 @@ class Article extends PureComponent {
 Article.propTypes = {
 	currentlyReading: PropTypes.object.isRequired,
 	fetchArticleByID: PropTypes.func.isRequired,
-	showSidebar: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({ currentlyReading: getCurrentlyReading(state) });
