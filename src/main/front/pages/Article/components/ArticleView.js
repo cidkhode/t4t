@@ -11,12 +11,16 @@ class ArticleView extends Component {
 		return(
 			<div id="article-view">
 				<div className="inner">
-					<div className="header">
-						{ thumbnailImageURL !== null ? <img src={ thumbnailImageURL } /> : <></> }
-						<h1> { title } </h1>
-						<p> By { userEmail } </p>
+					<div className="article-user-content">
+						<div className="header">
+							{ thumbnailImageURL !== null ? <div className="img-container"> <img src={ thumbnailImageURL } /> </div> : <></> }
+							<h1> { title } </h1>
+							<p className="user-ident"> By { userEmail } </p>
+						</div>
+						<div className="article-content" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(stateToHTML(convertFromRaw(JSON.parse(contentState)))) }} />
 					</div>
-					<div className="article-content" dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(stateToHTML(convertFromRaw(JSON.parse(contentState))))}} />
+
+					<div className="article-sidebar"></div>
 				</div>
 			</div>
 		)

@@ -9,14 +9,14 @@ import { fetchArticleByID } from '../../redux/actions/articles.action';
 import { getCurrentlyReading } from '../../redux/selectors/articles.selector';
 
 /* Components */
-import Navbar from "../../components/Navbar/Navbar";
-import Sidebar from "../../components/Sidebar/Sidebar";
-import ArticleLoad from "./components/ArticleLoad.js";
-import ArticleView from "./components/ArticleView.js";
+import Navbar from '../../components/Navbar/Navbar';
+import ArticleLoad from './components/ArticleLoad.js';
+import ArticleView from './components/ArticleView.js';
+import LoadingIcon from '../../components/LoadingIcon/LoadingIcon';
+import { Sidebar } from '../../components/Sidebar/Sidebar';
 
 /* Styles */
 import './Article.less';
-import LoadingIcon from "../../components/LoadingIcon/LoadingIcon";
 
 class Article extends PureComponent {
 	constructor(props) {
