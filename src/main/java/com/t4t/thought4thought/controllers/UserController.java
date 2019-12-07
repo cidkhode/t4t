@@ -52,6 +52,7 @@ public class UserController {
 
     @PostMapping(path = "/api/register")
     public Thought4ThoughtResponseObject registerUser(@RequestBody User user) {
+        user.setTopicIds("");
         return userService.registerNewUser(user);
     }
 
